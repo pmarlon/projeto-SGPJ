@@ -95,6 +95,17 @@ def init_db():
     )
     """)
 
+    banco.execute("""CREATE TABLE IF NOT EXISTS ocorrencias (
+        id INTEGER,
+        caso INTEGER NOT NULL,
+        data TEXT NOT NULL,
+        descricao TEXT,
+        valor TEXT NOT NULL,
+        vr_atual TEXT NOT NULL,
+        PRIMARY KEY('id' AUTOINCREMENT)
+)
+""")
+
     banco.persist()
     banco.disconnect()
 
