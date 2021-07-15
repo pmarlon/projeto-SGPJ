@@ -11,4 +11,4 @@ from SGPJ.models.ocorrencias import Ocorrencias
 from SGPJ.models.pesquisar import Pesquisar
 from SGPJ.models.consultas import Consultas
 from SGPJ.models.processos import Processos
-from SGPJ.models.banco import Banco
+from SGPJ.models.banco import *

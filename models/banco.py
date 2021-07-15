@@ -2,7 +2,7 @@ from sqlite3 import *
 
 
 class Banco:
-
+    """ Classe de criação do Banco de dados """
     def __init__(self):
 
         self.conn = None
@@ -10,27 +10,35 @@ class Banco:
         self.connected = False
 
     def connect(self):
+        """ Realiza a conexão com o banco de dados"""
         self.conn = connect('banco.db')
         self.cursor = self.conn.cursor()
         self.connected = True
 
     def disconnect(self):
+        """ Se desconecta do banco """
         self.conn.close()
         self.connected = False
 
     def execute(self, sql, parms=None):
-        if self.connected:
-            if parms:
-                self.cursor.execute(sql, parms)
-                return True
-            else:
-                self.cursor.execute(sql)
-        return False
+        """ Executa as consultas ao banco de dados """
+        try:
+            if self.connected:
+                if parms:
+                    self.cursor.execute(sql, parms)
+                    return True
+                else:
+                    self.cursor.execute(sql)
+            return False
+        except IntegrityError:
+            print('Tipo de dados inválidos. Tente novamente(execute)')
 
     def fetchall(self):
+        """ Busca todas as linhas de um resultado de consulta e retorna uma lista com os resultados """
         return self.cursor.fetchall()
 
     def persist(self):
+        """ Confirma a execução atual, gravando no banco de dados """
         if self.connected:
             self.conn.commit()
             return True
@@ -38,6 +46,7 @@ class Banco:
 
 
 def init_db():
+    """ Função que cria as tabelas do banco de dados caso não existam """
     banco = Banco()
     banco.connect()
     banco.execute("""CREATE TABLE IF NOT EXISTS processos (
@@ -73,7 +82,7 @@ def init_db():
         fone_com	NUMERIC,
         fax	NUMERIC,
         email	TEXT NOT NULL,
-        oab	INTEGER NOT NULL UNIQUE,
+        oab	TEXT NOT NULL UNIQUE,
         cpf	INTEGER NOT NULL UNIQUE,
         PRIMARY KEY('id' AUTOINCREMENT))
         """)
@@ -111,7 +120,7 @@ def init_db():
 
 
 def view(tabela):
-
+    """ Função que recebe por parâmetro o nome da tabela a ser consultada e retorna todas as linhas encontradas """
     try:
         banco = Banco()
         banco.connect()
@@ -120,21 +129,26 @@ def view(tabela):
         banco.disconnect()
         return rows
     except OperationalError:
-        print(f'Ocorreu um erro. Tente novamente')
+        print(f'Ocorreu um erro. Tente novamente(view)')
 
 
-def search(tabela, *args, **kwargs):
-    banco = Banco()
-    banco.connect()
-    for chave, valor in kwargs.items():
-        banco.execute(f"SELECT * FROM {tabela} where {chave} like '%{valor}%'")
+def search(tabela, *, parms='*', where=None):
+    """ Função que recebe como parâmetro obrigatório o nome da tabela a ser consultada,
+         como parâmetro padrão recebe os filtros da pesquisa e retorna todas as linhas encontradas """
+    try:
+        banco = Banco()
+        banco.connect()
+        banco.execute(f"SELECT {parms} FROM {tabela} {where}")
         rows = banco.fetchall()
-        print(rows)
-    banco.disconnect()
-    return rows
+        banco.disconnect()
+        return rows
+    except OperationalError:
+        print('ocorreu um erro operacional. Tente novamente(search)')
 
 
 def insert(tabela, *args):
+    """ Função que recebe como parâmetro obrigatório o nome da tabela a ser consultada,
+        e os dados para inserção como *args e os insere na tabela escolhida """
 
     try:
         banco = Banco()
@@ -144,16 +158,18 @@ def insert(tabela, *args):
         banco.disconnect()
 
     except OperationalError:
-        print(f'Ocorreu um erro! Tente novamente')
+        print(f'Ocorreu um erro! Tente novamente (insert)')
 
 
 def update(rid, tabela, **kwargs):
+    """ Função que recebe como parâmetro obrigatório o nome da tabela e o id da linha que deseja editar,
+        além dos valores de nome da coluna e dados a serem atualizados """
 
     try:
         banco = Banco()
         banco.connect()
-        for chave, valor in kwargs.items():
-            banco.execute(f'UPDATE {tabela} SET {chave}="{valor}" WHERE id={rid}')
+        for coluna, valor in kwargs.items():
+            banco.execute(f'UPDATE {tabela} SET {coluna}="{valor}" WHERE id={rid}')
             banco.persist()
         banco.disconnect()
     except OperationalError:
@@ -161,6 +177,7 @@ def update(rid, tabela, **kwargs):
 
 
 def delete(rid, tabela):
+    """ Função que recebe como parâmetro obrigatório o nome da tabela e o id da linha que deseja deletar """
     try:
         banco = Banco()
         banco.connect()
@@ -170,15 +187,20 @@ def delete(rid, tabela):
     except OperationalError:
         print('Ocorreu um erro. Tente novamente')
 
+
 init_db()
 
 if __name__ == '__main__':
 
-    #print(view('advogados'))
+    # print(view('advogados'))
+    # insert('advogados', 1, 'teste1', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252956187', 12345678900)
+    # insert('advogados', 2, 'teste2', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252948789', 12345678902)
+    # insert('ocorrencias', '', 'teste2', '15/08/2005', 'teste descrição', 'asdf', 58.785)
 
+    # update(1, 'advogados', fone_com='2633-9956')
+    # print(view('advogados'))
+    # delete(5, 'teste')
 
-    #update(1, 'advogados', fone_com='2633-9956')
-    #print(view('advogados'))
-    #delete(5, 'teste')
-
-    print(search('advogados', endereco='rua', fax='9'))
+    # print(search('advogados', endereco='rua', fax='9'))
+    # print(view('advogados'))
+    print(search('advogados', parms='*'))
