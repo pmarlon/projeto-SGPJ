@@ -105,7 +105,7 @@ class AddAdvogado:
                                   compound=TOP,
                                   relief='flat')
         self.__btnAddAdv['bg'] = 'LightSteelBlue3'
-        self.__btnAddAdv['command'] = ''
+        self.__btnAddAdv['command'] = lambda: self.insert_adv()
         self.__btnAddAdv.image = imgbtn11
         self.__btnAddAdv.place(x=80, y=350, relwidth=0.15)
 
@@ -147,6 +147,47 @@ class AddAdvogado:
         self.__btnFechar['bg'] = 'LightSteelBlue3'
         self.__btnFechar['command'] = lambda: self.master.destroy()
         self.__btnFechar.image = imgbtn15
+
+    # Criando os Getters da classe
+    @property
+    def adv_nome(self):
+        return self.__txtAdvNome.get()
+
+    @property
+    def adv_endereco(self):
+        return self.__txtAdvEndereco.get()
+
+    @property
+    def adv_cidade(self):
+        return self.__txtAdvCidadeUf.get()
+
+    @property
+    def adv_cep(self):
+        return self.__txtAdvCep.get()
+
+    @property
+    def adv_fax(self):
+        return self.__txtAdvFax.get()
+
+    @property
+    def adv_telefone(self):
+        return self.__txtAdvTel.get()
+
+    @property
+    def adv_email(self):
+        return self.__txtAdvEmail.get()
+
+    @property
+    def adv_oab(self):
+        return self.__txtAdvOAB.get()
+
+    @property
+    def adv_cpf(self):
+        return self.__txtAdvCPF.get()
+
+    def insert_adv(self):
+        insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
+               self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
 
     def iniciar_pagina(self):
         self.__frameAdvogados['padx'] = 80

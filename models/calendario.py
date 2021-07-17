@@ -1,11 +1,12 @@
 from SGPJ.utils.modulos import *
-#from tkcalendar import DateEntry
+from tkcalendar import DateEntry
 
 
 class Calendario:
+
     def __init__(self, frame):
-        imgbtn5 = PhotoImage(file='imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
-        imgbtn6 = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+        imgbtn5 = PhotoImage(file=f'{base_dir}/imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
+        imgbtn6 = PhotoImage(file=f'{base_dir}/imagens/imgCancelar.png')  # imagem do botão Cancelar
         data = localtime()
         win = Toplevel(frame)
         win.geometry('300x260+400+250')
@@ -13,9 +14,9 @@ class Calendario:
         win.resizable(width=False, height=False)
         cal = Calendar(win,
                        selectmode='day',
-                       year=data[0],
-                       month=data[1],
-                       day=data[2],
+                       year=2020,
+                       month=5,
+                       day=22,
                        firstweekday='sunday')
         cal.place(x=30, y=20)
 

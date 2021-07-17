@@ -1,4 +1,5 @@
 from sqlite3 import *
+from typing import Any
 
 
 class Banco:
@@ -70,7 +71,7 @@ def init_db():
         fim	TEXT,
         perda	TEXT,
         end_parte_adv TEXT,
-        PRIMARY KEY('id' AUTOINCREMENT))
+        PRIMARY KEY("id" AUTOINCREMENT))
     """)
 
     banco.execute("""CREATE TABLE IF NOT EXISTS advogados(
@@ -84,7 +85,7 @@ def init_db():
         email	TEXT NOT NULL,
         oab	TEXT NOT NULL UNIQUE,
         cpf	INTEGER NOT NULL UNIQUE,
-        PRIMARY KEY('id' AUTOINCREMENT))
+        PRIMARY KEY("id" AUTOINCREMENT))
         """)
     banco.execute("""CREATE TABLE IF NOT EXISTS consultas(
         id INTEGER,
@@ -100,7 +101,7 @@ def init_db():
         emenda	TEXT NOT NULL,
         saida	TEXT,
         destino	TEXT NOT NULL,
-        PRIMARY KEY('id' AUTOINCREMENT)                   
+        PRIMARY KEY("id" AUTOINCREMENT)                   
     )
     """)
 
@@ -111,7 +112,7 @@ def init_db():
         descricao TEXT,
         valor TEXT NOT NULL,
         vr_atual TEXT NOT NULL,
-        PRIMARY KEY('id' AUTOINCREMENT)
+        PRIMARY KEY("id" AUTOINCREMENT)
 )
 """)
 
@@ -153,10 +154,10 @@ def insert(tabela, *args):
     try:
         banco = Banco()
         banco.connect()
-        banco.execute(f'INSERT INTO {tabela} VALUES {args}')
+        banco.execute(f"INSERT INTO {tabela} VALUES (NULL{', ?' * len(args)})", args)
         banco.persist()
         banco.disconnect()
-
+        print('inserido com sucesso!')
     except OperationalError:
         print(f'Ocorreu um erro! Tente novamente (insert)')
 
@@ -193,14 +194,15 @@ init_db()
 if __name__ == '__main__':
 
     # print(view('advogados'))
-    # insert('advogados', 1, 'teste1', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252956187', 12345678900)
-    # insert('advogados', 2, 'teste2', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252948789', 12345678902)
+    #insert('advogados', 'teste1', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252956187', 12345678900)
+    #insert('advogados', 'teste2', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252948789', 12345678902)
     # insert('ocorrencias', '', 'teste2', '15/08/2005', 'teste descrição', 'asdf', 58.785)
 
     # update(1, 'advogados', fone_com='2633-9956')
     # print(view('advogados'))
-    # delete(5, 'teste')
+    #delete(3, 'advogados')
+    #delete(4, 'advogados')
 
     # print(search('advogados', endereco='rua', fax='9'))
-    # print(view('advogados'))
-    print(search('advogados', parms='*'))
+    print(view('advogados'))
+    #print(search('advogados', parms='*'))

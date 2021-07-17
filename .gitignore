@@ -1,2 +1,9 @@
 TESTE.py
+
 banco.db
+
+__pycache__
+
+*.*~
+
+*.pyc

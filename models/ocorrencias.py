@@ -11,53 +11,46 @@ class Ocorrencias:
         self.app = app
         self.__frameOcorrencias = Frame(master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
-        num_caso = StringVar()
-        tipo_acao = StringVar()
-        uf_municipio = StringVar()
-        autor = StringVar()
-        reu = StringVar()
-        num_processo = StringVar()
-        adv_externo = StringVar()
+        self.__num_caso = StringVar()
+        self.__tipo_acao = StringVar()
+        self.__uf_municipio = StringVar()
+        self.__autor = StringVar()
+        self.__reu = StringVar()
+        self.__num_processo = StringVar()
+        self.__adv_externo = StringVar()
 
-        num_caso.set('CASO N° 12345')  # wee
         self.__lblCaso = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
-        self.__lblCaso['textvariable'] = num_caso
+        self.__lblCaso['textvariable'] = self.num_caso
         self.__lblCaso['font'] = 'Serif', '12', 'bold'
         self.__lblCaso.place(x=400, y=20)
 
-        autor.set('Autor: NEYMAR DA SILVA JUNIOR')
         self.__lblAutor = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
-        self.__lblAutor['textvariable'] = autor
+        self.__lblAutor['textvariable'] = self.autor
         self.__lblAutor['font'] = 'Serif', '12', 'bold'
         self.__lblAutor.place(x=210, y=60)
 
-        num_processo.set('Processo: 7000/2020')
         self.__lblProcessso = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
-        self.__lblProcessso['textvariable'] = num_processo
+        self.__lblProcessso['textvariable'] = self.num_processo
         self.__lblProcessso['font'] = 'Serif', '12', 'bold'
         self.__lblProcessso.place(x=210, y=90)
 
-        reu.set('Réu: BRUNA MARQUEZINE')
         self.__lblReu = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
-        self.__lblReu['textvariable'] = reu
+        self.__lblReu['textvariable'] = self.reu
         self.__lblReu['font'] = 'Serif', '12', 'bold'
         self.__lblReu.place(x=210, y=120)
 
-        tipo_acao.set('Tipo Ação: EXECUÇÃO')  # wee
         self.__lblTipoAcao = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblTipoAcao['font'] = 'Serif', '12', 'bold'
-        self.__lblTipoAcao['textvariable'] = tipo_acao
+        self.__lblTipoAcao['textvariable'] = self.tipo_acao
         self.__lblTipoAcao.place(x=210, y=150)
 
-        adv_externo.set('Adv Externo: PATRIC MARLON J. DA SILVA FONSECA')
         self.__lblAdvExterno = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
-        self.__lblAdvExterno['textvariable'] = adv_externo
+        self.__lblAdvExterno['textvariable'] = self.adv_externo
         self.__lblAdvExterno['font'] = 'Serif', '12', 'bold'
         self.__lblAdvExterno.place(x=210, y=180)
 
-        uf_municipio.set('UF - Município: RJ - Rio de Janeiro')
         self.__lblUfMunicipio = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
-        self.__lblUfMunicipio['textvariable'] = uf_municipio
+        self.__lblUfMunicipio['textvariable'] = self.uf_municipio
         self.__lblUfMunicipio['font'] = 'Serif', '12', 'bold'
         self.__lblUfMunicipio.place(x=210, y=210)
 
@@ -105,7 +98,7 @@ class Ocorrencias:
                                          bg='LightSteelBlue3')
         self.__btnAddOcorrencia['image'] = imgbtn8
         self.__btnAddOcorrencia.image = imgbtn8
-        self.__btnAddOcorrencia['command'] = ''
+        self.__btnAddOcorrencia['command'] = lambda: self.insert_ocorrencia()
         self.__btnAddOcorrencia.place(x=350, y=370, relwidth=0.15)
 
         self.__btnVoltar = Button(self.__frameOcorrencias,
@@ -118,8 +111,92 @@ class Ocorrencias:
         self.__btnVoltar['command'] = lambda: self.voltar()
         self.__btnVoltar.place(x=510, y=370, relwidth=0.15)
 
+    @property
+    def num_caso(self):
+        return self.__num_caso
+
+    @num_caso.setter
+    def num_caso(self, valor):
+        self.__num_caso.set(valor)
+
+    @property
+    def autor(self):
+        return self.__autor
+
+    @autor.setter
+    def autor(self, valor):
+        self.__autor.set(valor)
+
+    @property
+    def num_processo(self):
+        return self.__num_processo
+
+    @num_processo.setter
+    def num_processo(self, valor):
+        self.__num_processo.set(valor)
+
+    @property
+    def reu(self):
+        return self.__reu
+
+    @reu.setter
+    def reu(self, valor):
+        self.__reu.set(valor)
+
+    @property
+    def tipo_acao(self):
+        return self.__tipo_acao
+
+    @tipo_acao.setter
+    def tipo_acao(self, valor):
+        self.__tipo_acao.set(valor)
+
+    @property
+    def adv_externo(self):
+        return self.__adv_externo
+
+    @adv_externo.setter
+    def adv_externo(self, valor):
+        self.__adv_externo.set(valor)
+
+    @property
+    def uf_municipio(self):
+        return self.__uf_municipio
+
+    @uf_municipio.setter
+    def uf_municipio(self, valor):
+        self.__uf_municipio.set(valor)
+
+    @property
+    def data_ocorrencia(self):
+        return self.__txtDataOcorrencia.get()
+
+    @property
+    def descricao(self):
+        return self.__txtDescricao.get(1.0, END)
+
+    @property
+    def valor(self):
+        return self.__txtValor.get()
+
+    @property
+    def vr_atual(self):
+        return self.__txtValorAtual.get()
+
+    def insert_ocorrencia(self):
+        insert('ocorrencias', int(self.app.caso), self.data_ocorrencia, self.descricao, self.valor, self.vr_atual)
+
     def iniciar_pagina(self):
         self.__frameOcorrencias.pack(side=BOTTOM, fill=X, pady=1)
+
+        # Recebe os Dados diretamente do "app" que nesse caso é Processos e mostra na página
+        self.num_caso = f'Caso N° {self.app.caso}'
+        self.autor = f'Autor: {self.app.autor}'
+        self.num_processo = f'Processo:{self.app.processo}'
+        self.reu = f'Réu: {self.app.reu}'
+        self.tipo_acao = f'Tipo da Ação: {self.app.tipo_acao}'
+        self.adv_externo = f'Advogado Externo: {self.app.adv_externo}'
+        self.uf_municipio = f'Uf - Município: {self.app.uf_municipio}'
 
     def ocultar_pagina(self):
         self.__frameOcorrencias.pack_forget()
