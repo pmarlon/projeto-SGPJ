@@ -9,11 +9,16 @@ class AddAdvogado:
         imgbtn13 = PhotoImage(file='imagens/imgListarAdv.png')  # imagem do botão Listar
         imgbtn14 = PhotoImage(file='imagens/imgEditarAdv.png')  # imagem do botão Editar
         imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Editar
+
+        self.janela = False
+
         if app is not None:
             self.master = master
             self.app = app
+
         else:
             self.master = Toplevel(master)
+
         self.__frameAdvogados = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
         self.__lblAdvNome = Label(self.__frameAdvogados, text='Nome', bg='LightSteelBlue3')
@@ -148,7 +153,6 @@ class AddAdvogado:
         self.__btnFechar['command'] = lambda: self.master.destroy()
         self.__btnFechar.image = imgbtn15
 
-    # Criando os Getters da classe
     @property
     def adv_nome(self):
         return self.__txtAdvNome.get()
@@ -188,16 +192,22 @@ class AddAdvogado:
     def insert_adv(self):
         insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
                self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
+        if self.janela:
+            self.master.destroy()
+            messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
+            self.app.iniciar_pagina()
 
     def iniciar_pagina(self):
+        self.janela = False
         self.__frameAdvogados['padx'] = 80
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):
         self.__frameAdvogados.pack_forget()
 
-    def iniciar_janela(self, master):
-
+    def iniciar_janela(self, app):
+        self.janela = True
+        self.app = app
         self.master.geometry('800x450+250+185')
         self.master.resizable(width=False, height=False)
         self.master['bg'] = 'LightSteelBlue3'

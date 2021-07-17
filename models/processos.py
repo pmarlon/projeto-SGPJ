@@ -37,7 +37,7 @@ class Processos:
         self.__lblAdvExterno['font'] = 'Serif', '12'
         self.__lblAdvExterno.place(x=100, y=80)
 
-        self.__txtAdvExterno = ttk.Combobox(self.__frameProcessos, values=['ANTÔNIO DOS ANZÓIS'],
+        self.__txtAdvExterno = ttk.Combobox(self.__frameProcessos, values=[],
                                             width=74)
         self.__txtAdvExterno['justify'] = 'left'
         self.__txtAdvExterno.place(x=210, y=80)
@@ -277,6 +277,14 @@ class Processos:
     def observacao(self):
         return self.__txtObs.get(1.0, END)
 
+    @property
+    def advogados(self):
+        return self.__txtAdvExterno.get()
+
+    @advogados.setter
+    def advogados(self, valor):
+        self.__txtAdvExterno['values'] = valor
+
     def insert_processo(self):
         insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso, self.processo,
                self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio, self.situacao,
@@ -286,6 +294,9 @@ class Processos:
         self.ocultar_pagina()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.num_caso.set(f'Caso N° {randint(1, 20)}')
+        advogados = [advogado for advogado in search('advogados', parms='nome')]
+        advogados = [advogado[0] for advogado in advogados]
+        self.advogados = advogados
 
     def ocultar_pagina(self):
         self.ocorrencias.ocultar_pagina()
@@ -293,7 +304,7 @@ class Processos:
 
     def command_advogados(self):
         advogados = AddAdvogado(self.master, None)
-        advogados.iniciar_janela(self.app.root)
+        advogados.iniciar_janela(self)
 
     def iniciar_botoes(self):
         self.ocultar_botoes()

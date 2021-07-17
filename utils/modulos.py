@@ -1,10 +1,10 @@
 from tkinter import *
 from pathlib import Path
 base_dir = Path(__file__).resolve().parent.parent
-from time import localtime
+from time import localtime, sleep
 from tkcalendar import Calendar
 from PIL import Image, ImageTk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from random import randint
 from SGPJ.models.banco import *
 from SGPJ.models.calendario import Calendario

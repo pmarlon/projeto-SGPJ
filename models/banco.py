@@ -1,5 +1,4 @@
 from sqlite3 import *
-from typing import Any
 
 
 class Banco:
