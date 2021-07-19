@@ -1,4 +1,4 @@
-from SGPJ.utils.modulos import *
+from utils.modulos import *
 
 
 class Processos:
@@ -37,7 +37,7 @@ class Processos:
         self.__lblAdvExterno['font'] = 'Serif', '12'
         self.__lblAdvExterno.place(x=100, y=80)
 
-        self.__txtAdvExterno = ttk.Combobox(self.__frameProcessos, values=['ANTÔNIO DOS ANZÓIS'],
+        self.__txtAdvExterno = ttk.Combobox(self.__frameProcessos, values=[],
                                             width=74)
         self.__txtAdvExterno['justify'] = 'left'
         self.__txtAdvExterno.place(x=210, y=80)
@@ -186,7 +186,7 @@ class Processos:
                                           bg='LightSteelBlue3')
         self.__btnSalvarRegistro['image'] = imgbtn4
         self.__btnSalvarRegistro.image = imgbtn4
-        self.__btnSalvarRegistro['command'] = ''
+        self.__btnSalvarRegistro['command'] = lambda: self.insert_processo()
         self.__btnSalvarRegistro.place(x=400, y=390)
 
         self.__btnOcorrencias = Button(self.__frameProcessos,
@@ -201,12 +201,102 @@ class Processos:
 
         self.ocorrencias = Ocorrencias(self.master, self)
 
+    @property
+    def caso(self):
+        return self.num_caso.get().split(' ')[2]
+
+    @property
+    def autor(self):
+        return self.__txtAutor.get()
+
+    @property
+    def reu(self):
+        return self.__txtReu.get()
+
+    @property
+    def adv_externo(self):
+        return self.__txtAdvExterno.get()
+
+    @property
+    def adv_adverso(self):
+        return self.__txtAdvAdverso.get()
+
+    @property
+    def end_parte_adv(self):
+        return self.__txtEndParteAdversa.get()
+
+    @property
+    def tipo_acao(self):
+        return self.__txtTipoAcao.get()
+
+    @property
+    def processo(self):
+        return self.__txtNumProcesso.get()
+
+    @property
+    def vara_tribunal(self):
+        return self.__txtVaraTribunal.get()
+
+    @property
+    def pos_feito(self):
+        return self.__txtPosFeito.get()
+
+    @property
+    def uf_municipio(self):
+        return self.__txtUfMunicipio.get()
+
+    @property
+    def vr_causa(self):
+        return self.__txtVrCausa.get()
+
+    @property
+    def situacao(self):
+        return self.__txtSitAtual.get()
+
+    @property
+    def vr_atual(self):
+        return self.__txtVrAtual.get()
+
+    @property
+    def inicio(self):
+        return self.__txtDataInicio.get()
+
+    @property
+    def fim(self):
+        return self.__txtDataFim.get()
+
+    @property
+    def perda(self):
+        return self.__txtPerda.get()
+
+    @property
+    def pedido(self):
+        return self.__txtPedido.get(1.0, END)
+
+    @property
+    def observacao(self):
+        return self.__txtObs.get(1.0, END)
+
+    @property
+    def advogados(self):
+        return self.__txtAdvExterno.get()
+
+    @advogados.setter
+    def advogados(self, valor):
+        self.__txtAdvExterno['values'] = valor
+
+    def insert_processo(self):
+        insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso, self.processo,
+               self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio, self.situacao,
+               self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda, self.end_parte_adv)
+
     def iniciar_pagina(self):
         self.ocultar_pagina()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.num_caso.set(f'Caso N° {randint(1, 20)}')
-
-        print(self.num_caso.get())
+        advogados = [advogado for advogado in search('advogados', parms='nome')]
+        advogados = [advogado[0] for advogado in advogados]
+        self.advogados = advogados
 
     def ocultar_pagina(self):
         self.ocorrencias.ocultar_pagina()
@@ -214,17 +304,14 @@ class Processos:
 
     def command_advogados(self):
         advogados = AddAdvogado(self.master, None)
-        advogados.iniciar_janela(self.app.root)
+        advogados.iniciar_janela(self)
 
     def iniciar_botoes(self):
         self.ocultar_botoes()
         self.__btnOcorrencias.place(x=700, y=390)
         self.__btnSalvarRegistro.place(x=250, y=390)
-        self.__btnExcluirRegistro.place(x=550, y=390)
-        self.__btnEditarRegistro.place(x=400, y=390)
 
     def ocultar_botoes(self):
         self.__btnSalvarRegistro.place_forget()
         self.__btnOcorrencias.place_forget()
-        self.__btnEditarRegistro.place_forget()
-        self.__btnExcluirRegistro.place_forget()
+

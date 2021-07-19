@@ -1,4 +1,4 @@
-from SGPJ.utils.modulos import *
+from utils.modulos import *
 
 
 class Consultas:
@@ -129,8 +129,60 @@ class Consultas:
                                           bg='LightSteelBlue3')
         self.__btnSalvarRegistro['image'] = imgbtn4
         self.__btnSalvarRegistro.image = imgbtn4
-        self.__btnSalvarRegistro['command'] = ''
+        self.__btnSalvarRegistro['command'] = lambda: self.insert_consulta()
         self.__btnSalvarRegistro.place(x=450, y=375)
+
+    @property
+    def consulta(self):
+        return self.__txtConsulta.get()
+
+    @property
+    def ref(self):
+        return self.__txtRef.get()
+
+    @property
+    def prioridade(self):
+        return self.__txtPrioridade.get()
+
+    @property
+    def esperado(self):
+        return self.__txtEsperado.get()
+
+    @property
+    def origem(self):
+        return self.__txtOrigem.get()
+
+    @property
+    def entrada(self):
+        return self.__txtEntrada.get()
+
+    @property
+    def assunto(self):
+        return self.__txtAssunto.get(1.0, END)
+
+    @property
+    def interessado(self):
+        return self.__txtInteressado.get()
+
+    @property
+    def adv_cojur(self):
+        return self.__txtAdvCojur.get()
+
+    @property
+    def destino(self):
+        return self.__txtDestino.get()
+
+    @property
+    def saida(self):
+        return self.__txtSaida.get()
+
+    @property
+    def emenda_result(self):
+        return self.__txtEmendaResult.get(1.0, END)
+
+    def insert_consulta(self):
+        insert('consultas', int(self.consulta), self.ref, self.prioridade, self.esperado, self.entrada,
+               self.origem, self.assunto, self.interessado, self.emenda_result, self.saida, self.destino)
 
     def iniciar_pagina(self):
         self.ocultar_pagina()

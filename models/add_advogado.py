@@ -1,4 +1,4 @@
-from SGPJ.utils.modulos import *
+from utils.modulos import *
 
 
 class AddAdvogado:
@@ -9,11 +9,16 @@ class AddAdvogado:
         imgbtn13 = PhotoImage(file='imagens/imgListarAdv.png')  # imagem do botão Listar
         imgbtn14 = PhotoImage(file='imagens/imgEditarAdv.png')  # imagem do botão Editar
         imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Editar
+
+        self.janela = False
+
         if app is not None:
             self.master = master
             self.app = app
+
         else:
             self.master = Toplevel(master)
+
         self.__frameAdvogados = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
         self.__lblAdvNome = Label(self.__frameAdvogados, text='Nome', bg='LightSteelBlue3')
@@ -105,7 +110,7 @@ class AddAdvogado:
                                   compound=TOP,
                                   relief='flat')
         self.__btnAddAdv['bg'] = 'LightSteelBlue3'
-        self.__btnAddAdv['command'] = ''
+        self.__btnAddAdv['command'] = lambda: self.insert_adv()
         self.__btnAddAdv.image = imgbtn11
         self.__btnAddAdv.place(x=80, y=350, relwidth=0.15)
 
@@ -148,15 +153,61 @@ class AddAdvogado:
         self.__btnFechar['command'] = lambda: self.master.destroy()
         self.__btnFechar.image = imgbtn15
 
+    @property
+    def adv_nome(self):
+        return self.__txtAdvNome.get()
+
+    @property
+    def adv_endereco(self):
+        return self.__txtAdvEndereco.get()
+
+    @property
+    def adv_cidade(self):
+        return self.__txtAdvCidadeUf.get()
+
+    @property
+    def adv_cep(self):
+        return self.__txtAdvCep.get()
+
+    @property
+    def adv_fax(self):
+        return self.__txtAdvFax.get()
+
+    @property
+    def adv_telefone(self):
+        return self.__txtAdvTel.get()
+
+    @property
+    def adv_email(self):
+        return self.__txtAdvEmail.get()
+
+    @property
+    def adv_oab(self):
+        return self.__txtAdvOAB.get()
+
+    @property
+    def adv_cpf(self):
+        return self.__txtAdvCPF.get()
+
+    def insert_adv(self):
+        insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
+               self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
+        if self.janela:
+            self.master.destroy()
+            messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
+            self.app.iniciar_pagina()
+
     def iniciar_pagina(self):
+        self.janela = False
         self.__frameAdvogados['padx'] = 80
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):
         self.__frameAdvogados.pack_forget()
 
-    def iniciar_janela(self, master):
-
+    def iniciar_janela(self, app):
+        self.janela = True
+        self.app = app
         self.master.geometry('800x450+250+185')
         self.master.resizable(width=False, height=False)
         self.master['bg'] = 'LightSteelBlue3'

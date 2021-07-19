@@ -1,4 +1,4 @@
-from SGPJ.utils.modulos import *
+from utils.modulos import *
 
 
 class Principal:
