@@ -1,4 +1,5 @@
 from utils.modulos import *
+
 from tkcalendar import DateEntry
 
 
@@ -14,9 +15,9 @@ class Calendario:
         win.resizable(width=False, height=False)
         cal = Calendar(win,
                        selectmode='day',
-                       year=2020,
-                       month=5,
-                       day=22,
+                       year=data[0],
+                       month=data[1],
+                       day=data[2],
                        firstweekday='sunday')
         cal.place(x=30, y=20)
 
