@@ -22,16 +22,14 @@ class Banco:
 
     def execute(self, sql, parms=None):
         """ Executa as consultas ao banco de dados """
-        try:
-            if self.connected:
-                if parms:
-                    self.cursor.execute(sql, parms)
-                    return True
-                else:
-                    self.cursor.execute(sql)
-            return False
-        except IntegrityError:
-            print('Tipo de dados inválidos. Tente novamente(execute)')
+
+        if self.connected:
+            if parms:
+                self.cursor.execute(sql, parms)
+                return True
+            else:
+                self.cursor.execute(sql)
+        return False
 
     def fetchall(self):
         """ Busca todas as linhas de um resultado de consulta e retorna uma lista com os resultados """
@@ -79,8 +77,8 @@ def init_db():
         endereco	TEXT NOT NULL,
         cidade_uf	TEXT NOT NULL,
         cep	NUMERIC,
-        fone_com	NUMERIC,
         fax	NUMERIC,
+        fone_com	NUMERIC,
         email	TEXT NOT NULL,
         oab	TEXT NOT NULL UNIQUE,
         cpf	INTEGER NOT NULL UNIQUE,
@@ -120,30 +118,25 @@ def init_db():
 
 
 def view(tabela):
-    """ Função que recebe por parâmetro o nome da tabela a ser consultada e retorna todas as linhas encontradas """
-    try:
-        banco = Banco()
-        banco.connect()
-        banco.execute(f'SELECT * FROM {tabela}')
-        rows = banco.fetchall()
-        banco.disconnect()
-        return rows
-    except OperationalError:
-        print(f'Ocorreu um erro. Tente novamente(view)')
+    """ Função que recebe por parâmetro o nome da tabela
+     a ser consultada e retorna todas as linhas encontradas """
+    banco = Banco()
+    banco.connect()
+    banco.execute(f'SELECT * FROM {tabela}')
+    rows = banco.fetchall()
+    banco.disconnect()
+    return rows
 
 
 def search(tabela, *, parms='*', where=None):
     """ Função que recebe como parâmetro obrigatório o nome da tabela a ser consultada,
          como parâmetro padrão recebe os filtros da pesquisa e retorna todas as linhas encontradas """
-    try:
-        banco = Banco()
-        banco.connect()
-        banco.execute(f"SELECT {parms} FROM {tabela} {where}")
-        rows = banco.fetchall()
-        banco.disconnect()
-        return rows
-    except OperationalError:
-        print('ocorreu um erro operacional. Tente novamente(search)')
+    banco = Banco()
+    banco.connect()
+    banco.execute(f"SELECT {parms} FROM {tabela} {where}")
+    rows = banco.fetchall()
+    banco.disconnect()
+    return rows
 
 
 def insert(tabela, *args):

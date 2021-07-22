@@ -4,11 +4,12 @@ from utils.modulos import *
 class AddAdvogado:
     def __init__(self, master=None, app=None):
 
+        imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar
         imgbtn11 = PhotoImage(file='imagens/imgAddAdv.png')  # imagem do botão Adicionar
         imgbtn12 = PhotoImage(file='imagens/imgRmvAdv.png')  # imagem do botão Remover
         imgbtn13 = PhotoImage(file='imagens/imgListarAdv.png')  # imagem do botão Listar
         imgbtn14 = PhotoImage(file='imagens/imgEditarAdv.png')  # imagem do botão Editar
-        imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Editar
+        imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Fechar
 
         self.janela = False
 
@@ -104,6 +105,15 @@ class AddAdvogado:
 
         self.__tvAdvogados.place(x=20, y=220)
 
+        self.__btnSalvar = Button(self.__frameAdvogados,
+                                  text='Salvar',
+                                  image=imgbtn4,
+                                  compound=TOP,
+                                  relief='flat')
+        self.__btnSalvar['bg'] = 'LightSteelBlue3'
+        self.__btnSalvar['command'] = lambda: self.salvar()
+        self.__btnSalvar.image = imgbtn4
+
         self.__btnAddAdv = Button(self.__frameAdvogados,
                                   text='Adicionar',
                                   image=imgbtn11,
@@ -120,7 +130,7 @@ class AddAdvogado:
                                      compound=TOP,
                                      relief='flat')
         self.__btnEditarAdv['bg'] = 'LightSteelBlue3'
-        self.__btnEditarAdv['command'] = ''
+        self.__btnEditarAdv['command'] = lambda: self.editar()
         self.__btnEditarAdv.image = imgbtn14
         self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
 
@@ -190,12 +200,15 @@ class AddAdvogado:
         return self.__txtAdvCPF.get()
 
     def insert_adv(self):
-        insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
-               self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
-        if self.janela:
-            self.master.destroy()
-            messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
-            self.app.iniciar_pagina()
+        try:
+            insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
+                   self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
+            if self.janela:
+                self.master.destroy()
+                messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
+                self.app.iniciar_pagina()
+        except IntegrityError:
+            messagebox.showwarning('Atenção', 'Já existe um cadastro com o CPF ou N° OAB digitados.')
 
     def listar(self):
         self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
@@ -203,22 +216,92 @@ class AddAdvogado:
         for advogado in advogados:
             self.__tvAdvogados.insert('', END, iid=None,
                                       values=(advogado[1], advogado[2], advogado[9],
-                                              advogado[8], f'{advogado[5]} / {advogado[6]}'))
+                                              advogado[8], f'{advogado[6]} / {advogado[5]}'))
 
     def deletar(self):
 
         try:
-            cpf = self.linha_selecionada('<<TreeviewSelect>>')[2]
-            rid = search('advogados', parms='id', where=f'where cpf={cpf}')[0][0]
-            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
-                delete(rid, 'advogados')
-                messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
-                self.listar()
+            rid = self.get_id()
 
         except IndexError:
             messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
         except TypeError:
             messagebox.showerror('Erro', 'Algo deu errado...')
+        except OperationalError:
+            messagebox.showerror('Erro', 'Algo deu errado...')
+        else:
+            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
+                delete(rid, 'advogados')
+                messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
+                self.listar()
+
+    def editar(self):
+        try:
+            self.preencher()
+        except ValueError:
+            messagebox.showerror('Atenção', 'Ocorreu um erro...')
+        except IndexError:
+            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
+        else:
+            self.__btnEditarAdv.place_forget()
+            self.__btnSalvar.place(x=210, y=350, relwidth=0.15)
+            self.__txtAdvCPF['state'] = 'readonly'
+            self.__txtAdvOAB['state'] = 'readonly'
+
+    def salvar(self):
+        cpf = self.__txtAdvCPF.get()
+        rid = search('advogados', parms='id', where=f'where cpf={cpf}')[0][0]
+
+        update(rid, 'advogados',
+               nome=self.adv_nome,
+               endereco=self.adv_endereco,
+               cidade_uf=self.adv_cidade,
+               cep=self.adv_cep,
+               fone_com=self.adv_telefone,
+               fax=self.adv_fax,
+               email=self.adv_email)
+        self.__txtAdvCPF['state'] = 'normal'
+        self.__txtAdvOAB['state'] = 'normal'
+        self.limpar()
+        self.listar()
+        self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
+
+    def preencher(self):
+        try:
+
+            rid = self.get_id()
+            values = search('advogados', where=f'where id={rid}')[0]
+        except OperationalError:
+            raise ValueError
+        else:
+            self.limpar()
+            self.listar()
+            cont = 0
+
+            for child in self.__frameAdvogados.winfo_children():
+                # Captura o nome da classe de cada elemento
+                widget_class = child.__class__.__name__
+                # Se a classe for Entry preenche o campo com
+                if widget_class == 'Entry':
+                    cont += 1
+                    child.insert(END, values[cont])
+
+    def limpar(self):
+        # Limpa todas as linhas do TreeView
+        self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
+
+        # Captura todos os elementos do Frame
+        for child in self.__frameAdvogados.winfo_children():
+            # Captura o nome da classe de cada elemento
+            widget_class = child.__class__.__name__
+            # Se a classe for Entry limpa o campo
+            if widget_class == 'Entry':
+                child.delete(0, END)
+
+    def get_id(self):
+        cpf = self.linha_selecionada('<<TreeviewSelect>>')[2]
+        rid = search('advogados', parms='id', where=f'where cpf={cpf}')[0][0]
+        return rid
 
     def linha_selecionada(self, event):
         linha = self.__tvAdvogados.selection()
