@@ -1,5 +1,8 @@
 from utils.modulos import *
 
+from models.ocorrencias import Ocorrencias
+from models.add_advogado import AddAdvogado
+
 
 class Processos:
     # Cadastro de processos
@@ -133,30 +136,12 @@ class Processos:
         self.__txtDataInicio = Entry(self.__frameProcessos, width=10)
         self.__txtDataInicio.place(x=210, y=290)
 
-        self.__btnSelecionarData = Button(self.__frameProcessos,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__frameProcessos)
-        self.__btnSelecionarData.place(x=297, y=288)
-
         self.__lblDataFim = Label(self.__frameProcessos, text='Fim', bg='LightSteelBlue3')
         self.__lblDataFim['font'] = 'Serif', '12'
         self.__lblDataFim.place(x=385, y=290)
 
         self.__txtDataFim = Entry(self.__frameProcessos, width=10)
         self.__txtDataFim.place(x=430, y=290)
-
-        self.__btnSelecionarData = Button(self.__frameProcessos,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__frameProcessos)
-        self.__btnSelecionarData.place(x=517 , y=288)
 
         self.__lblPerda = Label(self.__frameProcessos, text='Perda', bg='LightSteelBlue3')
         self.__lblPerda['font'] = 'Serif', '12'
@@ -314,4 +299,3 @@ class Processos:
     def ocultar_botoes(self):
         self.__btnSalvarRegistro.place_forget()
         self.__btnOcorrencias.place_forget()
-

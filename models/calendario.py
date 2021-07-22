@@ -1,11 +1,9 @@
 from utils.modulos import *
 
-from tkcalendar import DateEntry
-
 
 class Calendario:
 
-    def __init__(self, frame):
+    def __init__(self, frame, app=None):
         imgbtn5 = PhotoImage(file=f'{base_dir}/imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
         imgbtn6 = PhotoImage(file=f'{base_dir}/imagens/imgCancelar.png')  # imagem do botão Cancelar
         data = localtime()
@@ -27,7 +25,7 @@ class Calendario:
                                      compound=LEFT,
                                      relief='flat')
         btn_selecionar_data['bg'] = 'LightSteelBlue3'
-        btn_selecionar_data['command'] = lambda: print(command_selecionar())
+        btn_selecionar_data['command'] = lambda: command_selecionar()
         btn_selecionar_data.image = imgbtn5
         btn_selecionar_data.place(x=10, y=205)
 
@@ -46,9 +44,3 @@ class Calendario:
 
         def command_cancelar():
             win.destroy()
-
-
-class SelecionarData:
-    def __init__(self, frame=None):
-        cal = DateEntry(frame, width=12)
-        cal.place(x=30, y=20)

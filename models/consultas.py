@@ -34,42 +34,24 @@ class Consultas:
 
         self.__lblEsperado = Label(self.__frameConsultas, text='Esperado', bg='LightSteelBlue3')
         self.__lblEsperado['font'] = 'Serif', '12'
-        self.__lblEsperado.place(x=705, y=50)
+        self.__lblEsperado.place(x=720, y=50)
 
         self.__txtEsperado = Entry(self.__frameConsultas, width=10)
-        self.__txtEsperado.place(x=790, y=50)
-
-        self.__btnSelecionarData = Button(self.__frameConsultas,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__frameConsultas)
-        self.__btnSelecionarData.place(x=880, y=48)
+        self.__txtEsperado.place(x=810, y=50)
 
         self.__lblOrigem = Label(self.__frameConsultas, text='Origem', bg='LightSteelBlue3')
         self.__lblOrigem['font'] = 'Serif', '12'
         self.__lblOrigem.place(x=80, y=80)
 
-        self.__txtOrigem = Entry(self.__frameConsultas, width=65)
+        self.__txtOrigem = Entry(self.__frameConsultas, width=66)
         self.__txtOrigem.place(x=160, y=80)
 
         self.__lblEntrada = Label(self.__frameConsultas, text='Entrada', bg='LightSteelBlue3')
         self.__lblEntrada['font'] = 'Serif', '12'
-        self.__lblEntrada.place(x=710, y=80)
+        self.__lblEntrada.place(x=730, y=80)
 
         self.__txtEntrada = Entry(self.__frameConsultas, width=10)
-        self.__txtEntrada.place(x=790, y=80)
-
-        self.__btnSelecionarData = Button(self.__frameConsultas,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__frameConsultas)
-        self.__btnSelecionarData.place(x=880, y=78)
+        self.__txtEntrada.place(x=810, y=80)
 
         self.__lblAssunto = Label(self.__frameConsultas, text='Assunto', bg='LightSteelBlue3')
         self.__lblAssunto['font'] = 'Serif', '12'
@@ -101,19 +83,10 @@ class Consultas:
 
         self.__lblSaida = Label(self.__frameConsultas, text='Saída', bg='LightSteelBlue3')
         self.__lblSaida['font'] = 'Serif', '12'
-        self.__lblSaida.place(x=730, y=235)
+        self.__lblSaida.place(x=750, y=235)
 
         self.__txtSaida = Entry(self.__frameConsultas, width=10)
-        self.__txtSaida.place(x=790, y=235)
-
-        self.__btnSelecionarData = Button(self.__frameConsultas,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__frameConsultas)
-        self.__btnSelecionarData.place(x=880, y=233)
+        self.__txtSaida.place(x=810, y=235)
 
         self.__lblEmendaResult = Label(self.__frameConsultas, text='Emenda/Resultado', bg='LightSteelBlue3')
         self.__lblEmendaResult['font'] = 'Serif', '12'

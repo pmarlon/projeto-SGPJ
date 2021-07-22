@@ -85,24 +85,24 @@ class AddAdvogado:
         self.__txtAdvCPF.place(x=500, y=170)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5')
-        self.__tvOcorrencias = ttk.Treeview(self.__frameAdvogados, columns=self.__colunas, selectmode='browse',
-                                            height=5)
+        self.__tvAdvogados = ttk.Treeview(self.__frameAdvogados, columns=self.__colunas, selectmode='browse',
+                                          height=5)
 
-        self.__tvOcorrencias.heading('#0', text='')
-        self.__tvOcorrencias.heading('#1', text='Nome')
-        self.__tvOcorrencias.heading('#2', text='Endereço')
-        self.__tvOcorrencias.heading('#3', text='CPF')
-        self.__tvOcorrencias.heading('#4', text='OAB')
-        self.__tvOcorrencias.heading('#5', text='Telefone/FAX')
+        self.__tvAdvogados.heading('#0', text='')
+        self.__tvAdvogados.heading('#1', text='Nome')
+        self.__tvAdvogados.heading('#2', text='Endereço')
+        self.__tvAdvogados.heading('#3', text='CPF')
+        self.__tvAdvogados.heading('#4', text='OAB')
+        self.__tvAdvogados.heading('#5', text='Telefone/FAX')
 
-        self.__tvOcorrencias.column('#0', width=0, stretch=NO)
-        self.__tvOcorrencias.column('#1', width=200, anchor='center')
-        self.__tvOcorrencias.column('#2', width=200, anchor='center')
-        self.__tvOcorrencias.column('#3', width=100, anchor='center')
-        self.__tvOcorrencias.column('#4', width=100, anchor='center')
-        self.__tvOcorrencias.column('#5', width=150, anchor='center')
+        self.__tvAdvogados.column('#0', width=0, stretch=NO)
+        self.__tvAdvogados.column('#1', width=200, anchor='n')
+        self.__tvAdvogados.column('#2', width=150, anchor='center')
+        self.__tvAdvogados.column('#3', width=150, anchor='center')
+        self.__tvAdvogados.column('#4', width=100, anchor='center')
+        self.__tvAdvogados.column('#5', width=150, anchor='center')
 
-        self.__tvOcorrencias.place(x=20, y=220)
+        self.__tvAdvogados.place(x=20, y=220)
 
         self.__btnAddAdv = Button(self.__frameAdvogados,
                                   text='Adicionar',
@@ -130,7 +130,7 @@ class AddAdvogado:
                                   compound=TOP,
                                   relief='flat')
         self.__btnRmvAdv['bg'] = 'LightSteelBlue3'
-        self.__btnRmvAdv['command'] = ''
+        self.__btnRmvAdv['command'] = lambda: self.deletar()
         self.__btnRmvAdv.image = imgbtn12
         self.__btnRmvAdv.place(x=340, y=350, relwidth=0.15)
 
@@ -140,7 +140,7 @@ class AddAdvogado:
                                      compound=TOP,
                                      relief='flat')
         self.__btnListarAdv['bg'] = 'LightSteelBlue3'
-        self.__btnListarAdv['command'] = ''
+        self.__btnListarAdv['command'] = lambda: self.listar()
         self.__btnListarAdv.image = imgbtn13
         self.__btnListarAdv.place(x=470, y=350)
 
@@ -196,6 +196,34 @@ class AddAdvogado:
             self.master.destroy()
             messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
             self.app.iniciar_pagina()
+
+    def listar(self):
+        self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
+        advogados = view('advogados')
+        for advogado in advogados:
+            self.__tvAdvogados.insert('', END, iid=None,
+                                      values=(advogado[1], advogado[2], advogado[9],
+                                              advogado[8], f'{advogado[5]} / {advogado[6]}'))
+
+    def deletar(self):
+
+        try:
+            cpf = self.linha_selecionada('<<TreeviewSelect>>')[2]
+            rid = search('advogados', parms='id', where=f'where cpf={cpf}')[0][0]
+            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
+                delete(rid, 'advogados')
+                messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
+                self.listar()
+
+        except IndexError:
+            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
+        except TypeError:
+            messagebox.showerror('Erro', 'Algo deu errado...')
+
+    def linha_selecionada(self, event):
+        linha = self.__tvAdvogados.selection()
+        valores = self.__tvAdvogados.item(linha)['values']
+        return valores
 
     def iniciar_pagina(self):
         self.janela = False

@@ -1,6 +1,13 @@
 from utils.modulos import *
 
 
+from models.principal import Principal
+from models.consultas import Consultas
+from models.processos import Processos
+from models.pesquisar import Pesquisar
+from models.add_advogado import AddAdvogado
+
+
 class App:
 
     def __init__(self, root=None):

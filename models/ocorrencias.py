@@ -61,15 +61,6 @@ class Ocorrencias:
         self.__txtDataOcorrencia = Entry(self.__frameOcorrencias, width=10)
         self.__txtDataOcorrencia.place(x=300, y=240)
 
-        self.__btnSelecionarData = Button(self.__frameOcorrencias,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__frameOcorrencias)
-        self.__btnSelecionarData.place(x=272, y=238)
-
         self.__lblDescricao = Label(self.__frameOcorrencias, text='Descrição', bg='LightSteelBlue3')
         self.__lblDescricao['font'] = 'Serif', '12'
         self.__lblDescricao.place(x=210, y=270)

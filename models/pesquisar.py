@@ -4,9 +4,6 @@ from utils.modulos import *
 class Pesquisar:
 
     def __init__(self, master=None, app=None):
-        img_processo = ImageTk.PhotoImage(Image.open('imagens/imgProcessos.png').resize((24, 24), Image.ANTIALIAS))
-        img_consultas = ImageTk.PhotoImage(Image.open('imagens/imgConsultas.png').resize((24, 24), Image.ANTIALIAS))
-        img_ocorrencias = ImageTk.PhotoImage(Image.open('imagens/imgObservar.png').resize((24, 24), Image.ANTIALIAS))
         img_pesquisar = PhotoImage(file='imagens/imgPesquisar.png')  # imagem do botão Pesquisar
         img_listar = PhotoImage(file='imagens/imgListarDoc')  # imagem do botão Listar
         imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
@@ -17,15 +14,10 @@ class Pesquisar:
         self.app = app
         self.__framePesquisar = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
-        # Define o Estilo dos Widgets ttk
+        # Define o Estilo dos Notebook
         style = ttk.Style()
-        style.theme_create('LightSteelBlue3', settings={
-            ".": {
-                "configure": {
-                    "background": 'LightSteelBlue3',  # All except tabs
-                    }
-            }})
-        style.theme_use('LightSteelBlue3')
+        style.configure("TNotebook", background='LightSteelBlue3')
+        style.configure("TNotebook.Tab", background='LightSteelBlue3')
 
         # Cria um Notebook
         self.__notebook = ttk.Notebook(self.__framePesquisar, height=500)
@@ -35,10 +27,7 @@ class Pesquisar:
         # Aba Pesquisar Processos
         self.__tbProcessos = Frame(self.__notebook, bg='LightSteelBlue3')
         self.__notebook.add(self.__tbProcessos,
-                            text='Pesquisar Processos ',
-                            image=img_processo,
-                            compound='left')
-        self.__tbProcessos.image = img_processo
+                            text='Pesquisar Processos')
 
         self.__lblTitulo = Label(self.__tbProcessos, text='Pesquisar Processos', bg='LightSteelBlue3')
         self.__lblTitulo['font'] = 'Serif', '16', 'bold'
@@ -81,30 +70,12 @@ class Pesquisar:
         self.__txtDataInicio = Entry(self.__tbProcessos, width=10)
         self.__txtDataInicio.place(x=210, y=140)
 
-        self.__btnSelecionarData = Button(self.__tbProcessos,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__tbProcessos)
-        self.__btnSelecionarData.place(x=297, y=138)
-
         self.__lblDataFim = Label(self.__tbProcessos, text='Fim', bg='LightSteelBlue3')
         self.__lblDataFim['font'] = 'Serif', '12'
         self.__lblDataFim.place(x=340, y=140)
 
         self.__txtDataFim = Entry(self.__tbProcessos, width=10)
         self.__txtDataFim.place(x=380, y=140)
-
-        self.__btnSelecionarData = Button(self.__tbProcessos,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__tbProcessos)
-        self.__btnSelecionarData.place(x=467, y=138)
 
         self.__lblVaraTribunal = Label(self.__tbProcessos, text='Vara/Tribunal', bg='LightSteelBlue3')
         self.__lblVaraTribunal['font'] = 'Serif', '12'
@@ -124,30 +95,29 @@ class Pesquisar:
         self.__tvProcessos.heading('#5', text='Situação Atual')
 
         self.__tvProcessos.column('#0', width=0, stretch=NO)
-        self.__tvProcessos.column('#1', width=100, anchor='center')
+        self.__tvProcessos.column('#1', width=70, anchor='center')
         self.__tvProcessos.column('#2', width=100, anchor='center')
         self.__tvProcessos.column('#3', width=200, anchor='center')
         self.__tvProcessos.column('#4', width=200, anchor='center')
         self.__tvProcessos.column('#5', width=150, anchor='center')
-        self.__tvProcessos.column('#5', width=150, anchor='center')
+        self.__tvProcessos.column('#5', width=180, anchor='n')
 
         self.__tvProcessos.place(x=105, y=200)
 
         self.__btnPesquisar = criar_botao(self.__tbProcessos, 'Pesquisar', img_pesquisar, '', 300, 350)
 
-        self.__btnListar = criar_botao(self.__tbProcessos, 'Listar', img_listar, '', 410, 350)
+        self.__btnListar = criar_botao(self.__tbProcessos, 'Listar', img_listar,
+                                       lambda: self.listar_processos(), 410, 350)
 
         self.__btnEditar = criar_botao(self.__tbProcessos, 'Editar', imgbtn6, '', 520, 350)
 
-        self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', imgbtn7, '', 630, 350)
+        self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', imgbtn7,
+                                        lambda: self.deletar(self.__tvProcessos, 'processos'), 630, 350)
 
         # Aba Pesquisar Ocorrências
         self.__tbOcorrencias = Frame(self.__notebook, bg='LightSteelBlue3')
         self.__notebook.add(self.__tbOcorrencias,
-                            text='Pesquisar Ocorrências',
-                            image=img_ocorrencias,
-                            compound='left')
-        self.__tbOcorrencias.image = img_ocorrencias
+                            text='Pesquisar Ocorrências')
 
         self.__lblTitulo = Label(self.__tbOcorrencias, text='Pesquisar Ocorrências', bg='LightSteelBlue3')
         self.__lblTitulo['font'] = 'Serif', '16', 'bold'
@@ -174,48 +144,40 @@ class Pesquisar:
         self.__txtDataOcorrencia = Entry(self.__tbOcorrencias, width=10)
         self.__txtDataOcorrencia.place(x=670, y=80)
 
-        self.__btnSelecionarData = Button(self.__tbOcorrencias,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__tbOcorrencias)
-        self.__btnSelecionarData.place(x=758, y=78)
-
-        self.__colunas = ('#1', '#2', '#3', '#4')
+        self.__colunas = ('#1', '#2', '#3', '#4', '#5')
         self.__tvOcorrencias = ttk.Treeview(self.__tbOcorrencias, columns=self.__colunas, selectmode='browse',
                                             height=8)
 
         self.__tvOcorrencias.heading('#0', text='')
-        self.__tvOcorrencias.heading('#1', text='Data')
-        self.__tvOcorrencias.heading('#2', text='Descrição')
-        self.__tvOcorrencias.heading('#3', text='Valor')
-        self.__tvOcorrencias.heading('#4', text='Valor Atual')
+        self.__tvOcorrencias.heading('#1', text='Caso')
+        self.__tvOcorrencias.heading('#2', text='Data')
+        self.__tvOcorrencias.heading('#3', text='Descrição')
+        self.__tvOcorrencias.heading('#4', text='Valor')
+        self.__tvOcorrencias.heading('#5', text='Valor Atual')
 
         self.__tvOcorrencias.column('#0', width=0, stretch=NO)
         self.__tvOcorrencias.column('#1', width=100, anchor='center')
-        self.__tvOcorrencias.column('#2', width=300, anchor='center')
-        self.__tvOcorrencias.column('#3', width=150, anchor='center')
+        self.__tvOcorrencias.column('#2', width=100, anchor='center')
+        self.__tvOcorrencias.column('#3', width=300, anchor='center')
         self.__tvOcorrencias.column('#4', width=150, anchor='center')
+        self.__tvOcorrencias.column('#5', width=150, anchor='center')
 
-        self.__tvOcorrencias.place(x=90, y=150)
+        self.__tvOcorrencias.place(x=80, y=150)
 
         self.__btnPesquisar = criar_botao(self.__tbOcorrencias, 'Pesquisar', img_pesquisar, '', 200, 350)
 
-        self.__btnListar = criar_botao(self.__tbOcorrencias, 'Listar', img_listar, '', 310, 350)
+        self.__btnListar = criar_botao(self.__tbOcorrencias, 'Listar', img_listar,
+                                       lambda: self.listar_ocorrencias(), 310, 350)
 
         self.__btnEditar = criar_botao(self.__tbOcorrencias, 'Editar', imgbtn6, '', 420, 350)
 
-        self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', imgbtn7, '', 530, 350)
+        self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', imgbtn7,
+                                        lambda: self.deletar(self.__tvOcorrencias, 'ocorrencias'), 530, 350)
 
         # Aba Pesquisar Consultas
         self.__tbConsultas = Frame(self.__notebook, bg='LightSteelBlue3')
         self.__notebook.add(self.__tbConsultas,
-                            text='Pesquisar Consultas',
-                            image=img_consultas,
-                            compound='left')
-        self.__tbConsultas.image = img_consultas
+                            text='Pesquisar Consultas')
 
         self.__lblTitulo = Label(self.__tbConsultas, text='Pesquisar Consultas', bg='LightSteelBlue3')
         self.__lblTitulo['font'] = 'Serif', '16', 'bold'
@@ -225,7 +187,7 @@ class Pesquisar:
         self.__lblConsulta['font'] = 'Serif', '12'
         self.__lblConsulta.place(x=225, y=80)
 
-        self.__txtConsulta = Entry(self.__tbConsultas, width=10)
+        self.__txtConsulta = Entry(self.__tbConsultas, width=11)
         self.__txtConsulta.place(x=310, y=80)
 
         self.__lblPrioridade = Label(self.__tbConsultas, text='Prioridade', bg='LightSteelBlue3')
@@ -243,30 +205,12 @@ class Pesquisar:
         self.__txtEntrada = Entry(self.__tbConsultas, width=10)
         self.__txtEntrada.place(x=310, y=110)
 
-        self.__btnSelecionarData = Button(self.__tbConsultas,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__tbConsultas)
-        self.__btnSelecionarData.place(x=400, y=108)
-
         self.__lblSaida = Label(self.__tbConsultas, text='Saída', bg='LightSteelBlue3')
         self.__lblSaida['font'] = 'Serif', '12'
-        self.__lblSaida.place(x=450, y=110)
+        self.__lblSaida.place(x=460, y=110)
 
         self.__txtSaida = Entry(self.__tbConsultas, width=10)
-        self.__txtSaida.place(x=510, y=110)
-
-        self.__btnSelecionarData = Button(self.__tbConsultas,
-                                          image=imgbtn5,
-                                          relief='flat',
-                                          bg='LightSteelBlue3',
-                                          highlightthickness=0)
-        self.__btnSelecionarData.image = imgbtn5
-        self.__btnSelecionarData['command'] = lambda: Calendario(self.__tbConsultas)
-        self.__btnSelecionarData.place(x=600, y=108)
+        self.__txtSaida.place(x=521, y=110)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5', '#6', '#7')
         self.__tvConsultas = ttk.Treeview(self.__tbConsultas, columns=self.__colunas, selectmode='browse',
@@ -294,11 +238,67 @@ class Pesquisar:
 
         self.__btnPesquisar = criar_botao(self.__tbConsultas, 'Pesquisar', img_pesquisar, '', 250, 360)
 
-        self.__btnListar = criar_botao(self.__tbConsultas, 'Listar', img_listar, '', 360, 360)
+        self.__btnListar = criar_botao(self.__tbConsultas, 'Listar', img_listar,
+                                       lambda: self.listar_consultas(), 360, 360)
 
         self.__btnEditar = criar_botao(self.__tbConsultas, 'Editar', imgbtn6, '', 470, 360)
 
-        self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', imgbtn7, '', 580, 360)
+        self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', imgbtn7,
+                                        lambda: self.deletar(self.__tvConsultas, 'consultas'), 580, 360)
+
+    def listar_processos(self):
+        self.__tvProcessos.delete(*self.__tvProcessos.get_children())
+        processos = view('processos')
+        for processo in processos:
+            self.__tvProcessos.insert('', END, iid=None,
+                                      values=(processo[1], processo[6],
+                                              processo[2], processo[3], processo[12]))
+
+    def listar_ocorrencias(self):
+        self.__tvOcorrencias.delete(*self.__tvOcorrencias.get_children())
+        ocorrencias = view('ocorrencias')
+        for ocorrencia in ocorrencias:
+            self.__tvOcorrencias.insert('', END, iid=None,
+                                        values=(ocorrencia[1], ocorrencia[2],
+                                                ocorrencia[3], ocorrencia[4], ocorrencia[5]))
+
+    def listar_consultas(self):
+        self.__tvConsultas.delete(*self.__tvConsultas.get_children())
+        consultas = view('consultas')
+        for consulta in consultas:
+            self.__tvConsultas.insert('', END, iid=None,
+                                      values=(consulta[1], consulta[3], consulta[5], consulta[10],
+                                              consulta[6], consulta[11], consulta[7]))
+
+    @staticmethod
+    def linha_selecionada(tv, event):
+        linha = tv.selection()
+        valores = tv.item(linha)['values']
+        return valores
+
+    def deletar(self, tv, tabela):
+
+        try:
+
+            rid = None
+
+            if tabela == 'processos' or tabela == 'ocorrencias':
+                caso = self.linha_selecionada(tv, '<<TreeviewSelect>>')[0]
+                rid = search(tabela, parms='id', where=f'where caso={caso}')[0][0]
+
+            elif tabela == 'consultas':
+                consulta = self.linha_selecionada(tv, '<<TreeviewSelect>>')[0]
+                rid = search(tabela, parms='id', where=f'where consulta={consulta}')[0][0]
+
+            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
+                delete(rid, tabela)
+                messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
+                tv.delete(tv.selection())
+
+        except IndexError:
+            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
+        except TypeError:
+            messagebox.showerror('Erro', 'Algo deu errado...')
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
