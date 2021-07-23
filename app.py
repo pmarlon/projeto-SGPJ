@@ -1,13 +1,6 @@
 from utils.modulos import *
 
 
-from models.principal import Principal
-from models.consultas import Consultas
-from models.processos import Processos
-from models.pesquisar import Pesquisar
-from models.add_advogado import AddAdvogado
-
-
 class App:
 
     def __init__(self, root=None):
@@ -46,7 +39,7 @@ class App:
                                      relief='flat',
                                      bg='LightSteelBlue3')
         self.__btnPrincipal.image = img_principal
-        self.__btnPrincipal['command'] = lambda: self.switch_frame(self.__framePrincipal)
+        self.__btnPrincipal['command'] = lambda: self.switch_frame(self.framePrincipal)
         self.__btnPrincipal.place(x=20, y=3, relwidth=0.15)
 
         self.__btnProcessos = Button(self.__MenuBar,
@@ -56,7 +49,7 @@ class App:
                                      relief='flat',
                                      bg='LightSteelBlue3')
         self.__btnProcessos.image = img_processo
-        self.__btnProcessos['command'] = lambda: self.switch_frame(self.__frameProcessos)
+        self.__btnProcessos['command'] = lambda: self.switch_frame(self.frameProcessos)
         self.__btnProcessos.place(x=175, y=3, relwidth=0.15)
 
         self.__btnAdvogados = Button(self.__MenuBar,
@@ -66,7 +59,7 @@ class App:
                                      relief='flat',
                                      bg='LightSteelBlue3')
         self.__btnAdvogados.image = img_advogados
-        self.__btnAdvogados['command'] = lambda: self.switch_frame(self.__frameAdvogados)
+        self.__btnAdvogados['command'] = lambda: self.switch_frame(self.frameAdvogados)
         self.__btnAdvogados.place(x=330, y=3, relwidth=0.15)
 
         self.__btnConsultas = Button(self.__MenuBar,
@@ -76,7 +69,7 @@ class App:
                                      relief='flat',
                                      bg='LightSteelBlue3')
         self.__btnConsultas.image = img_consultas
-        self.__btnConsultas['command'] = lambda: self.switch_frame(self.__frameConsultas)
+        self.__btnConsultas['command'] = lambda: self.switch_frame(self.frameConsultas)
         self.__btnConsultas.place(x=480, y=3, relwidth=0.15)
 
         self.__btnPesquisar = Button(self.__MenuBar,
@@ -86,7 +79,7 @@ class App:
                                      relief='flat',
                                      bg='LightSteelBlue3')
         self.__btnPesquisar.image = img_pesquisar
-        self.__btnPesquisar['command'] = lambda: self.switch_frame(self.__framePesquisar)
+        self.__btnPesquisar['command'] = lambda: self.switch_frame(self.framePesquisar)
         self.__btnPesquisar.place(x=635, y=3, relwidth=0.15)
 
         self.__btnSair = Button(self.__MenuBar,
@@ -100,27 +93,27 @@ class App:
         self.__btnSair.place(x=790, y=3, relwidth=0.15)
 
         # Frame principal
-        self.__framePrincipal = Principal(self.root, self)
-        self.__framePrincipal.iniciar_pagina()
+        self.framePrincipal = Principal(self.root, self)
+        self.framePrincipal.iniciar_pagina()
 
         # Frame Processos
-        self.__frameProcessos = Processos(self.root, self)
+        self.frameProcessos = Processos(self.root, self)
 
         # Frame Advogados
-        self.__frameAdvogados = AddAdvogado(self.root, self)
+        self.frameAdvogados = AddAdvogado(self.root, self)
 
         # Frame Consultas
-        self.__frameConsultas = Consultas(self.root, self)
+        self.frameConsultas = Consultas(self.root, self)
 
         # Frame Pesquisar
-        self.__framePesquisar = Pesquisar(self.root, self)
+        self.framePesquisar = Pesquisar(self.root, self)
 
     def ocultar_paginas(self):
-        self.__framePrincipal.ocultar_pagina()
-        self.__frameProcessos.ocultar_pagina()
-        self.__frameAdvogados.ocultar_pagina()
-        self.__frameConsultas.ocultar_pagina()
-        self.__framePesquisar.ocultar_pagina()
+        self.framePrincipal.ocultar_pagina()
+        self.frameProcessos.ocultar_pagina()
+        self.frameAdvogados.ocultar_pagina()
+        self.frameConsultas.ocultar_pagina()
+        self.framePesquisar.ocultar_pagina()
 
     def switch_frame(self, frame):
         """Recebe um frame como parâmetro, oculta os frames ativos e inicia o frame recebido"""

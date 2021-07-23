@@ -1,8 +1,5 @@
 from utils.modulos import *
 
-from models.ocorrencias import Ocorrencias
-from models.add_advogado import AddAdvogado
-
 
 class Processos:
     # Cadastro de processos
@@ -190,77 +187,153 @@ class Processos:
     def caso(self):
         return self.num_caso.get().split(' ')[2]
 
+    @caso.setter
+    def caso(self, valor):
+        self.num_caso.set(f'Caso N° {valor}')
+
     @property
     def autor(self):
         return self.__txtAutor.get()
+
+    @autor.setter
+    def autor(self, valor):
+        self.__txtAutor.insert(0, valor)
 
     @property
     def reu(self):
         return self.__txtReu.get()
 
+    @reu.setter
+    def reu(self, valor):
+        self.__txtReu.insert(0, valor)
+
     @property
     def adv_externo(self):
         return self.__txtAdvExterno.get()
+
+    @adv_externo.setter
+    def adv_externo(self, valor):
+        self.__txtAdvExterno.insert(0, valor)
 
     @property
     def adv_adverso(self):
         return self.__txtAdvAdverso.get()
 
+    @adv_adverso.setter
+    def adv_adverso(self, valor):
+        self.__txtAdvAdverso.insert(0, valor)
+
     @property
     def end_parte_adv(self):
         return self.__txtEndParteAdversa.get()
+
+    @end_parte_adv.setter
+    def end_parte_adv(self, valor):
+        self.__txtEndParteAdversa.insert(0, valor)
 
     @property
     def tipo_acao(self):
         return self.__txtTipoAcao.get()
 
+    @tipo_acao.setter
+    def tipo_acao(self, valor):
+        self.__txtTipoAcao.insert(0, valor)
+
     @property
     def processo(self):
         return self.__txtNumProcesso.get()
+
+    @processo.setter
+    def processo(self, valor):
+        self.__txtNumProcesso.insert(0, valor)
 
     @property
     def vara_tribunal(self):
         return self.__txtVaraTribunal.get()
 
+    @vara_tribunal.setter
+    def vara_tribunal(self, valor):
+        self.__txtVaraTribunal.insert(0, valor)
+
     @property
     def pos_feito(self):
         return self.__txtPosFeito.get()
+
+    @pos_feito.setter
+    def pos_feito(self, valor):
+        self.__txtPosFeito.insert(0, valor)
 
     @property
     def uf_municipio(self):
         return self.__txtUfMunicipio.get()
 
+    @uf_municipio.setter
+    def uf_municipio(self, valor):
+        self.__txtUfMunicipio.insert(0, valor)
+
     @property
     def vr_causa(self):
         return self.__txtVrCausa.get()
+
+    @vr_causa.setter
+    def vr_causa(self, valor):
+        self.__txtVrCausa.insert(0, valor)
 
     @property
     def situacao(self):
         return self.__txtSitAtual.get()
 
+    @situacao.setter
+    def situacao(self, valor):
+        self.__txtSitAtual.insert(0, valor)
+
     @property
     def vr_atual(self):
         return self.__txtVrAtual.get()
+
+    @vr_atual.setter
+    def vr_atual(self, valor):
+        self.__txtVrAtual.insert(0, valor)
 
     @property
     def inicio(self):
         return self.__txtDataInicio.get()
 
+    @inicio.setter
+    def inicio(self, valor):
+        self.__txtDataInicio.insert(0, valor)
+
     @property
     def fim(self):
         return self.__txtDataFim.get()
+
+    @fim.setter
+    def fim(self, valor):
+        self.__txtDataFim.insert(0, valor)
 
     @property
     def perda(self):
         return self.__txtPerda.get()
 
+    @perda.setter
+    def perda(self, valor):
+        self.__txtPerda.insert(0, valor)
+
     @property
     def pedido(self):
         return self.__txtPedido.get(1.0, END)
 
+    @pedido.setter
+    def pedido(self, valor):
+        self.__txtPedido.insert(1.0, valor)
+
     @property
     def observacao(self):
         return self.__txtObs.get(1.0, END)
+
+    @observacao.setter
+    def observacao(self, valor):
+        self.__txtObs.insert(1.0, valor)
 
     @property
     def advogados(self):
@@ -275,10 +348,34 @@ class Processos:
                self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio, self.situacao,
                self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda, self.end_parte_adv)
 
+    def preencher(self, values=None):
+        limpar(self.__frameProcessos)
+
+        if values:
+            self.caso = values[1]
+            self.autor = values[2]
+            self.reu = values[3]
+            self.__txtAdvExterno.set(values[4])
+            self.adv_adverso = values[5]
+            self.processo = values[6]
+            self.inicio = values[7]
+            self.vr_causa = values[8]
+            self.tipo_acao = values[9]
+            self.vara_tribunal = values[10]
+            self.uf_municipio = values[11]
+            self.situacao = values[12]
+            self.pos_feito = values[13]
+            self.observacao = values[14]
+            self.vr_atual = values[15]
+            self.pedido = values[16]
+            self.fim = values[17]
+            self.perda = values[18]
+            self.end_parte_adv = values[19]
+
     def iniciar_pagina(self):
         self.ocultar_pagina()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
-        self.num_caso.set(f'Caso N° {randint(1, 20)}')
+        self.caso = randint(1, 20)
         advogados = [advogado for advogado in search('advogados', parms='nome')]
         advogados = [advogado[0] for advogado in advogados]
         self.advogados = advogados
@@ -286,6 +383,7 @@ class Processos:
     def ocultar_pagina(self):
         self.ocorrencias.ocultar_pagina()
         self.__frameProcessos.pack_forget()
+        limpar(self.__frameProcessos)
 
     def command_advogados(self):
         advogados = AddAdvogado(self.master, None)

@@ -132,7 +132,6 @@ class AddAdvogado:
         self.__btnEditarAdv['bg'] = 'LightSteelBlue3'
         self.__btnEditarAdv['command'] = lambda: self.editar()
         self.__btnEditarAdv.image = imgbtn14
-        self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
 
         self.__btnRmvAdv = Button(self.__frameAdvogados,
                                   text='Remover',
@@ -221,7 +220,7 @@ class AddAdvogado:
     def deletar(self):
 
         try:
-            rid = self.get_id()
+            rid = get_id(self.__tvAdvogados, 'advogados')
 
         except IndexError:
             messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
@@ -260,21 +259,22 @@ class AddAdvogado:
                fone_com=self.adv_telefone,
                fax=self.adv_fax,
                email=self.adv_email)
+
         self.__txtAdvCPF['state'] = 'normal'
         self.__txtAdvOAB['state'] = 'normal'
-        self.limpar()
+        limpar(self.__tvAdvogados, self.__frameAdvogados)
         self.listar()
         self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
 
     def preencher(self):
         try:
 
-            rid = self.get_id()
+            rid = get_id(self.__tvAdvogados, 'advogados')
             values = search('advogados', where=f'where id={rid}')[0]
         except OperationalError:
             raise ValueError
         else:
-            self.limpar()
+            limpar(self.__tvAdvogados, self.__frameAdvogados)
             self.listar()
             cont = 0
 
@@ -286,41 +286,30 @@ class AddAdvogado:
                     cont += 1
                     child.insert(END, values[cont])
 
-    def limpar(self):
-        # Limpa todas as linhas do TreeView
-        self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
-
-        # Captura todos os elementos do Frame
-        for child in self.__frameAdvogados.winfo_children():
-            # Captura o nome da classe de cada elemento
-            widget_class = child.__class__.__name__
-            # Se a classe for Entry limpa o campo
-            if widget_class == 'Entry':
-                child.delete(0, END)
-
-    def get_id(self):
-        cpf = self.linha_selecionada('<<TreeviewSelect>>')[2]
-        rid = search('advogados', parms='id', where=f'where cpf={cpf}')[0][0]
-        return rid
-
-    def linha_selecionada(self, event):
-        linha = self.__tvAdvogados.selection()
-        valores = self.__tvAdvogados.item(linha)['values']
-        return valores
-
     def iniciar_pagina(self):
         self.janela = False
+        self.__txtAdvCPF['state'] = 'normal'
+        self.__txtAdvOAB['state'] = 'normal'
+        limpar(self.__frameAdvogados, self.__tvAdvogados)
         self.__frameAdvogados['padx'] = 80
+        self.__btnSalvar.place_forget()
+        self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):
         self.__frameAdvogados.pack_forget()
 
     def iniciar_janela(self, app):
+
+        self.__txtAdvCPF['state'] = 'normal'
+        self.__txtAdvOAB['state'] = 'normal'
+        limpar(self.__tvAdvogados, self.__frameAdvogados)
         self.janela = True
         self.app = app
         self.master.geometry('800x450+250+185')
         self.master.resizable(width=False, height=False)
         self.master['bg'] = 'LightSteelBlue3'
+        self.__btnSalvar.place_forget()
+        self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnFechar.place(x=620, y=350, relwidth=0.15)
