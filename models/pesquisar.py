@@ -114,7 +114,7 @@ class Pesquisar:
                                        520, 350)
 
         self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', imgbtn7,
-                                        lambda: self.deletar(self.__tvProcessos, 'processos'), 630, 350)
+                                        lambda: deletar(self.__tvProcessos, 'processos'), 630, 350)
 
         # Aba Pesquisar Ocorrências
         self.__tbOcorrencias = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -174,11 +174,11 @@ class Pesquisar:
         self.__btnEditar = criar_botao(self.__tbOcorrencias, 'Editar', imgbtn6,
                                        lambda: self.editar(self.app.frameProcessos.ocorrencias,
                                                            self.__tvOcorrencias,
-                                                           'ocorrencias')
-                                       , 420, 350)
+                                                           'ocorrencias'),
+                                       420, 350)
 
         self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', imgbtn7,
-                                        lambda: self.deletar(self.__tvOcorrencias, 'ocorrencias'), 530, 350)
+                                        lambda: deletar(self.__tvOcorrencias, 'ocorrencias'), 530, 350)
 
         # Aba Pesquisar Consultas
         self.__tbConsultas = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -252,7 +252,7 @@ class Pesquisar:
                                        470, 360)
 
         self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', imgbtn7,
-                                        lambda: self.deletar(self.__tvConsultas, 'consultas'), 580, 360)
+                                        lambda: deletar(self.__tvConsultas, 'consultas'), 580, 360)
 
     def listar_processos(self):
         self.__tvProcessos.delete(*self.__tvProcessos.get_children())
@@ -278,38 +278,6 @@ class Pesquisar:
                                       values=(consulta[1], consulta[3], consulta[5], consulta[10],
                                               consulta[6], consulta[11], consulta[7]))
 
-    @staticmethod
-    def linha_selecionada(tv, event):
-        linha = tv.selection()
-        valores = tv.item(linha)['values']
-        return valores
-
-    def deletar(self, tv, tabela):
-
-        try:
-
-            rid = None
-
-            if tabela == 'processos' or tabela == 'ocorrencias':
-                caso = self.linha_selecionada(tv, '<<TreeviewSelect>>')[0]
-                rid = search(tabela, parms='id', where=f'where caso={caso}')[0][0]
-
-            elif tabela == 'consultas':
-                consulta = self.linha_selecionada(tv, '<<TreeviewSelect>>')[0]
-                rid = search(tabela, parms='id', where=f'where consulta={consulta}')[0][0]
-
-            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
-                delete(rid, tabela)
-                messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
-                tv.delete(tv.selection())
-
-        except IndexError:
-            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
-        except TypeError:
-            messagebox.showerror('Erro', 'Algo deu errado...')
-        except OperationalError:
-            messagebox.showerror('Erro', 'Algo deu errado...')
-
     def iniciar_pagina(self):
         self.ocultar_pagina()
         self.__framePesquisar.pack(side=BOTTOM, fill=X, pady=1)
@@ -328,4 +296,5 @@ class Pesquisar:
             messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
         else:
             self.app.switch_frame(frame)
+            self.app.frameProcessos.trocar_botoes()
             frame.preencher(values)

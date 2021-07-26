@@ -48,3 +48,30 @@ def get_id(tv, tabela):
         consulta = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
         rid = search(tabela, parms='id', where=f'where consulta={consulta}')[0][0]
         return rid
+
+
+def deletar(tv, tabela):
+
+    try:
+
+        rid = None
+
+        if tabela == 'processos' or tabela == 'ocorrencias':
+            caso = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
+            rid = search(tabela, parms='id', where=f'where caso={caso}')[0][0]
+
+        elif tabela == 'consultas':
+            consulta = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
+            rid = search(tabela, parms='id', where=f'where consulta={consulta}')[0][0]
+
+        if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
+            delete(rid, tabela)
+            messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
+            tv.delete(tv.selection())
+
+    except IndexError:
+        messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
+    except TypeError:
+        messagebox.showerror('Erro', 'Algo deu errado...')
+    except OperationalError:
+        messagebox.showerror('Erro', 'Algo deu errado...')

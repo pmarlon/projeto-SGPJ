@@ -8,6 +8,7 @@ class Processos:
         imgbtn3 = PhotoImage(file='imagens/imgEscolherAdv.png')  # imagem do botão Escolher Advogado
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
         imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
+        imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Add Registro
 
         self.app = app
         self.master = master
@@ -91,8 +92,7 @@ class Processos:
         self.__lblPosFeito['font'] = 'Serif', '12'
         self.__lblPosFeito.place(x=590, y=200)
 
-        self.__txtPosFeito = ttk.Combobox(self.__frameProcessos, values=['AUTOR'])
-        self.__txtPosFeito['justify'] = 'center'
+        self.__txtPosFeito = Entry(self.__frameProcessos, width=21)
         self.__txtPosFeito.place(x=680, y=200)
 
         self.__lblUfMunicipio = Label(self.__frameProcessos, text='UF - Município', bg='LightSteelBlue3')
@@ -161,6 +161,16 @@ class Processos:
         self.__txtObs = Text(self.__frameProcessos, width=30, height=3)
         self.__txtObs.place(x=608, y=320)
 
+        self.__btnAddRegistro = Button(self.__frameProcessos,
+                                       text='Adicionar Registro',
+                                       compound=TOP,
+                                       relief='flat',
+                                       bg='LightSteelBlue3')
+        self.__btnAddRegistro['image'] = imgbtn8
+        self.__btnAddRegistro.image = imgbtn8
+        self.__btnAddRegistro['command'] = lambda: self.insert_processo()
+        self.__btnAddRegistro.place(x=400, y=390)
+
         self.__btnSalvarRegistro = Button(self.__frameProcessos,
                                           text='Salvar Registro',
                                           compound=TOP,
@@ -168,8 +178,7 @@ class Processos:
                                           bg='LightSteelBlue3')
         self.__btnSalvarRegistro['image'] = imgbtn4
         self.__btnSalvarRegistro.image = imgbtn4
-        self.__btnSalvarRegistro['command'] = lambda: self.insert_processo()
-        self.__btnSalvarRegistro.place(x=400, y=390)
+        self.__btnSalvarRegistro['command'] = lambda: self.update_processo()
 
         self.__btnOcorrencias = Button(self.__frameProcessos,
                                        text='Ocorrências',
@@ -348,6 +357,32 @@ class Processos:
                self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio, self.situacao,
                self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda, self.end_parte_adv)
 
+    def update_processo(self):
+        caso = self.caso
+        rid = search('processos', parms='id', where=f'where caso={caso}')[0][0]
+        update(rid, 'processos',
+               autor=self.autor,
+               reu=self.reu,
+               adv_externo=self.adv_externo,
+               adv_adverso=self.adv_adverso,
+               processo=self.processo,
+               inicio=self.inicio,
+               vr_causa=self.vr_causa,
+               tipo_acao=self.tipo_acao,
+               vara_tribunal=self.vara_tribunal,
+               uf_municipio=self.uf_municipio,
+               situacao=self.situacao,
+               pos_feito=self.pos_feito,
+               observacao=self.observacao,
+               valor_atual=self.vr_atual,
+               pedido=self.pedido,
+               fim=self.fim,
+               perda=self.perda,
+               end_parte_adv=self.end_parte_adv
+               )
+        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
+        self.iniciar_pagina()
+
     def preencher(self, values=None):
         limpar(self.__frameProcessos)
 
@@ -378,6 +413,9 @@ class Processos:
         self.caso = randint(1, 20)
         advogados = [advogado for advogado in search('advogados', parms='nome')]
         advogados = [advogado[0] for advogado in advogados]
+        self.__btnSalvarRegistro.place_forget()
+        self.__btnAddRegistro.place(x=400, y=390)
+        self.__btnOcorrencias.place(x=550, y=390)
         self.advogados = advogados
 
     def ocultar_pagina(self):
@@ -386,14 +424,11 @@ class Processos:
         limpar(self.__frameProcessos)
 
     def command_advogados(self):
-        advogados = AddAdvogado(self.master, None)
-        advogados.iniciar_janela(self)
+        self.app.frameAdvogados.iniciar_janela(self)
 
-    def iniciar_botoes(self):
-        self.ocultar_botoes()
-        self.__btnOcorrencias.place(x=700, y=390)
-        self.__btnSalvarRegistro.place(x=250, y=390)
+    def trocar_botoes(self):
+        if not self.__btnSalvarRegistro.place_info():
+            self.__btnAddRegistro.place_forget()
+            self.__btnOcorrencias.place_forget()
+            self.__btnSalvarRegistro.place(x=470, y=390)
 
-    def ocultar_botoes(self):
-        self.__btnSalvarRegistro.place_forget()
-        self.__btnOcorrencias.place_forget()
