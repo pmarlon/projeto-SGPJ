@@ -359,7 +359,7 @@ class Processos:
 
     def update_processo(self):
         caso = self.caso
-        rid = search('processos', parms='id', where=f'where caso={caso}')[0][0]
+        rid = search('processos', parms='id', clause=f'where caso={caso}')[0][0]
         update(rid, 'processos',
                autor=self.autor,
                reu=self.reu,
@@ -431,4 +431,3 @@ class Processos:
             self.__btnAddRegistro.place_forget()
             self.__btnOcorrencias.place_forget()
             self.__btnSalvarRegistro.place(x=470, y=390)
-

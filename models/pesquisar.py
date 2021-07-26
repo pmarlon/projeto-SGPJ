@@ -289,12 +289,19 @@ class Pesquisar:
         try:
 
             rid = get_id(tv, tabela)
-            values = search(tabela, where=f'where id={rid}')[0]
+            if tabela == 'ocorrencias':
+                values = search('processos', parms='processos.autor,processos.processo, processos.reu, '
+                                                   'processos.tipo_acao, processos.adv_externo, '
+                                                   'processos.uf_municipio, ocorrencias.*',
+                                clause='inner join ocorrencias on caso_processo = processos.caso')[0]
+            else:
+                values = search(tabela, clause=f'where id={rid}')[0]
+
         except OperationalError:
             messagebox.showerror('Atenção', 'Ocorreu um erro...')
         except IndexError:
             messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
         else:
             self.app.switch_frame(frame)
-            self.app.frameProcessos.trocar_botoes()
+            frame.trocar_botoes()
             frame.preencher(values)

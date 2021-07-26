@@ -90,7 +90,6 @@ class Ocorrencias:
         self.__btnAddOcorrencia['image'] = imgbtn8
         self.__btnAddOcorrencia.image = imgbtn8
         self.__btnAddOcorrencia['command'] = lambda: self.insert_ocorrencia()
-        self.__btnAddOcorrencia.place(x=350, y=370, relwidth=0.15)
 
         self.__btnVoltar = Button(self.__frameOcorrencias,
                                   text='Voltar',
@@ -100,7 +99,6 @@ class Ocorrencias:
         self.__btnVoltar['image'] = imgbtn2
         self.__btnVoltar.image = imgbtn2
         self.__btnVoltar['command'] = lambda: self.voltar()
-        self.__btnVoltar.place(x=510, y=370, relwidth=0.15)
 
     @property
     def num_caso(self):
@@ -108,7 +106,7 @@ class Ocorrencias:
 
     @num_caso.setter
     def num_caso(self, valor):
-        self.__num_caso.set(valor)
+        self.__num_caso.set(f'Caso N° {valor}')
 
     @property
     def autor(self):
@@ -116,7 +114,7 @@ class Ocorrencias:
 
     @autor.setter
     def autor(self, valor):
-        self.__autor.set(valor)
+        self.__autor.set(f'Autor: {valor}')
 
     @property
     def num_processo(self):
@@ -124,7 +122,7 @@ class Ocorrencias:
 
     @num_processo.setter
     def num_processo(self, valor):
-        self.__num_processo.set(valor)
+        self.__num_processo.set(f'Processo:{valor}')
 
     @property
     def reu(self):
@@ -132,7 +130,7 @@ class Ocorrencias:
 
     @reu.setter
     def reu(self, valor):
-        self.__reu.set(valor)
+        self.__reu.set(f'Réu: {valor}')
 
     @property
     def tipo_acao(self):
@@ -140,7 +138,7 @@ class Ocorrencias:
 
     @tipo_acao.setter
     def tipo_acao(self, valor):
-        self.__tipo_acao.set(valor)
+        self.__tipo_acao.set(f'Tipo da Ação: {valor}')
 
     @property
     def adv_externo(self):
@@ -148,7 +146,7 @@ class Ocorrencias:
 
     @adv_externo.setter
     def adv_externo(self, valor):
-        self.__adv_externo.set(valor)
+        self.__adv_externo.set(f'Advogado Externo: {valor}')
 
     @property
     def uf_municipio(self):
@@ -156,38 +154,73 @@ class Ocorrencias:
 
     @uf_municipio.setter
     def uf_municipio(self, valor):
-        self.__uf_municipio.set(valor)
+        self.__uf_municipio.set(f'Uf - Município: {valor}')
 
     @property
     def data_ocorrencia(self):
         return self.__txtDataOcorrencia.get()
 
+    @data_ocorrencia.setter
+    def data_ocorrencia(self, valor):
+        self.__txtDataOcorrencia.insert(END, valor)
+
     @property
     def descricao(self):
         return self.__txtDescricao.get(1.0, END)
+
+    @descricao.setter
+    def descricao(self, valor):
+        self.__txtDescricao.insert(END, valor)
 
     @property
     def valor(self):
         return self.__txtValor.get()
 
+    @valor.setter
+    def valor(self, valor):
+        self.__txtValor.insert(END, valor)
+
     @property
     def vr_atual(self):
         return self.__txtValorAtual.get()
 
+    @vr_atual.setter
+    def vr_atual(self, valor):
+        self.__txtValorAtual.insert(END, valor)
+
     def insert_ocorrencia(self):
         insert('ocorrencias', int(self.app.caso), self.data_ocorrencia, self.descricao, self.valor, self.vr_atual)
 
+    def preencher(self, values=None):
+        limpar(self.__frameOcorrencias)
+        if values:
+            self.num_caso = values[7]
+            self.autor = values[0]
+            self.num_processo = values[1]
+            self.reu = values[2]
+            self.tipo_acao = values[3]
+            self.adv_externo = values[4]
+            self.uf_municipio = values[5]
+            self.data_ocorrencia = values[8]
+            self.descricao = values[9]
+            self.valor = values[10]
+            self.vr_atual = values[11]
+
+        else:
+            # Recebe os Dados diretamente do "app" que nesse caso é Processos e mostra na página
+            self.num_caso = self.app.caso
+            self.autor = self.app.autor
+            self.num_processo = self.app.processo
+            self.reu = self.app.reu
+            self.tipo_acao = self.app.tipo_acao
+            self.adv_externo = self.app.adv_externo
+            self.uf_municipio = self.app.uf_municipio
+
     def iniciar_pagina(self):
         self.__frameOcorrencias.pack(side=BOTTOM, fill=X, pady=1)
-
-        # Recebe os Dados diretamente do "app" que nesse caso é Processos e mostra na página
-        self.num_caso = f'Caso N° {self.app.caso}'
-        self.autor = f'Autor: {self.app.autor}'
-        self.num_processo = f'Processo:{self.app.processo}'
-        self.reu = f'Réu: {self.app.reu}'
-        self.tipo_acao = f'Tipo da Ação: {self.app.tipo_acao}'
-        self.adv_externo = f'Advogado Externo: {self.app.adv_externo}'
-        self.uf_municipio = f'Uf - Município: {self.app.uf_municipio}'
+        self.__btnAddOcorrencia.place(x=350, y=370, relwidth=0.15)
+        self.__btnVoltar.place(x=510, y=370, relwidth=0.15)
+        self.preencher()
 
     def ocultar_pagina(self):
         self.__frameOcorrencias.pack_forget()

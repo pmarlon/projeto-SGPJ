@@ -38,15 +38,15 @@ def limpar(frame, tv=None):
 def get_id(tv, tabela):
     if tabela == 'advogados':
         cpf = linha_selecionada(tv, '<<TreeviewSelect>>')[2]
-        rid = search(tabela, parms='id', where=f'where cpf={cpf}')[0][0]
+        rid = search(tabela, parms='id', clause=f'where cpf={cpf}')[0][0]
         return rid
     elif tabela == 'processos' or tabela == 'ocorrencias':
         caso = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
-        rid = search(tabela, parms='id', where=f'where caso={caso}')[0][0]
+        rid = search(tabela, parms='id', clause=f'where caso={caso}')[0][0]
         return rid
     elif tabela == 'consultas':
         consulta = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
-        rid = search(tabela, parms='id', where=f'where consulta={consulta}')[0][0]
+        rid = search(tabela, parms='id', clause=f'where consulta={consulta}')[0][0]
         return rid
 
 
@@ -58,11 +58,11 @@ def deletar(tv, tabela):
 
         if tabela == 'processos' or tabela == 'ocorrencias':
             caso = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
-            rid = search(tabela, parms='id', where=f'where caso={caso}')[0][0]
+            rid = search(tabela, parms='id', clause=f'where caso={caso}')[0][0]
 
         elif tabela == 'consultas':
             consulta = linha_selecionada(tv, '<<TreeviewSelect>>')[0]
-            rid = search(tabela, parms='id', where=f'where consulta={consulta}')[0][0]
+            rid = search(tabela, parms='id', clause=f'where consulta={consulta}')[0][0]
 
         if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
             delete(rid, tabela)

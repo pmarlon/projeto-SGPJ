@@ -109,7 +109,9 @@ def init_db():
         descricao TEXT,
         valor TEXT NOT NULL,
         vr_atual TEXT NOT NULL,
-        PRIMARY KEY("id" AUTOINCREMENT)
+        id_processo	INTEGER NOT NULL, 
+        PRIMARY KEY("id" AUTOINCREMENT),
+        FOREIGN KEY("id_processo") REFERENCES "processos"("id")
 )
 """)
 
@@ -128,12 +130,12 @@ def view(tabela):
     return rows
 
 
-def search(tabela, *, parms='*', where=None):
+def search(tabela, *, parms='*', clause=None):
     """ Função que recebe como parâmetro obrigatório o nome da tabela a ser consultada,
          como parâmetro padrão recebe os filtros da pesquisa e retorna todas as linhas encontradas """
     banco = Banco()
     banco.connect()
-    banco.execute(f"SELECT {parms} FROM {tabela} {where}")
+    banco.execute(f"SELECT {parms} FROM {tabela} {clause}")
     rows = banco.fetchall()
     banco.disconnect()
     return rows

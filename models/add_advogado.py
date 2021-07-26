@@ -249,7 +249,7 @@ class AddAdvogado:
 
     def salvar(self):
         cpf = self.__txtAdvCPF.get()
-        rid = search('advogados', parms='id', where=f'where cpf={cpf}')[0][0]
+        rid = search('advogados', parms='id', clause=f'where cpf={cpf}')[0][0]
 
         update(rid, 'advogados',
                nome=self.adv_nome,
@@ -270,7 +270,7 @@ class AddAdvogado:
         try:
 
             rid = get_id(self.__tvAdvogados, 'advogados')
-            values = search('advogados', where=f'where id={rid}')[0]
+            values = search('advogados', clause=f'where id={rid}')[0]
         except OperationalError:
             raise ValueError
         else:
