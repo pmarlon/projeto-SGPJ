@@ -409,6 +409,7 @@ class Processos:
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
+        limpar(self.__frameProcessos)
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.caso = randint(1, 20)
         advogados = [advogado for advogado in search('advogados', parms='nome')]
@@ -421,7 +422,6 @@ class Processos:
     def ocultar_pagina(self):
         self.ocorrencias.ocultar_pagina()
         self.__frameProcessos.pack_forget()
-        limpar(self.__frameProcessos)
 
     def command_advogados(self):
         self.app.frameAdvogados.iniciar_janela(self)

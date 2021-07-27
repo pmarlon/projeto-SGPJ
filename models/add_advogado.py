@@ -18,6 +18,7 @@ class AddAdvogado:
             self.app = app
 
         else:
+            self.janela = True
             self.master = Toplevel(master)
 
         self.__frameAdvogados = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
@@ -262,7 +263,7 @@ class AddAdvogado:
 
         self.__txtAdvCPF['state'] = 'normal'
         self.__txtAdvOAB['state'] = 'normal'
-        limpar(self.__tvAdvogados, self.__frameAdvogados)
+        limpar(self.__frameAdvogados, self.__tvAdvogados)
         self.listar()
         self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
 
@@ -274,7 +275,7 @@ class AddAdvogado:
         except OperationalError:
             raise ValueError
         else:
-            limpar(self.__tvAdvogados, self.__frameAdvogados)
+            limpar(self.__frameAdvogados, self.__tvAdvogados)
             self.listar()
             cont = 0
 
@@ -301,15 +302,20 @@ class AddAdvogado:
 
     def iniciar_janela(self, app):
 
-        self.__txtAdvCPF['state'] = 'normal'
-        self.__txtAdvOAB['state'] = 'normal'
-        limpar(self.__tvAdvogados, self.__frameAdvogados)
         self.janela = True
         self.app = app
         self.master.geometry('800x450+250+185')
         self.master.resizable(width=False, height=False)
         self.master['bg'] = 'LightSteelBlue3'
+
+        self.__txtAdvCPF['state'] = 'normal'
+        self.__txtAdvOAB['state'] = 'normal'
+        limpar(self.__frameAdvogados, self.__tvAdvogados)
+
         self.__btnSalvar.place_forget()
         self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnFechar.place(x=620, y=350, relwidth=0.15)
+
+
+# corrigir bug janela Toplevel
