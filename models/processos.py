@@ -410,13 +410,16 @@ class Processos:
     def iniciar_pagina(self):
         self.ocultar_pagina()
         limpar(self.__frameProcessos)
+        self.atualizar__advogados()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.caso = randint(1, 20)
-        advogados = [advogado for advogado in search('advogados', parms='nome')]
-        advogados = [advogado[0] for advogado in advogados]
         self.__btnSalvarRegistro.place_forget()
         self.__btnAddRegistro.place(x=400, y=390)
         self.__btnOcorrencias.place(x=550, y=390)
+
+    def atualizar__advogados(self):
+        advogados = [advogado for advogado in search('advogados', parms='nome')]
+        advogados = [advogado[0] for advogado in advogados]
         self.advogados = advogados
 
     def ocultar_pagina(self):
@@ -424,7 +427,8 @@ class Processos:
         self.__frameProcessos.pack_forget()
 
     def command_advogados(self):
-        self.app.frameAdvogados.iniciar_janela(self)
+        add_advogado = AddAdvogado(self.master, self, True)
+        add_advogado.iniciar_janela(self)
 
     def trocar_botoes(self):
         if not self.__btnSalvarRegistro.place_info():

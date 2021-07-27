@@ -2,7 +2,7 @@ from utils.modulos import *
 
 
 class AddAdvogado:
-    def __init__(self, master=None, app=None):
+    def __init__(self, master=None, app=None, janela=None):
 
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar
         imgbtn11 = PhotoImage(file='imagens/imgAddAdv.png')  # imagem do botão Adicionar
@@ -11,15 +11,11 @@ class AddAdvogado:
         imgbtn14 = PhotoImage(file='imagens/imgEditarAdv.png')  # imagem do botão Editar
         imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Fechar
 
-        self.janela = False
-
-        if app is not None:
+        if janela:
+            self.master = Toplevel(master)
+        else:
             self.master = master
             self.app = app
-
-        else:
-            self.janela = True
-            self.master = Toplevel(master)
 
         self.__frameAdvogados = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
@@ -203,10 +199,13 @@ class AddAdvogado:
         try:
             insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
                    self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
-            if self.janela:
+            messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
+            if str(self.master.winfo_class()) == 'Toplevel':
                 self.master.destroy()
-                messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
-                self.app.iniciar_pagina()
+                self.app.atualizar__advogados()
+            else:
+                self.iniciar_pagina()
+
         except IntegrityError:
             messagebox.showwarning('Atenção', 'Já existe um cadastro com o CPF ou N° OAB digitados.')
 
@@ -288,7 +287,7 @@ class AddAdvogado:
                     child.insert(END, values[cont])
 
     def iniciar_pagina(self):
-        self.janela = False
+
         self.__txtAdvCPF['state'] = 'normal'
         self.__txtAdvOAB['state'] = 'normal'
         limpar(self.__frameAdvogados, self.__tvAdvogados)
@@ -301,13 +300,10 @@ class AddAdvogado:
         self.__frameAdvogados.pack_forget()
 
     def iniciar_janela(self, app):
-
-        self.janela = True
         self.app = app
         self.master.geometry('800x450+250+185')
         self.master.resizable(width=False, height=False)
         self.master['bg'] = 'LightSteelBlue3'
-
         self.__txtAdvCPF['state'] = 'normal'
         self.__txtAdvOAB['state'] = 'normal'
         limpar(self.__frameAdvogados, self.__tvAdvogados)
@@ -317,5 +313,3 @@ class AddAdvogado:
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnFechar.place(x=620, y=350, relwidth=0.15)
 
-
-# corrigir bug janela Toplevel

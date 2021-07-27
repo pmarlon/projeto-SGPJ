@@ -20,6 +20,4 @@ __pycache__
 
 /models/*.*~
 
-/models/*.pyc
-
-models/__pycache__/
+.models/*.pyc
