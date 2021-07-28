@@ -5,9 +5,9 @@ class Ocorrencias:
 
     def __init__(self, master=None, app=None):
         img_pesquisar = ImageTk.PhotoImage(Image.open('imagens/imgPesquisar.png').resize((28, 28), Image.ANTIALIAS))
-        imgbtn2 = PhotoImage(file='imagens/imgVoltar.png')  # imagem do botão Voltar
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar
         imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Nova Ocorrência
+        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
 
         self.app = app
         self.__frameOcorrencias = Frame(master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
@@ -114,15 +114,6 @@ class Ocorrencias:
         self.__btnSalvar.image = imgbtn4
         self.__btnSalvar['command'] = lambda: self.update_ocorrencia()
 
-        self.__btnVoltar = Button(self.__frameOcorrencias,
-                                  text='Voltar',
-                                  compound=TOP,
-                                  relief='flat',
-                                  bg='LightSteelBlue3')
-        self.__btnVoltar['image'] = imgbtn2
-        self.__btnVoltar.image = imgbtn2
-        self.__btnVoltar['command'] = lambda: self.voltar()
-
         self.__btnPesquisar = Button(self.__frameOcorrencias,
                                      image=img_pesquisar,
                                      compound=TOP,
@@ -130,15 +121,24 @@ class Ocorrencias:
                                      bg='LightSteelBlue3',
                                      highlightthickness=False)
         self.__btnPesquisar.image = img_pesquisar
-        self.__btnPesquisar['command'] = ''
+        self.__btnPesquisar['command'] = lambda: self.pesquisar()
         self.__btnPesquisar.place(x=300, y=15)
 
-    @property
-    def num_caso(self):
-        return self.__txtCaso
+        self.__btnCancelar = Button(self.__frameOcorrencias,
+                                    image=img_cancelar,
+                                    text='Cancelar',
+                                    compound=TOP,
+                                    relief='flat',
+                                    bg='LightSteelBlue3')
+        self.__btnCancelar.image = img_cancelar
+        self.__btnCancelar['command'] = lambda: self.iniciar_pagina()
 
-    @num_caso.setter
-    def num_caso(self, valor):
+    @property
+    def caso(self):
+        return self.__txtCaso.get()
+
+    @caso.setter
+    def caso(self, valor):
         self.__txtCaso.insert(END, valor)
 
     @property
@@ -223,15 +223,14 @@ class Ocorrencias:
 
     def insert_ocorrencia(self):
         try:
-            insert('ocorrencias', int(self.app.caso), self.data_ocorrencia, self.descricao, self.valor, self.vr_atual)
+            insert('ocorrencias', self.caso, self.data_ocorrencia, self.descricao, self.valor, self.vr_atual)
             messagebox.showinfo('Informação', 'Ocorrência adicionada com sucesso.')
-            limpar(self.__frameOcorrencias)
-
+            self.iniciar_pagina()
         except OperationalError:
-            messagebox.showerror('Erro', 'Só é possível adicionar ocorrências à processos existentes.')
+            messagebox.showerror('Atenção', 'Ocorreu um erro...')
 
     def update_ocorrencia(self):
-        caso = self.num_caso.get().split(' ')[2]
+        caso = self.caso
         rid = search('ocorrencias', parms='id', clause=f'where caso={caso}')[0][0]
         update(rid, 'ocorrencias',
                data=self.data_ocorrencia,
@@ -242,10 +241,36 @@ class Ocorrencias:
         messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
         self.iniciar_pagina()
 
-    def preencher(self, values=None):
+    def pesquisar(self):
+        try:
+            caso = self.caso
+            values = search('processos', parms='caso, autor, reu, adv_externo, tipo_acao, processo, uf_municipio',
+                            clause=f'where caso={caso}')[0]
+            self.preencher(values, True)
+            self.__btnAddOcorrencia.place_forget()
+            self.__btnAddOcorrencia.place(x=250, y=370, relwidth=0.15)
+            self.__btnCancelar.place(x=400, y=370, relwidth=0.15)
+
+        except IndexError:
+            messagebox.showwarning('Atenção', 'Nenhum registro encontrado.')
+        except OperationalError:
+            messagebox.showerror('Erro', 'Digite o número do caso que deseja consultar.')
+
+    def preencher(self, values=None, alt=None):
+
+        self.status_normal()
         limpar(self.__frameOcorrencias)
-        if values:
-            self.num_caso = values[7]
+        if values and alt:
+            self.caso = values[0]
+            self.autor = values[1]
+            self.reu = values[2]
+            self.adv_externo = values[3]
+            self.tipo_acao = values[4]
+            self.num_processo = values[5]
+            self.uf_municipio = values[6]
+
+        elif values:
+            self.caso = values[7]
             self.autor = values[0]
             self.num_processo = values[1]
             self.reu = values[2]
@@ -256,24 +281,44 @@ class Ocorrencias:
             self.descricao = values[9]
             self.valor = values[10]
             self.vr_atual = values[11]
+        self.status_readonly()
 
     def iniciar_pagina(self):
+        self.status_normal()
+        limpar(self.__frameOcorrencias)
         self.__frameOcorrencias.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnAddOcorrencia.place(x=350, y=370, relwidth=0.15)
-        self.__btnVoltar.place(x=510, y=370, relwidth=0.15)
+        self.__btnCancelar.place_forget()
         self.__btnSalvar.place_forget()
-        self.preencher()
+        self.status_readonly()
+        self.__txtCaso['state'] = 'normal'
+        self.__btnPesquisar['state'] = 'normal'
 
     def ocultar_pagina(self):
         self.__frameOcorrencias.pack_forget()
 
-    def voltar(self):
-        self.ocultar_pagina()
-        self.app.ocultar_pagina()
-        self.app.iniciar_pagina(novo=False)
-
     def trocar_botoes(self):
         if not self.__btnSalvar.place_info():
             self.__btnAddOcorrencia.place_forget()
-            self.__btnVoltar.place_forget()
+            self.__btnCancelar.place_forget()
             self.__btnSalvar.place(x=400, y=390)
+
+    def status_normal(self):
+
+        self.__txtCaso['state'] = 'normal'
+        self.__txtAutor['state'] = 'normal'
+        self.__txtProcesso['state'] = 'normal'
+        self.__txtReu['state'] = 'normal'
+        self.__txtTipoAcao['state'] = 'normal'
+        self.__txtAdvExterno['state'] = 'normal'
+        self.__txtUfMunicipio['state'] = 'normal'
+
+    def status_readonly(self):
+        self.__btnPesquisar['state'] = 'disabled'
+        self.__txtCaso['state'] = 'readonly'
+        self.__txtAutor['state'] = 'readonly'
+        self.__txtProcesso['state'] = 'readonly'
+        self.__txtReu['state'] = 'readonly'
+        self.__txtTipoAcao['state'] = 'readonly'
+        self.__txtAdvExterno['state'] = 'readonly'
+        self.__txtUfMunicipio['state'] = 'readonly'

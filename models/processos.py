@@ -343,9 +343,15 @@ class Processos:
         self.__txtAdvExterno['values'] = valor
 
     def insert_processo(self):
-        insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso, self.processo,
-               self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio, self.situacao,
-               self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda, self.end_parte_adv)
+        try:
+            insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso,
+                   self.processo, self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio,
+                   self.situacao, self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda,
+                   self.end_parte_adv)
+            messagebox.showinfo('Informação', 'Processo adicionado com sucesso.')
+            self.iniciar_pagina()
+        except OperationalError:
+            messagebox.showerror('Atenção', 'Ocorreu um erro...')
 
     def update_processo(self):
         caso = self.caso

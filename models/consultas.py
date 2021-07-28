@@ -154,11 +154,17 @@ class Consultas:
         return self.__txtEmendaResult.get(1.0, END)
 
     def insert_consulta(self):
-        insert('consultas', int(self.consulta), self.ref, self.prioridade, self.esperado, self.entrada,
-               self.origem, self.assunto, self.interessado, self.emenda_result, self.saida, self.destino)
+        try:
+            insert('consultas', int(self.consulta), self.ref, self.prioridade, self.esperado, self.entrada,
+                   self.origem, self.assunto, self.interessado, self.emenda_result, self.saida, self.destino)
+            messagebox.showinfo('Informação', 'Consulta adicionada com sucesso.')
+            self.iniciar_pagina()
+        except OperationalError:
+            messagebox.showerror('Atenção', 'Ocorreu um erro...')
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
+        limpar(self.__frameConsultas)
         self.__frameConsultas.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):

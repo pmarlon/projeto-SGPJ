@@ -128,6 +128,7 @@ class App:
         self.frameAdvogados.ocultar_pagina()
         self.frameConsultas.ocultar_pagina()
         self.framePesquisar.ocultar_pagina()
+        self.frameOcorrencias.ocultar_pagina()
 
     def switch_frame(self, frame):
         """Recebe um frame como parâmetro, oculta os frames ativos e inicia o frame recebido"""

@@ -108,10 +108,9 @@ def init_db():
         data TEXT NOT NULL,
         descricao TEXT,
         valor TEXT NOT NULL,
-        vr_atual TEXT NOT NULL,
-        id_processo	INTEGER NOT NULL, 
-        PRIMARY KEY("id" AUTOINCREMENT),
-        FOREIGN KEY("id_processo") REFERENCES "processos"("id")
+        vr_atual TEXT NOT NULL, 
+        FOREIGN KEY(caso) REFERENCES processos (caso) ON DELETE CASCADE,
+        PRIMARY KEY("id" AUTOINCREMENT)
 )
 """)
 
@@ -150,50 +149,29 @@ def insert(tabela, *args):
     banco.execute(f"INSERT INTO {tabela} VALUES (NULL{', ?' * len(args)})", args)
     banco.persist()
     banco.disconnect()
-    print('inserido com sucesso!')
 
 
 def update(rid, tabela, **kwargs):
     """ Função que recebe como parâmetro obrigatório o nome da tabela e o id da linha que deseja editar,
         além dos valores de nome da coluna e dados a serem atualizados """
 
-    try:
-        banco = Banco()
-        banco.connect()
-        for coluna, valor in kwargs.items():
-            banco.execute(f'UPDATE {tabela} SET {coluna}="{valor}" WHERE id={rid}')
-            banco.persist()
-        banco.disconnect()
-    except OperationalError:
-        print('dados inválidos')
+    banco = Banco()
+    banco.connect()
+    for coluna, valor in kwargs.items():
+        banco.execute(f'UPDATE {tabela} SET {coluna}="{valor}" WHERE id={rid}')
+        banco.persist()
+    banco.disconnect()
 
 
 def delete(rid, tabela):
     """ Função que recebe como parâmetro obrigatório o nome da tabela e o id da linha que deseja deletar """
-    try:
-        banco = Banco()
-        banco.connect()
-        banco.execute(f'DELETE FROM {tabela} WHERE id = {rid}')
-        banco.persist()
-        banco.disconnect()
-    except OperationalError:
-        print('Ocorreu um erro. Tente novamente')
+
+    banco = Banco()
+    banco.connect()
+    banco.execute("PRAGMA foreign_keys = ON")
+    banco.execute(f'DELETE FROM {tabela} WHERE id = {rid}')
+    banco.persist()
+    banco.disconnect()
 
 
 init_db()
-
-if __name__ == '__main__':
-
-    # print(view('advogados'))
-    #insert('advogados', 'teste1', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252956187', 12345678900)
-    #insert('advogados', 'teste2', 'rua projetada', 'mage/rj', 25900-000, 2633-0000, '', 'teste@email.com', 'RJ252948789', 12345678902)
-    # insert('ocorrencias', '', 'teste2', '15/08/2005', 'teste descrição', 'asdf', 58.785)
-
-    # update(1, 'advogados', fone_com='2633-9956')
-    # print(view('advogados'))
-    #delete(3, 'advogados')
-    #delete(4, 'advogados')
-
-    # print(search('advogados', endereco='rua', fax='9'))
-    print(view('advogados'))
-    #print(search('advogados', parms='*'))

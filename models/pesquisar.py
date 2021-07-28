@@ -171,7 +171,7 @@ class Pesquisar:
                                        lambda: self.listar_ocorrencias(), 310, 350)
 
         self.__btnEditar = criar_botao(self.__tbOcorrencias, 'Editar', imgbtn6,
-                                       lambda: self.editar(self.app.frameProcessos.ocorrencias,
+                                       lambda: self.editar(self.app.frameOcorrencias,
                                                            self.__tvOcorrencias,
                                                            'ocorrencias'),
                                        420, 350)
@@ -279,6 +279,9 @@ class Pesquisar:
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
+        limpar(self.__framePesquisar, self.__tvConsultas)
+        limpar(self.__framePesquisar, self.__tvProcessos)
+        limpar(self.__framePesquisar, self.__tvOcorrencias)
         self.__framePesquisar.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):
@@ -292,7 +295,7 @@ class Pesquisar:
                 values = search('processos', parms='processos.autor,processos.processo, processos.reu, '
                                                    'processos.tipo_acao, processos.adv_externo, '
                                                    'processos.uf_municipio, ocorrencias.*',
-                                clause='inner join ocorrencias on caso_processo = processos.caso')[0]
+                                clause='inner join ocorrencias on id_processo = processos.id')[0]
             else:
                 values = search(tabela, clause=f'where id={rid}')[0]
 
