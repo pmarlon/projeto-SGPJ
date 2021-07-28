@@ -8,6 +8,8 @@ __pycache__
 
 *.pyc
 
+*.cpython-39
+
 .idea
 
 /utils/__pycache__
@@ -16,8 +18,9 @@ __pycache__
 
 /utils/*.pyc
 
-.models/__pycache__/
+.models/__pycache__/*.cpython-39
 
 /models/*.*~
 
 .models/*.pyc
+

@@ -228,4 +228,4 @@ class Ocorrencias:
     def voltar(self):
         self.ocultar_pagina()
         self.app.ocultar_pagina()
-        self.app.iniciar_pagina()
+        self.app.iniciar_pagina(novo=False)

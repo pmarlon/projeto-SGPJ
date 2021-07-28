@@ -407,20 +407,32 @@ class Processos:
             self.perda = values[18]
             self.end_parte_adv = values[19]
 
-    def iniciar_pagina(self):
+    def iniciar_pagina(self, novo=True):
         self.ocultar_pagina()
         limpar(self.__frameProcessos)
         self.atualizar__advogados()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
-        self.caso = randint(1, 20)
         self.__btnSalvarRegistro.place_forget()
         self.__btnAddRegistro.place(x=400, y=390)
         self.__btnOcorrencias.place(x=550, y=390)
+        if novo:
+            self.novo_caso()
 
     def atualizar__advogados(self):
         advogados = [advogado for advogado in search('advogados', parms='nome')]
         advogados = [advogado[0] for advogado in advogados]
         self.advogados = advogados
+
+    def novo_caso(self):
+        casos = search('processos', parms='caso')
+        casos = [caso[0] for caso in casos]
+        novo_caso = None
+        for caso in casos:
+            while novo_caso is None:
+                num = randint(1, 9999)
+                if num not in casos:
+                    novo_caso = num
+        self.caso = novo_caso
 
     def ocultar_pagina(self):
         self.ocorrencias.ocultar_pagina()
