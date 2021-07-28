@@ -4,7 +4,6 @@ from utils.modulos import *
 class Processos:
     # Cadastro de processos
     def __init__(self, master=None, app=None):
-        imgbtn1 = PhotoImage(file='imagens/imgObservar.png')  # imagem do botão Ocorrências
         imgbtn3 = PhotoImage(file='imagens/imgEscolherAdv.png')  # imagem do botão Escolher Advogado
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
         imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
@@ -180,21 +179,12 @@ class Processos:
         self.__btnSalvarRegistro.image = imgbtn4
         self.__btnSalvarRegistro['command'] = lambda: self.update_processo()
 
-        self.__btnOcorrencias = Button(self.__frameProcessos,
-                                       text='Ocorrências',
-                                       compound=TOP,
-                                       relief='flat',
-                                       bg='LightSteelBlue3')
-        self.__btnOcorrencias['image'] = imgbtn1
-        self.__btnOcorrencias.image = imgbtn1
-        self.__btnOcorrencias['command'] = lambda: app.switch_frame(self.ocorrencias)
-        self.__btnOcorrencias.place(x=550, y=390)
-
-        self.ocorrencias = Ocorrencias(self.master, self)
-
     @property
     def caso(self):
-        return self.num_caso.get().split(' ')[2]
+        try:
+            return self.num_caso.get().split(' ')[2]
+        except IndexError:
+            print(self.num_caso.get())
 
     @caso.setter
     def caso(self, valor):
@@ -414,7 +404,6 @@ class Processos:
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnSalvarRegistro.place_forget()
         self.__btnAddRegistro.place(x=400, y=390)
-        self.__btnOcorrencias.place(x=550, y=390)
         if novo:
             self.novo_caso()
 
@@ -427,15 +416,13 @@ class Processos:
         casos = search('processos', parms='caso')
         casos = [caso[0] for caso in casos]
         novo_caso = None
-        for caso in casos:
-            while novo_caso is None:
-                num = randint(1, 9999)
-                if num not in casos:
-                    novo_caso = num
+        while novo_caso is None:
+            num = randint(1, 9999)
+            if num not in casos:
+                novo_caso = num
         self.caso = novo_caso
 
     def ocultar_pagina(self):
-        self.ocorrencias.ocultar_pagina()
         self.__frameProcessos.pack_forget()
 
     def command_advogados(self):
@@ -445,5 +432,4 @@ class Processos:
     def trocar_botoes(self):
         if not self.__btnSalvarRegistro.place_info():
             self.__btnAddRegistro.place_forget()
-            self.__btnOcorrencias.place_forget()
             self.__btnSalvarRegistro.place(x=470, y=390)

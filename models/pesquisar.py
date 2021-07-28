@@ -6,7 +6,6 @@ class Pesquisar:
     def __init__(self, master=None, app=None):
         img_pesquisar = PhotoImage(file='imagens/imgPesquisar.png')  # imagem do botão Pesquisar
         img_listar = PhotoImage(file='imagens/imgListarDoc')  # imagem do botão Listar
-        imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
         imgbtn6 = PhotoImage(file='imagens/imgEditar.png')  # imagem do botão Editar
         imgbtn7 = PhotoImage(file='imagens/imgExcluirRegistro.png')  # imagem do botão Excluir
 

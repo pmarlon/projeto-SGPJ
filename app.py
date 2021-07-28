@@ -6,6 +6,7 @@ class App:
     def __init__(self, root=None):
         logo = ImageTk.PhotoImage(Image.open('imagens/logo.png').resize((80, 80), Image.ANTIALIAS))
         img_principal = PhotoImage(file='imagens/imgHome.png')  # imagem do botão Página Principal
+        img_ocorrencias = PhotoImage(file='imagens/imgObservar.png')  # imagem do botão Ocorrências
         img_processo = PhotoImage(file='imagens/imgProcessos.png')  # imagem do botão Processos
         img_advogados = PhotoImage(file='imagens/imgAdvogados.png')  # imagem do botão Escolher Advogado
         img_pesquisar = PhotoImage(file='imagens/imgPesquisar.png')  # imagem do botão Pesquisar
@@ -40,7 +41,7 @@ class App:
                                      bg='LightSteelBlue3')
         self.__btnPrincipal.image = img_principal
         self.__btnPrincipal['command'] = lambda: self.switch_frame(self.framePrincipal)
-        self.__btnPrincipal.place(x=20, y=3, relwidth=0.15)
+        self.__btnPrincipal.place(x=10, y=3, relwidth=0.13)
 
         self.__btnProcessos = Button(self.__MenuBar,
                                      text='Processos',
@@ -50,7 +51,17 @@ class App:
                                      bg='LightSteelBlue3')
         self.__btnProcessos.image = img_processo
         self.__btnProcessos['command'] = lambda: self.switch_frame(self.frameProcessos)
-        self.__btnProcessos.place(x=175, y=3, relwidth=0.15)
+        self.__btnProcessos.place(x=145, y=3, relwidth=0.13)
+
+        self.__btnOcorrencias = Button(self.__MenuBar,
+                                       text='Ocorrências',
+                                       compound=TOP,
+                                       relief='flat',
+                                       bg='LightSteelBlue3')
+        self.__btnOcorrencias['image'] = img_ocorrencias
+        self.__btnOcorrencias.image = img_ocorrencias
+        self.__btnOcorrencias['command'] = lambda: self.switch_frame(self.frameOcorrencias)
+        self.__btnOcorrencias.place(x=280, y=3, relwidth=0.13)
 
         self.__btnAdvogados = Button(self.__MenuBar,
                                      text='Advogados',
@@ -60,7 +71,7 @@ class App:
                                      bg='LightSteelBlue3')
         self.__btnAdvogados.image = img_advogados
         self.__btnAdvogados['command'] = lambda: self.switch_frame(self.frameAdvogados)
-        self.__btnAdvogados.place(x=330, y=3, relwidth=0.15)
+        self.__btnAdvogados.place(x=415, y=3, relwidth=0.13)
 
         self.__btnConsultas = Button(self.__MenuBar,
                                      text='Consultas',
@@ -70,7 +81,7 @@ class App:
                                      bg='LightSteelBlue3')
         self.__btnConsultas.image = img_consultas
         self.__btnConsultas['command'] = lambda: self.switch_frame(self.frameConsultas)
-        self.__btnConsultas.place(x=480, y=3, relwidth=0.15)
+        self.__btnConsultas.place(x=550, y=3, relwidth=0.13)
 
         self.__btnPesquisar = Button(self.__MenuBar,
                                      text='Pesquisar',
@@ -80,7 +91,7 @@ class App:
                                      bg='LightSteelBlue3')
         self.__btnPesquisar.image = img_pesquisar
         self.__btnPesquisar['command'] = lambda: self.switch_frame(self.framePesquisar)
-        self.__btnPesquisar.place(x=635, y=3, relwidth=0.15)
+        self.__btnPesquisar.place(x=685, y=3, relwidth=0.13)
 
         self.__btnSair = Button(self.__MenuBar,
                                 text='Sair',
@@ -90,7 +101,7 @@ class App:
                                 bg='LightSteelBlue3')
         self.__btnSair.image = img_sair
         self.__btnSair['command'] = lambda: root.destroy()
-        self.__btnSair.place(x=790, y=3, relwidth=0.15)
+        self.__btnSair.place(x=820, y=3, relwidth=0.13)
 
         # Frame principal
         self.framePrincipal = Principal(self.root, self)
@@ -98,6 +109,9 @@ class App:
 
         # Frame Processos
         self.frameProcessos = Processos(self.root, self)
+
+        # Frame Ocorrências
+        self.frameOcorrencias = Ocorrencias(self.root, self)
 
         # Frame Advogados
         self.frameAdvogados = AddAdvogado(self.root, self)

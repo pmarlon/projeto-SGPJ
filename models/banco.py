@@ -145,15 +145,12 @@ def insert(tabela, *args):
     """ Função que recebe como parâmetro obrigatório o nome da tabela a ser consultada,
         e os dados para inserção como *args e os insere na tabela escolhida """
 
-    try:
-        banco = Banco()
-        banco.connect()
-        banco.execute(f"INSERT INTO {tabela} VALUES (NULL{', ?' * len(args)})", args)
-        banco.persist()
-        banco.disconnect()
-        print('inserido com sucesso!')
-    except OperationalError:
-        print(f'Ocorreu um erro! Tente novamente (insert)')
+    banco = Banco()
+    banco.connect()
+    banco.execute(f"INSERT INTO {tabela} VALUES (NULL{', ?' * len(args)})", args)
+    banco.persist()
+    banco.disconnect()
+    print('inserido com sucesso!')
 
 
 def update(rid, tabela, **kwargs):
