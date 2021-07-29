@@ -104,7 +104,7 @@ class Consultas:
                                           bg='LightSteelBlue3')
         self.__btnSalvarRegistro['image'] = imgbtn4
         self.__btnSalvarRegistro.image = imgbtn4
-        self.__btnSalvarRegistro['command'] = ''
+        self.__btnSalvarRegistro['command'] = lambda: self.update_consulta()
 
         self.__btnAddRegistro = Button(self.__frameConsultas,
                                        text='Adicionar Registro',
@@ -222,15 +222,53 @@ class Consultas:
 
     def insert_consulta(self):
         try:
-            insert('consultas', int(self.consulta), self.ref, self.prioridade, self.esperado, self.entrada,
-                   self.origem, self.assunto, self.interessado, self.emenda_result, self.saida, self.destino)
+            insert('consultas', int(self.consulta), self.ref, self.prioridade, self.esperado, self.entrada, self.origem,
+                   self.assunto, self.interessado, self.adv_cojur, self.emenda_result, self.saida, self.destino)
             messagebox.showinfo('Informação', 'Consulta adicionada com sucesso.')
             self.iniciar_pagina()
         except OperationalError:
             messagebox.showerror('Atenção', 'Ocorreu um erro...')
+        except IntegrityError:
+            messagebox.showwarning('Atenção', 'Já existe uma consulta com este número.')
+
+    def update_consulta(self):
+        consulta = self.consulta
+        rid = search('consultas', parms='id', clause=f'WHERE consulta={consulta}')[0][0]
+
+        update(rid, 'consultas',
+               ref=self.ref,
+               prioridade=self.prioridade,
+               esperado=self.esperado,
+               entrada=self.entrada,
+               origem=self.origem,
+               assunto=self.assunto,
+               interessado=self.interessado,
+               adv_cojur=self.adv_cojur,
+               emenda=self.emenda_result,
+               saida=self.saida,
+               destino=self.destino
+               )
+        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
+        self.iniciar_pagina()
 
     def preencher(self, values):
-        print(values)
+
+        limpar(self.__frameConsultas)
+
+        self.consulta = values[1]
+        self.ref = values[2]
+        self.prioridade = values[3]
+        self.esperado = values[4]
+        self.entrada = values[5]
+        self.origem = values[6]
+        self.assunto = values[7]
+        self.interessado = values[8]
+        self.adv_cojur = values[9]
+        self.emenda_result = values[10]
+        self.saida = values[11]
+        self.destino = values[12]
+
+        self.__txtConsulta['state'] = 'readonly'
 
     def trocar_botoes(self):
         if not self.__btnSalvarRegistro.place_info():
@@ -240,6 +278,7 @@ class Consultas:
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
+        self.__txtConsulta['state'] = 'normal'
         limpar(self.__frameConsultas)
         self.__frameConsultas.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnAddRegistro.place(x=450, y=375)
