@@ -109,7 +109,7 @@ class AddAdvogado:
                                   compound=TOP,
                                   relief='flat')
         self.__btnSalvar['bg'] = 'LightSteelBlue3'
-        self.__btnSalvar['command'] = lambda: self.salvar()
+        self.__btnSalvar['command'] = lambda: self.update_adv()
         self.__btnSalvar.image = imgbtn4
 
         self.__btnAddAdv = Button(self.__frameAdvogados,
@@ -209,10 +209,9 @@ class AddAdvogado:
         try:
             insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
                    self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
-            messagebox.showinfo('Importante!', 'Operação Realizada com Sucesso.')
+            messagebox.showinfo('Informação', 'Advogado cadastrado com sucesso.')
             if str(self.master.winfo_class()) == 'Toplevel':
                 self.master.destroy()
-                self.app.atualizar__advogados()
             else:
                 self.iniciar_pagina()
 
@@ -241,7 +240,7 @@ class AddAdvogado:
         else:
             if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
                 delete(rid, 'advogados')
-                messagebox.showinfo('Informação', 'Cadastro excluído com sucesso.')
+                messagebox.showinfo('Informação', 'Registro excluído com sucesso.')
                 self.listar()
 
     def editar(self):
@@ -263,7 +262,7 @@ class AddAdvogado:
             if str(self.master.winfo_class()) == 'Toplevel':
                 self.__btnFechar.place(x=470, y=350, relwidth=0.15)
 
-    def salvar(self):
+    def update_adv(self):
         cpf = self.__txtAdvCPF.get()
         rid = search('advogados', parms='id', clause=f'where cpf={cpf}')[0][0]
 
@@ -275,6 +274,8 @@ class AddAdvogado:
                fone_com=self.adv_telefone,
                fax=self.adv_fax,
                email=self.adv_email)
+
+        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
 
         self.__txtAdvCPF['state'] = 'normal'
         self.__txtAdvOAB['state'] = 'normal'

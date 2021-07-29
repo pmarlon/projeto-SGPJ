@@ -2,25 +2,10 @@ TESTE.py
 
 banco.db
 
-__pycache__
+__pycache__/
 
 *.*~
 
 *.pyc
 
-*.cpython-39
-
 .idea
-
-/utils/__pycache__
-
-/utils/*.*~
-
-/utils/*.pyc
-
-.models/__pycache__/*.cpython-39
-
-/models/*.*~
-
-.models/*.pyc
-

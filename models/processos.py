@@ -360,6 +360,8 @@ class Processos:
                    self.end_parte_adv)
             messagebox.showinfo('Informação', 'Processo adicionado com sucesso.')
             self.iniciar_pagina()
+        except IntegrityError:
+            messagebox.showwarning('Atenção', 'Já existe um caso com este número.')
         except OperationalError:
             messagebox.showerror('Atenção', 'Ocorreu um erro...')
 

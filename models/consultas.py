@@ -222,7 +222,7 @@ class Consultas:
 
     def insert_consulta(self):
         try:
-            insert('consultas', int(self.consulta), self.ref, self.prioridade, self.esperado, self.entrada, self.origem,
+            insert('consultas', self.consulta, self.ref, self.prioridade, self.esperado, self.entrada, self.origem,
                    self.assunto, self.interessado, self.adv_cojur, self.emenda_result, self.saida, self.destino)
             messagebox.showinfo('Informação', 'Consulta adicionada com sucesso.')
             self.iniciar_pagina()
