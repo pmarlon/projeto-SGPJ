@@ -300,8 +300,8 @@ class Ocorrencias:
     def trocar_botoes(self):
         if not self.__btnSalvar.place_info():
             self.__btnAddOcorrencia.place_forget()
-            self.__btnCancelar.place_forget()
-            self.__btnSalvar.place(x=400, y=390)
+            self.__btnCancelar.place(x=500, y=390, relwidth=0.15)
+            self.__btnSalvar.place(x=350, y=390)
 
     def status_normal(self):
 

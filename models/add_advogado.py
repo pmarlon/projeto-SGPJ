@@ -10,6 +10,7 @@ class AddAdvogado:
         imgbtn13 = PhotoImage(file='imagens/imgListarAdv.png')  # imagem do botão Listar
         imgbtn14 = PhotoImage(file='imagens/imgEditarAdv.png')  # imagem do botão Editar
         imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Fechar
+        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
 
         if janela:
             self.master = Toplevel(master)
@@ -159,6 +160,15 @@ class AddAdvogado:
         self.__btnFechar['command'] = lambda: self.master.destroy()
         self.__btnFechar.image = imgbtn15
 
+        self.__btnCancelar = Button(self.__frameAdvogados,
+                                    image=img_cancelar,
+                                    text='Cancelar',
+                                    compound=TOP,
+                                    relief='flat',
+                                    bg='LightSteelBlue3')
+        self.__btnCancelar.image = img_cancelar
+        self.__btnCancelar['command'] = lambda: self.command_cancelar()
+
     @property
     def adv_nome(self):
         return self.__txtAdvNome.get()
@@ -243,9 +253,15 @@ class AddAdvogado:
             messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
         else:
             self.__btnEditarAdv.place_forget()
-            self.__btnSalvar.place(x=210, y=350, relwidth=0.15)
+            self.__btnRmvAdv.place_forget()
+            self.__btnAddAdv.place_forget()
+            self.__btnListarAdv.place_forget()
             self.__txtAdvCPF['state'] = 'readonly'
             self.__txtAdvOAB['state'] = 'readonly'
+            self.__btnSalvar.place(x=210, y=350, relwidth=0.15)
+            self.__btnCancelar.place(x=340, y=350, relwidth=0.15)
+            if str(self.master.winfo_class()) == 'Toplevel':
+                self.__btnFechar.place(x=470, y=350, relwidth=0.15)
 
     def salvar(self):
         cpf = self.__txtAdvCPF.get()
@@ -264,7 +280,7 @@ class AddAdvogado:
         self.__txtAdvOAB['state'] = 'normal'
         limpar(self.__frameAdvogados, self.__tvAdvogados)
         self.listar()
-        self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
+        self.command_cancelar()
 
     def preencher(self):
         try:
@@ -281,7 +297,7 @@ class AddAdvogado:
             for child in self.__frameAdvogados.winfo_children():
                 # Captura o nome da classe de cada elemento
                 widget_class = child.__class__.__name__
-                # Se a classe for Entry preenche o campo com
+                # Se a classe for Entry preenche o campo com valor
                 if widget_class == 'Entry':
                     cont += 1
                     child.insert(END, values[cont])
@@ -313,3 +329,17 @@ class AddAdvogado:
         self.__frameAdvogados.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnFechar.place(x=620, y=350, relwidth=0.15)
 
+    def command_cancelar(self):
+        self.__txtAdvCPF['state'] = 'normal'
+        self.__txtAdvOAB['state'] = 'normal'
+        limpar(self.__frameAdvogados, self.__tvAdvogados)
+        self.__btnSalvar.place_forget()
+        self.__btnCancelar.place_forget()
+        self.__btnAddAdv.place(x=80, y=350, relwidth=0.15)
+        self.__btnEditarAdv.place(x=210, y=350, relwidth=0.15)
+        self.__btnRmvAdv.place(x=340, y=350, relwidth=0.15)
+        self.__btnListarAdv.place(x=470, y=350)
+
+        if str(self.master.winfo_class()) == 'Toplevel':
+            self.__btnFechar.place_forget()
+            self.__btnFechar.place(x=620, y=350, relwidth=0.15)

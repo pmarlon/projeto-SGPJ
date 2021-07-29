@@ -295,7 +295,7 @@ class Pesquisar:
                 values = search('processos', parms='processos.autor,processos.processo, processos.reu, '
                                                    'processos.tipo_acao, processos.adv_externo, '
                                                    'processos.uf_municipio, ocorrencias.*',
-                                clause='inner join ocorrencias on id_processo = processos.id')[0]
+                                clause='inner join ocorrencias on ocorrencias.caso = processos.caso')[0]
             else:
                 values = search(tabela, clause=f'where id={rid}')[0]
 

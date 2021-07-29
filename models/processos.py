@@ -8,6 +8,7 @@ class Processos:
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
         imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
         imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Add Registro
+        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
 
         self.app = app
         self.master = master
@@ -178,6 +179,15 @@ class Processos:
         self.__btnSalvarRegistro['image'] = imgbtn4
         self.__btnSalvarRegistro.image = imgbtn4
         self.__btnSalvarRegistro['command'] = lambda: self.update_processo()
+
+        self.__btnCancelar = Button(self.__frameProcessos,
+                                    image=img_cancelar,
+                                    text='Cancelar',
+                                    compound=TOP,
+                                    relief='flat',
+                                    bg='LightSteelBlue3')
+        self.__btnCancelar.image = img_cancelar
+        self.__btnCancelar['command'] = lambda: self.iniciar_pagina()
 
     @property
     def caso(self):
@@ -409,6 +419,7 @@ class Processos:
         self.atualizar__advogados()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnSalvarRegistro.place_forget()
+        self.__btnCancelar.place_forget()
         self.__btnAddRegistro.place(x=400, y=390)
         if novo:
             self.novo_caso()
@@ -438,4 +449,5 @@ class Processos:
     def trocar_botoes(self):
         if not self.__btnSalvarRegistro.place_info():
             self.__btnAddRegistro.place_forget()
-            self.__btnSalvarRegistro.place(x=470, y=390)
+            self.__btnSalvarRegistro.place(x=350, y=390)
+            self.__btnCancelar.place(x=500, y=390, relwidth=0.13)

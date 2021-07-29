@@ -5,7 +5,9 @@ class Consultas:
 
     def __init__(self, master=None, app=None):
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
-        imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
+        imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Adicionar Registro
+        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+
         self.master = master
         self.app = app
         self.__frameConsultas = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
@@ -102,56 +104,121 @@ class Consultas:
                                           bg='LightSteelBlue3')
         self.__btnSalvarRegistro['image'] = imgbtn4
         self.__btnSalvarRegistro.image = imgbtn4
-        self.__btnSalvarRegistro['command'] = lambda: self.insert_consulta()
-        self.__btnSalvarRegistro.place(x=450, y=375)
+        self.__btnSalvarRegistro['command'] = ''
+
+        self.__btnAddRegistro = Button(self.__frameConsultas,
+                                       text='Adicionar Registro',
+                                       compound=TOP,
+                                       relief='flat',
+                                       bg='LightSteelBlue3')
+        self.__btnAddRegistro['image'] = imgbtn8
+        self.__btnAddRegistro.image = imgbtn8
+        self.__btnAddRegistro['command'] = lambda: self.insert_consulta()
+
+        self.__btnCancelar = Button(self.__frameConsultas,
+                                    image=img_cancelar,
+                                    text='Cancelar',
+                                    compound=TOP,
+                                    relief='flat',
+                                    bg='LightSteelBlue3')
+        self.__btnCancelar.image = img_cancelar
+        self.__btnCancelar['command'] = lambda: self.iniciar_pagina()
 
     @property
     def consulta(self):
         return self.__txtConsulta.get()
 
+    @consulta.setter
+    def consulta(self, valor):
+        self.__txtConsulta.insert(END, valor)
+
     @property
     def ref(self):
         return self.__txtRef.get()
+
+    @ref.setter
+    def ref(self, valor):
+        self.__txtRef.insert(END, valor)
 
     @property
     def prioridade(self):
         return self.__txtPrioridade.get()
 
+    @prioridade.setter
+    def prioridade(self, valor):
+        self.__txtPrioridade.insert(END, valor)
+
     @property
     def esperado(self):
         return self.__txtEsperado.get()
+
+    @esperado.setter
+    def esperado(self, valor):
+        self.__txtEsperado.insert(END, valor)
 
     @property
     def origem(self):
         return self.__txtOrigem.get()
 
+    @origem.setter
+    def origem(self, valor):
+        self.__txtOrigem.insert(END, valor)
+
     @property
     def entrada(self):
         return self.__txtEntrada.get()
+
+    @entrada.setter
+    def entrada(self, valor):
+        self.__txtEntrada.insert(END, valor)
 
     @property
     def assunto(self):
         return self.__txtAssunto.get(1.0, END)
 
+    @assunto.setter
+    def assunto(self, valor):
+        self.__txtAssunto.insert(END, valor)
+
     @property
     def interessado(self):
         return self.__txtInteressado.get()
+
+    @interessado.setter
+    def interessado(self, valor):
+        self.__txtInteressado.insert(END, valor)
 
     @property
     def adv_cojur(self):
         return self.__txtAdvCojur.get()
 
+    @adv_cojur.setter
+    def adv_cojur(self, valor):
+        self.__txtAdvCojur.insert(END, valor)
+
     @property
     def destino(self):
         return self.__txtDestino.get()
+
+    @destino.setter
+    def destino(self, valor):
+        self.__txtDestino.insert(END, valor)
 
     @property
     def saida(self):
         return self.__txtSaida.get()
 
+    @saida.setter
+    def saida(self, valor):
+        self.__txtSaida.insert(END, valor)
+
     @property
     def emenda_result(self):
         return self.__txtEmendaResult.get(1.0, END)
+
+    @emenda_result.setter
+    def emenda_result(self, valor):
+        self.__txtEmendaResult.insert(END, valor)
 
     def insert_consulta(self):
         try:
@@ -162,10 +229,22 @@ class Consultas:
         except OperationalError:
             messagebox.showerror('Atenção', 'Ocorreu um erro...')
 
+    def preencher(self, values):
+        print(values)
+
+    def trocar_botoes(self):
+        if not self.__btnSalvarRegistro.place_info():
+            self.__btnAddRegistro.place_forget()
+            self.__btnCancelar.place(x=500, y=375, relwidth=0.13)
+            self.__btnSalvarRegistro.place(x=350, y=375)
+
     def iniciar_pagina(self):
         self.ocultar_pagina()
         limpar(self.__frameConsultas)
         self.__frameConsultas.pack(side=BOTTOM, fill=X, pady=1)
+        self.__btnAddRegistro.place(x=450, y=375)
+        self.__btnCancelar.place_forget()
+        self.__btnSalvarRegistro.place_forget()
 
     def ocultar_pagina(self):
         self.__frameConsultas.pack_forget()
