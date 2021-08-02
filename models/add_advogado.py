@@ -25,6 +25,9 @@ class AddAdvogado:
         self.__lblAdvNome.place(x=35, y=20)
 
         self.__txtAdvNome = Entry(self.__frameAdvogados, width=80)
+        vcmd = self.__txtAdvNome.register(func=self.valida_auto_complete)
+        self.__txtAdvNome['validate'] = 'all'
+        self.__txtAdvNome['validatecommand'] = (vcmd, '%P', 'nome')
         self.__txtAdvNome.place(x=100, y=20)
 
         self.__lblAdvEndereco = Label(self.__frameAdvogados, text='Endereço', bg='LightSteelBlue3')
@@ -74,6 +77,9 @@ class AddAdvogado:
         self.__lblAdvOAB.place(x=30, y=170)
 
         self.__txtAdvOAB = Entry(self.__frameAdvogados, width=30)
+        vcmd = self.__txtAdvOAB.register(func=self.valida_auto_complete)
+        self.__txtAdvOAB['validate'] = 'all'
+        self.__txtAdvOAB['validatecommand'] = (vcmd, '%P', 'oab')
         self.__txtAdvOAB.place(x=100, y=170)
 
         self.__lblAdvCPF = Label(self.__frameAdvogados, text='CPF', bg='LightSteelBlue3')
@@ -81,6 +87,9 @@ class AddAdvogado:
         self.__lblAdvCPF.place(x=450, y=170)
 
         self.__txtAdvCPF = Entry(self.__frameAdvogados, width=30)
+        vcmd = self.__txtAdvCPF.register(func=self.valida_auto_complete)
+        self.__txtAdvCPF['validate'] = 'all'
+        self.__txtAdvCPF['validatecommand'] = (vcmd, '%P', 'cpf')
         self.__txtAdvCPF.place(x=500, y=170)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5')
@@ -302,6 +311,18 @@ class AddAdvogado:
                 if widget_class == 'Entry':
                     cont += 1
                     child.insert(END, values[cont])
+
+    def valida_auto_complete(self, entrada, campo):
+
+        if entrada:
+            self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
+            auto_complete(entrada, 'advogados', campo, self.__tvAdvogados)
+            return True
+
+        elif entrada == '':
+            return True
+        else:
+            return False
 
     def iniciar_pagina(self):
 

@@ -103,7 +103,8 @@ class Pesquisar:
 
         self.__tvProcessos.place(x=105, y=200)
 
-        self.__btnPesquisar = criar_botao(self.__tbProcessos, 'Pesquisar', img_pesquisar, '', 300, 350)
+        self.__btnPesquisar = criar_botao(self.__tbProcessos, 'Pesquisar', img_pesquisar,
+                                          lambda: self.pesquisar_processos(), 300, 350)
 
         self.__btnListar = criar_botao(self.__tbProcessos, 'Listar', img_listar,
                                        lambda: self.listar_processos(), 410, 350)
@@ -124,19 +125,19 @@ class Pesquisar:
         self.__lblTitulo['font'] = 'Serif', '16', 'bold'
         self.__lblTitulo.place(x=320, y=10)
 
-        self.__lblCaso = Label(self.__tbOcorrencias, text='Caso', bg='LightSteelBlue3')
-        self.__lblCaso['font'] = 'Serif', '12'
-        self.__lblCaso.place(x=100, y=80)
+        self.__lblCasoOcorrencia = Label(self.__tbOcorrencias, text='Caso', bg='LightSteelBlue3')
+        self.__lblCasoOcorrencia['font'] = 'Serif', '12'
+        self.__lblCasoOcorrencia.place(x=100, y=80)
 
-        self.__txtCaso = Entry(self.__tbOcorrencias, width=20)
-        self.__txtCaso.place(x=150, y=80)
+        self.__txtCasoOcorrencia = Entry(self.__tbOcorrencias, width=20)
+        self.__txtCasoOcorrencia.place(x=150, y=80)
 
-        self.__lblProcesso = Label(self.__tbOcorrencias, text='Processo', bg='LightSteelBlue3')
-        self.__lblProcesso['font'] = 'Serif', '12'
-        self.__lblProcesso.place(x=340, y=80)
+        self.__lblProcessoOcorrencia = Label(self.__tbOcorrencias, text='Processo', bg='LightSteelBlue3')
+        self.__lblProcessoOcorrencia['font'] = 'Serif', '12'
+        self.__lblProcessoOcorrencia.place(x=340, y=80)
 
-        self.__txtProcesso = Entry(self.__tbOcorrencias, width=20)
-        self.__txtProcesso.place(x=430, y=80)
+        self.__txtProcessoOcorrencia = Entry(self.__tbOcorrencias, width=20)
+        self.__txtProcessoOcorrencia.place(x=430, y=80)
 
         self.__lblDataOcorrencia = Label(self.__tbOcorrencias, text='Data', bg='LightSteelBlue3')
         self.__lblDataOcorrencia['font'] = 'Serif', '12'
@@ -165,7 +166,8 @@ class Pesquisar:
 
         self.__tvOcorrencias.place(x=80, y=150)
 
-        self.__btnPesquisar = criar_botao(self.__tbOcorrencias, 'Pesquisar', img_pesquisar, '', 200, 350)
+        self.__btnPesquisar = criar_botao(self.__tbOcorrencias, 'Pesquisar', img_pesquisar,
+                                          lambda: self.pesqisar_ocorrencias(), 200, 350)
 
         self.__btnListar = criar_botao(self.__tbOcorrencias, 'Listar', img_listar,
                                        lambda: self.listar_ocorrencias(), 310, 350)
@@ -253,6 +255,62 @@ class Pesquisar:
         self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', imgbtn7,
                                         lambda: deletar(self.__tvConsultas, 'consultas'), 580, 360)
 
+    @property
+    def caso(self):
+        return self.__txtCaso.get()
+
+    @property
+    def processo(self):
+        return self.__txtProcesso.get()
+
+    @property
+    def autor(self):
+        return self.__txtAutor.get()
+
+    @property
+    def adv_externo(self):
+        return self.__txtAdvExterno.get()
+
+    @property
+    def inicio(self):
+        return self.__txtDataInicio.get()
+
+    @property
+    def fim(self):
+        return self.__txtDataFim.get()
+
+    @property
+    def vara_tribunal(self):
+        return self.__txtVaraTribunal.get()
+
+    @property
+    def caso_ocorrencia(self):
+        return self.__txtCasoOcorrencia.get()
+
+    @property
+    def processo_ocorrencia(self):
+        return self.__txtProcessoOcorrencia.get()
+
+    @property
+    def data_ocorrencia(self):
+        return self.__txtDataOcorrencia.get()
+
+    @property
+    def consulta(self):
+        return self.__txtConsulta.get()
+
+    @property
+    def prioridade(self):
+        return self.__txtPrioridade.get()
+
+    @property
+    def entrada(self):
+        return self.__txtEntrada.get()
+
+    @property
+    def saida(self):
+        return self.__txtSaida.get()
+
     def listar_processos(self):
         self.__tvProcessos.delete(*self.__tvProcessos.get_children())
         processos = view('processos')
@@ -276,6 +334,62 @@ class Pesquisar:
             self.__tvConsultas.insert('', END, iid=None,
                                       values=(consulta[1], consulta[3], consulta[5], consulta[10],
                                               consulta[6], consulta[11], consulta[7]))
+
+    def pesquisar_processos(self):
+        self.__tvProcessos.delete(*self.__tvProcessos.get_children())
+        if (self.caso != '') and (self.processo != '') and (self.autor != '') and (self.adv_externo != '') and\
+                (self.inicio != '') and (self.fim != '') and (self.vara_tribunal != ''):
+
+            processos = search('processos', clause=f'where caso="{self.caso}" and processo="{self.processo}" and '
+                                                   f'autor="{self.autor}" and adv_externo="{self.adv_externo}" and '
+                                                   f'inicio="{self.inicio}" and fim="{self.fim}" and '
+                                                   f'vara_tribunal="{self.vara_tribunal}"')
+
+        try:
+            for processo in processos:
+                self.__tvProcessos.insert('', END, iid=None,
+                                          values=(processo[1], processo[6],
+                                                  processo[2], processo[3], processo[12]))
+        except UnboundLocalError:
+            pass
+
+    def pesqisar_ocorrencias(self):
+
+        self.__tvOcorrencias.delete(*self.__tvOcorrencias.get_children())
+        if (self.caso_ocorrencia != '') and (self.processo_ocorrencia != '') and (self.data_ocorrencia != ''):
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
+                                        f'p.processo = "{self.processo_ocorrencia}" AND'
+                                        f' o.data = "{self.data_ocorrencia}"')
+        elif (self.caso_ocorrencia != '') and (self.processo_ocorrencia != ''):
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
+                                        f'p.processo = "{self.processo_ocorrencia}" ')
+        elif (self.caso_ocorrencia != '') and (self.data_ocorrencia != ''):
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
+                                        f'o.data = "{self.data_ocorrencia}"')
+        elif (self.processo_ocorrencia != '') and (self.data_ocorrencia != ''):
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on p.processo = "{self.processo_ocorrencia}" AND '
+                                        f'o.data = "{self.data_ocorrencia}"')
+
+        elif self.caso_ocorrencia != '':
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" ')
+        elif self.processo_ocorrencia != '':
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on p.processo = "{self.processo_ocorrencia}" ')
+        elif self.data_ocorrencia != '':
+            ocorrencias = search('ocorrencias as o', parms='o.*',
+                                 clause=f'INNER JOIN processos as p on o.data = "{self.data_ocorrencia}" ')
+        try:
+            for ocorrencia in ocorrencias:
+                self.__tvOcorrencias.insert('', END, iid=None,
+                                            values=(ocorrencia[1], ocorrencia[2],
+                                                    ocorrencia[3], ocorrencia[4], ocorrencia[5]))
+        except UnboundLocalError:
+            pass
 
     def iniciar_pagina(self):
         self.ocultar_pagina()

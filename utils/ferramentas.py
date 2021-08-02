@@ -28,10 +28,12 @@ def limpar(frame, tv=None):
         widget_class = child.__class__.__name__
         # Se a classe for Entry limpa o campo
         if widget_class == 'Entry':
+            child['highlightcolor'] = 'blue'
             child.delete(0, END)
         elif widget_class == 'Combobox':
             child.delete(0, END)
         elif widget_class == 'Text':
+            child['highlightcolor'] = 'blue'
             child.delete(1.0, END)
 
 
@@ -75,3 +77,18 @@ def deletar(tv, tabela):
         messagebox.showerror('Erro', 'Algo deu errado...')
     except OperationalError:
         messagebox.showerror('Erro', 'Algo deu errado...')
+
+
+def auto_complete(entrada, tabela, campo, tv=None):
+    if entrada:
+
+        if tabela == 'advogados':
+            advogados = search(tabela, clause=f"where {campo} like '%{entrada}%'")
+
+            for advogado in advogados:
+
+                tv.insert('', END, iid=None, values=(advogado[1], advogado[2], advogado[9],
+                                                     advogado[8], f'{advogado[6]} / {advogado[5]}'))
+
+    else:
+        pass
