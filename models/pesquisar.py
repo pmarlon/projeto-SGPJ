@@ -337,13 +337,74 @@ class Pesquisar:
 
     def pesquisar_processos(self):
         self.__tvProcessos.delete(*self.__tvProcessos.get_children())
-        if (self.caso != '') and (self.processo != '') and (self.autor != '') and (self.adv_externo != '') and\
+
+        if (self.caso != '') and (self.processo != '') and (self.autor != '') and (self.adv_externo != '') and \
                 (self.inicio != '') and (self.fim != '') and (self.vara_tribunal != ''):
 
             processos = search('processos', clause=f'where caso="{self.caso}" and processo="{self.processo}" and '
                                                    f'autor="{self.autor}" and adv_externo="{self.adv_externo}" and '
                                                    f'inicio="{self.inicio}" and fim="{self.fim}" and '
                                                    f'vara_tribunal="{self.vara_tribunal}"')
+
+        elif (self.caso != '') or (self.processo != '') or (self.autor != '') or (self.adv_externo != '') or \
+                (self.inicio != '') or (self.fim != '') or (self.vara_tribunal != ''):
+            processos = search('processos', clause=f'where caso="{self.caso}" or processo="{self.processo}" or '
+                                                   f'autor="{self.autor}" or adv_externo="{self.adv_externo}" or '
+                                                   f'inicio="{self.inicio}" or fim="{self.fim}" or '
+                                                   f'vara_tribunal="{self.vara_tribunal}"')
+
+        elif (self.caso != '') and ((self.processo != '') or (self.autor != '') or (self.adv_externo != '') or
+                                    (self.inicio != '') or (self.fim != '') or (self.vara_tribunal != '')):
+
+            processos = search('processos', clause=f'where caso="{self.caso}" and (processo="{self.processo}" or '
+                                                   f'autor="{self.autor}" or adv_externo="{self.adv_externo}" or '
+                                                   f'inicio="{self.inicio}" or fim="{self.fim}" or '
+                                                   f'vara_tribunal="{self.vara_tribunal}")')
+
+        elif (self.processo != '') and (self.autor != '') and (self.adv_externo != '') and \
+                (self.inicio != '') and (self.fim != '') and (self.vara_tribunal != ''):
+            processos = search('processos', clause=f'where processo="{self.processo}" and '
+                                                   f'autor="{self.autor}" and adv_externo="{self.adv_externo}" and '
+                                                   f'inicio="{self.inicio}" and fim="{self.fim}" and '
+                                                   f'vara_tribunal="{self.vara_tribunal}"')
+
+        elif (self.processo != '') and ((self.autor != '') or (self.adv_externo != '') or
+                                        (self.inicio != '') or (self.fim != '') or (self.vara_tribunal != '')):
+            processos = search('processos', clause=f'where processo="{self.processo}" and  '
+                                                   f'(autor="{self.autor}" or adv_externo="{self.adv_externo}" or '
+                                                   f'inicio="{self.inicio}" or fim="{self.fim}" or '
+                                                   f'vara_tribunal="{self.vara_tribunal}")')
+
+        elif (self.autor != '') and (self.adv_externo != '') and \
+                (self.inicio != '') and (self.fim != '') and (self.vara_tribunal != ''):
+            processos = search('processos', clause=f'where autor="{self.autor}" and adv_externo="{self.adv_externo}" '
+                                                   f'and inicio="{self.inicio}" and fim="{self.fim}" and '
+                                                   f'vara_tribunal="{self.vara_tribunal}"')
+
+        elif (self.autor != '') and ((self.adv_externo != '') or (self.inicio != '') or (self.fim != '')
+                                     or (self.vara_tribunal != '')):
+            processos = search('processos', clause=f'where autor="{self.autor}" and (adv_externo="{self.adv_externo}" '
+                                                   f'or inicio="{self.inicio}" or fim="{self.fim}" or '
+                                                   f'vara_tribunal="{self.vara_tribunal}")')
+
+        elif (self.adv_externo != '') and (self.inicio != '') and (self.fim != '') and (self.vara_tribunal != ''):
+            processos = search('processos', clause=f'where adv_externo="{self.adv_externo}" and inicio="{self.inicio}"'
+                                                   f' and fim="{self.fim}" and vara_tribunal="{self.vara_tribunal}"')
+
+        elif (self.adv_externo != '') and ((self.inicio != '') or (self.fim != '') or (self.vara_tribunal != '')):
+            processos = search('processos', clause=f'where adv_externo="{self.adv_externo}" and (inicio="{self.inicio}"'
+                                                   f' or fim="{self.fim}" or vara_tribunal="{self.vara_tribunal}")')
+
+        elif (self.inicio != '') and (self.fim != '') and (self.vara_tribunal != ''):
+            processos = search('processos', clause=f'where inicio="{self.inicio}" and fim="{self.fim}" and '
+                                                   f'vara_tribunal="{self.vara_tribunal}"')
+
+        elif (self.inicio != '') and ((self.fim != '') or (self.vara_tribunal != '')):
+            processos = search('processos', clause=f'where inicio="{self.inicio}" and (fim="{self.fim}" or '
+                                                   f'vara_tribunal="{self.vara_tribunal}")')
+
+        elif (self.fim != '') and (self.vara_tribunal != ''):
+            processos = search('processos', clause=f'where fim="{self.fim}" and vara_tribunal="{self.vara_tribunal}"')
 
         try:
             for processo in processos:
