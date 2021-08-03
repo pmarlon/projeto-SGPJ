@@ -132,12 +132,12 @@ class Pesquisar:
         self.__txtCasoOcorrencia = Entry(self.__tbOcorrencias, width=20)
         self.__txtCasoOcorrencia.place(x=150, y=80)
 
-        self.__lblProcessoOcorrencia = Label(self.__tbOcorrencias, text='Processo', bg='LightSteelBlue3')
-        self.__lblProcessoOcorrencia['font'] = 'Serif', '12'
-        self.__lblProcessoOcorrencia.place(x=340, y=80)
+        self.__lblValorOcorrencia = Label(self.__tbOcorrencias, text='Valor', bg='LightSteelBlue3')
+        self.__lblValorOcorrencia['font'] = 'Serif', '12'
+        self.__lblValorOcorrencia.place(x=370, y=80)
 
-        self.__txtProcessoOcorrencia = Entry(self.__tbOcorrencias, width=20)
-        self.__txtProcessoOcorrencia.place(x=430, y=80)
+        self.__txtValorOcorrencia = Entry(self.__tbOcorrencias, width=20)
+        self.__txtValorOcorrencia.place(x=430, y=80)
 
         self.__lblDataOcorrencia = Label(self.__tbOcorrencias, text='Data', bg='LightSteelBlue3')
         self.__lblDataOcorrencia['font'] = 'Serif', '12'
@@ -293,8 +293,8 @@ class Pesquisar:
         return self.__txtCasoOcorrencia.get()
 
     @property
-    def processo_ocorrencia(self):
-        return self.__txtProcessoOcorrencia.get()
+    def valor_ocorrencia(self):
+        return self.__txtValorOcorrencia.get()
 
     @property
     def data_ocorrencia(self):
@@ -426,33 +426,20 @@ class Pesquisar:
 
         self.__tvOcorrencias.delete(*self.__tvOcorrencias.get_children())
 
-        if (self.caso_ocorrencia != '') and (self.processo_ocorrencia != '') and (self.data_ocorrencia != ''):
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
-                                        f'p.processo = "{self.processo_ocorrencia}" AND'
-                                        f' o.data = "{self.data_ocorrencia}"')
-        elif (self.caso_ocorrencia != '') and (self.processo_ocorrencia != ''):
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
-                                        f'p.processo = "{self.processo_ocorrencia}" ')
-        elif (self.caso_ocorrencia != '') and (self.data_ocorrencia != ''):
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
-                                        f'o.data = "{self.data_ocorrencia}"')
-        elif (self.processo_ocorrencia != '') and (self.data_ocorrencia != ''):
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on p.processo = "{self.processo_ocorrencia}" AND '
-                                        f'o.data = "{self.data_ocorrencia}"')
+        if (self.caso_ocorrencia != '') and (self.valor_ocorrencia != '') and (self.data_ocorrencia != ''):
+            ocorrencias = search('ocorrencias', clause=f'where caso="{self.caso_ocorrencia}" and '
+                                                       f'valor="{self.valor_ocorrencia}" and '
+                                                       f'data="{self.data_ocorrencia}"')
 
-        elif self.caso_ocorrencia != '':
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" ')
-        elif self.processo_ocorrencia != '':
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on p.processo = "{self.processo_ocorrencia}" ')
-        elif self.data_ocorrencia != '':
-            ocorrencias = search('ocorrencias as o', parms='o.*',
-                                 clause=f'INNER JOIN processos as p on o.data = "{self.data_ocorrencia}" ')
+        elif (self.caso_ocorrencia != '') or (self.valor_ocorrencia != '') or (self.data_ocorrencia != ''):
+            ocorrencias = search('ocorrencias', clause=f'where caso="{self.caso_ocorrencia}" or '
+                                                       f'valor="{self.valor_ocorrencia}" or '
+                                                       f'data="{self.data_ocorrencia}"')
+
+        elif (self.caso_ocorrencia != '') and ((self.valor_ocorrencia != '') or (self.data_ocorrencia != '')):
+            ocorrencias = search('ocorrencias', clause=f'where caso="{self.caso_ocorrencia}" and '
+                                                       f'(valor="{self.valor_ocorrencia}" or '
+                                                       f'data="{self.data_ocorrencia}")')
         try:
 
             if len(ocorrencias) == 0:
@@ -530,10 +517,11 @@ class Pesquisar:
 
             rid = get_id(tv, tabela)
             if tabela == 'ocorrencias':
-                values = search('processos', parms='processos.autor,processos.processo, processos.reu, '
-                                                   'processos.tipo_acao, processos.adv_externo, '
-                                                   'processos.uf_municipio, ocorrencias.*',
-                                clause='inner join ocorrencias on ocorrencias.caso = processos.caso')[0]
+                values = search('processos as p, ocorrencias as o', parms='p.autor,p.processo, p.reu, '
+                                                                          'p.tipo_acao, p.adv_externo, '
+                                                                          'p.uf_municipio, o.*',
+                                clause=f'where  p.caso = o.caso and o.id="{rid}"')[0]
+
             else:
                 values = search(tabela, clause=f'where id={rid}')[0]
 
