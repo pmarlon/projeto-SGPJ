@@ -7,6 +7,7 @@ class Consultas:
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
         imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Adicionar Registro
         img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
 
         self.master = master
         self.app = app
@@ -123,6 +124,39 @@ class Consultas:
                                     bg='LightSteelBlue3')
         self.__btnCancelar.image = img_cancelar
         self.__btnCancelar['command'] = lambda: self.iniciar_pagina()
+
+        self.__btnCalendario = Button(self.__frameConsultas,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__frameConsultas,
+                                                             self.__txtEsperado.winfo_name())
+        self.__btnCalendario.place(x=897, y=48)
+
+        self.__btnCalendario = Button(self.__frameConsultas,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__frameConsultas,
+                                                             self.__txtEntrada.winfo_name())
+        self.__btnCalendario.place(x=897, y=78)
+
+        self.__btnCalendario = Button(self.__frameConsultas,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__frameConsultas,
+                                                             self.__txtSaida.winfo_name())
+        self.__btnCalendario.place(x=897, y=232)
 
     @property
     def consulta(self):
