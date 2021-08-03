@@ -1,5 +1,12 @@
 from utils.modulos import *
 
+from models.principal import Principal
+from models.consultas import Consultas
+from models.add_advogado import AddAdvogado
+from models.ocorrencias import Ocorrencias
+from models.processos import Processos
+from models.pesquisar import Pesquisar
+
 
 class App:
 

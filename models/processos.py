@@ -1,3 +1,5 @@
+from random import randint
+
 from utils.modulos import *
 
 
@@ -467,6 +469,7 @@ class Processos:
         self.__frameProcessos.pack_forget()
 
     def command_advogados(self):
+        from models.add_advogado import AddAdvogado
         add_advogado = AddAdvogado(self.master, self, True)
         add_advogado.iniciar_janela(self)
 
