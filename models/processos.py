@@ -6,9 +6,9 @@ class Processos:
     def __init__(self, master=None, app=None):
         imgbtn3 = PhotoImage(file='imagens/imgEscolherAdv.png')  # imagem do botão Escolher Advogado
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
-        imgbtn5 = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão Calendario
         imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Add Registro
         img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
 
         self.app = app
         self.master = master
@@ -188,6 +188,28 @@ class Processos:
                                     bg='LightSteelBlue3')
         self.__btnCancelar.image = img_cancelar
         self.__btnCancelar['command'] = lambda: self.iniciar_pagina()
+
+        self.__btnCalendario = Button(self.__frameProcessos,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__frameProcessos,
+                                                             self.__txtDataInicio.winfo_name())
+        self.__btnCalendario.place(x=297, y=288)
+
+        self.__btnCalendario = Button(self.__frameProcessos,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__frameProcessos,
+                                                             self.__txtDataFim.winfo_name())
+        self.__btnCalendario.place(x=517, y=288)
 
     @property
     def caso(self):

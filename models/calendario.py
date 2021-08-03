@@ -8,10 +8,9 @@ class Calendario:
     def __init__(self, frame, campo=None):
         imgbtn5 = PhotoImage(file='imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
         imgbtn6 = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
-
         data = localtime()
         win = Toplevel(frame)
-        win.geometry('300x260+400+250')
+        win.geometry('300x260+550+300')
         win['bg'] = 'LightSteelBlue3'
         win.resizable(width=False, height=False)
         cal = Calendar(win,
