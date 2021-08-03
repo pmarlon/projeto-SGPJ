@@ -10,8 +10,9 @@ class Calendario:
         imgbtn5 = PhotoImage(file='imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
         imgbtn6 = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
         data = localtime()
+        relx, rely = preencher_data(frame, None, campo)
         win = Toplevel(frame)
-        win.geometry('300x260+550+300')
+        win.geometry(f'300x260+{relx}+{rely-300}')
         win['bg'] = 'LightSteelBlue3'
         win.resizable(width=False, height=False)
         cal = Calendar(win,
@@ -49,3 +50,22 @@ class Calendario:
 
         def command_cancelar():
             win.destroy()
+
+
+def preencher_data(frame, data, campo):
+    """
+    Função que preenche um campo de data de acordo com os parâmetros recebidos
+    :param frame: frame onde o campo de data se encontra
+    :param data: data recebida direto da class Calendário
+    :param campo: nome do campo data, usado para encontrar o campo correto no frame
+    :return: retorna a posição do campo no frame, usado para posicionar o Toplevel do Calendário
+    """
+    for child in frame.winfo_children():
+        child_class = child.__class__.__name__
+        if child_class == 'Entry':
+            if child.winfo_name() == campo:
+                if not data:
+                    return child.winfo_rootx(), child.winfo_rooty()
+                else:
+                    child.delete(0, END)
+                    child.insert(END, data)
