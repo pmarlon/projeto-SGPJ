@@ -8,6 +8,7 @@ class Ocorrencias:
         imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar
         imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Nova Ocorrência
         img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
 
         self.app = app
         self.__frameOcorrencias = Frame(master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
@@ -132,6 +133,17 @@ class Ocorrencias:
                                     bg='LightSteelBlue3')
         self.__btnCancelar.image = img_cancelar
         self.__btnCancelar['command'] = lambda: self.iniciar_pagina()
+
+        self.__btnCalendario = Button(self.__frameOcorrencias,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__frameOcorrencias,
+                                                             self.__txtDataOcorrencia.winfo_name())
+        self.__btnCalendario.place(x=297, y=238)
 
     @property
     def caso(self):

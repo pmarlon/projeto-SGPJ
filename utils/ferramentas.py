@@ -92,3 +92,12 @@ def auto_complete(entrada, tabela, campo, tv=None):
 
     else:
         pass
+
+
+def preencher_data(frame, data, campo):
+    for child in frame.winfo_children():
+        child_class = child.__class__.__name__
+        if child_class == 'Entry':
+            if child.winfo_name() == campo:
+                child.delete(0, END)
+                child.insert(END, data)

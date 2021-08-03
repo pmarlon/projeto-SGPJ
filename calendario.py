@@ -1,14 +1,11 @@
-from time import localtime
-
 from utils.modulos import *
 
 
 class Calendario:
 
-    def __init__(self, frame, campo=None):
-        imgbtn5 = PhotoImage(file='imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
-        imgbtn6 = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
-
+    def __init__(self, frame, app=None):
+        imgbtn5 = PhotoImage(file=f'{base_dir}/imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
+        imgbtn6 = PhotoImage(file=f'{base_dir}/imagens/imgCancelar.png')  # imagem do botão Cancelar
         data = localtime()
         win = Toplevel(frame)
         win.geometry('300x260+400+250')
@@ -43,9 +40,7 @@ class Calendario:
         btn_cancelar.place(x=160, y=205)
 
         def command_selecionar():
-            data_selecionada = cal.get_date()
-            preencher_data(frame, data_selecionada, campo)
-            win.destroy()
+            return cal.get_date()
 
         def command_cancelar():
             win.destroy()
