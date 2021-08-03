@@ -167,7 +167,7 @@ class Pesquisar:
         self.__tvOcorrencias.place(x=80, y=150)
 
         self.__btnPesquisar = criar_botao(self.__tbOcorrencias, 'Pesquisar', img_pesquisar,
-                                          lambda: self.pesqisar_ocorrencias(), 200, 350)
+                                          lambda: self.pesquisar_ocorrencias(), 200, 350)
 
         self.__btnListar = criar_botao(self.__tbOcorrencias, 'Listar', img_listar,
                                        lambda: self.listar_ocorrencias(), 310, 350)
@@ -243,7 +243,8 @@ class Pesquisar:
 
         self.__tvConsultas.place(x=25, y=160)
 
-        self.__btnPesquisar = criar_botao(self.__tbConsultas, 'Pesquisar', img_pesquisar, '', 250, 360)
+        self.__btnPesquisar = criar_botao(self.__tbConsultas, 'Pesquisar', img_pesquisar,
+                                          lambda: self.pesquisar_consultas(), 250, 360)
 
         self.__btnListar = criar_botao(self.__tbConsultas, 'Listar', img_listar,
                                        lambda: self.listar_consultas(), 360, 360)
@@ -332,8 +333,8 @@ class Pesquisar:
         consultas = view('consultas')
         for consulta in consultas:
             self.__tvConsultas.insert('', END, iid=None,
-                                      values=(consulta[1], consulta[3], consulta[5], consulta[10],
-                                              consulta[6], consulta[11], consulta[7]))
+                                      values=(consulta[1], consulta[3], consulta[5], consulta[11],
+                                              consulta[6], consulta[12], consulta[7]))
 
     def pesquisar_processos(self):
         self.__tvProcessos.delete(*self.__tvProcessos.get_children())
@@ -407,16 +408,20 @@ class Pesquisar:
             processos = search('processos', clause=f'where fim="{self.fim}" and vara_tribunal="{self.vara_tribunal}"')
 
         try:
-            for processo in processos:
-                self.__tvProcessos.insert('', END, iid=None,
-                                          values=(processo[1], processo[6],
-                                                  processo[2], processo[3], processo[12]))
+            if len(processos) == 0:
+                messagebox.showwarning('Atenção', 'Nenhum Registro encontrado.')
+            else:
+                for processo in processos:
+                    self.__tvProcessos.insert('', END, iid=None,
+                                              values=(processo[1], processo[6],
+                                                      processo[2], processo[3], processo[12]))
         except UnboundLocalError:
             pass
 
-    def pesqisar_ocorrencias(self):
+    def pesquisar_ocorrencias(self):
 
         self.__tvOcorrencias.delete(*self.__tvOcorrencias.get_children())
+
         if (self.caso_ocorrencia != '') and (self.processo_ocorrencia != '') and (self.data_ocorrencia != ''):
             ocorrencias = search('ocorrencias as o', parms='o.*',
                                  clause=f'INNER JOIN processos as p on p.caso = "{self.caso_ocorrencia}" AND '
@@ -445,18 +450,67 @@ class Pesquisar:
             ocorrencias = search('ocorrencias as o', parms='o.*',
                                  clause=f'INNER JOIN processos as p on o.data = "{self.data_ocorrencia}" ')
         try:
-            for ocorrencia in ocorrencias:
-                self.__tvOcorrencias.insert('', END, iid=None,
-                                            values=(ocorrencia[1], ocorrencia[2],
-                                                    ocorrencia[3], ocorrencia[4], ocorrencia[5]))
+
+            if len(ocorrencias) == 0:
+                messagebox.showwarning('Atenção', 'Nenhum Registro encontrado.')
+            else:
+                for ocorrencia in ocorrencias:
+                    self.__tvOcorrencias.insert('', END, iid=None,
+                                                values=(ocorrencia[1], ocorrencia[2],
+                                                        ocorrencia[3], ocorrencia[4], ocorrencia[5]))
+        except UnboundLocalError:
+            pass
+
+    def pesquisar_consultas(self):
+        self.__tvConsultas.delete(*self.__tvConsultas.get_children())
+        if (self.consulta != '') and (self.prioridade != '') and (self.entrada != '') and (self.saida != ''):
+            consultas = search('consultas',
+                               clause=f'where consulta="{self.consulta}" and prioridade="{self.prioridade}" and '
+                                      f'entrada="{self.entrada}" and saida="{self.saida}"')
+
+        elif (self.consulta != '') or (self.prioridade != '') or (self.entrada != '') or (self.saida != ''):
+            consultas = search('consultas',
+                               clause=f'where consulta="{self.consulta}" or prioridade="{self.prioridade}" or '
+                                      f'entrada="{self.entrada}" or saida="{self.saida}"')
+
+        elif (self.consulta != '') and ((self.prioridade != '') or (self.entrada != '') or (self.saida != '')):
+            consultas = search('consultas',
+                               clause=f'where consulta="{self.consulta}" and (prioridade="{self.prioridade}" or '
+                                      f'entrada="{self.entrada}" or saida="{self.saida}")')
+
+        elif (self.prioridade != '') and (self.entrada != '') and (self.saida != ''):
+            consultas = search('consultas',
+                               clause=f'where prioridade="{self.prioridade}" and '
+                                      f'entrada="{self.entrada}" and saida="{self.saida}"')
+
+        elif (self.prioridade != '') and ((self.entrada != '') or (self.saida != '')):
+            consultas = search('consultas',
+                               clause=f'where prioridade="{self.prioridade}" and '
+                                      f'(entrada="{self.entrada}" or saida="{self.saida}")')
+
+        elif (self.entrada != '') and (self.saida != ''):
+            consultas = search('consultas',
+                               clause=f'where entrada="{self.entrada}" and saida="{self.saida}"')
+
+        try:
+
+            if len(consultas) == 0:
+                messagebox.showwarning('Atenção', 'Nenhum Registro encontrado.')
+            else:
+                for consulta in consultas:
+                    self.__tvConsultas.insert('', END, iid=None,
+                                              values=(consulta[1], consulta[3], consulta[5], consulta[11],
+                                                      consulta[6], consulta[12], consulta[7]))
+
         except UnboundLocalError:
             pass
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
-        limpar(self.__framePesquisar, self.__tvConsultas)
-        limpar(self.__framePesquisar, self.__tvProcessos)
-        limpar(self.__framePesquisar, self.__tvOcorrencias)
+        limpar(self.__tbProcessos, self.__tvProcessos)
+        limpar(self.__tbConsultas, self.__tvConsultas)
+        limpar(self.__tbOcorrencias, self.__tvOcorrencias)
+
         self.__framePesquisar.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):
