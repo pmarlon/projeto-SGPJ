@@ -6,6 +6,7 @@ class Pesquisar:
     def __init__(self, master=None, app=None):
         img_pesquisar = PhotoImage(file='imagens/imgPesquisar.png')  # imagem do botão Pesquisar
         img_listar = PhotoImage(file='imagens/imgListarDoc')  # imagem do botão Listar
+        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
         imgbtn6 = PhotoImage(file='imagens/imgEditar.png')  # imagem do botão Editar
         imgbtn7 = PhotoImage(file='imagens/imgExcluirRegistro.png')  # imagem do botão Excluir
 
@@ -116,6 +117,28 @@ class Pesquisar:
         self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', imgbtn7,
                                         lambda: deletar(self.__tvProcessos, 'processos'), 630, 350)
 
+        self.__btnCalendario = Button(self.__tbProcessos,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__tbProcessos,
+                                                             self.__txtDataInicio.winfo_name())
+        self.__btnCalendario.place(x=297, y=138)
+
+        self.__btnCalendario = Button(self.__tbProcessos,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__tbProcessos,
+                                                             self.__txtDataFim.winfo_name())
+        self.__btnCalendario.place(x=467, y=138)
+
         # Aba Pesquisar Ocorrências
         self.__tbOcorrencias = Frame(self.__notebook, bg='LightSteelBlue3')
         self.__notebook.add(self.__tbOcorrencias,
@@ -180,6 +203,17 @@ class Pesquisar:
 
         self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', imgbtn7,
                                         lambda: deletar(self.__tvOcorrencias, 'ocorrencias'), 530, 350)
+
+        self.__btnCalendario = Button(self.__tbOcorrencias,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__tbOcorrencias,
+                                                             self.__txtDataOcorrencia.winfo_name())
+        self.__btnCalendario.place(x=757, y=78)
 
         # Aba Pesquisar Consultas
         self.__tbConsultas = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -255,6 +289,28 @@ class Pesquisar:
 
         self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', imgbtn7,
                                         lambda: deletar(self.__tvConsultas, 'consultas'), 580, 360)
+
+        self.__btnCalendario = Button(self.__tbConsultas,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__tbConsultas,
+                                                             self.__txtEntrada.winfo_name())
+        self.__btnCalendario.place(x=397, y=108)
+
+        self.__btnCalendario = Button(self.__tbConsultas,
+                                      image=img_calendario,
+                                      relief='flat',
+                                      bg='LightSteelBlue3',
+                                      highlightthickness=0
+                                      )
+        self.__btnCalendario.image = img_calendario
+        self.__btnCalendario['command'] = lambda: Calendario(self.__tbConsultas,
+                                                             self.__txtSaida.winfo_name())
+        self.__btnCalendario.place(x=607, y=108)
 
     @property
     def caso(self):
