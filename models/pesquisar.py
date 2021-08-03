@@ -272,6 +272,10 @@ class Pesquisar:
     def adv_externo(self):
         return self.__txtAdvExterno.get()
 
+    @adv_externo.setter
+    def adv_externo(self, valor):
+        self.__txtAdvExterno['values'] = valor
+
     @property
     def inicio(self):
         return self.__txtDataInicio.get()
@@ -510,11 +514,16 @@ class Pesquisar:
         limpar(self.__tbProcessos, self.__tvProcessos)
         limpar(self.__tbConsultas, self.__tvConsultas)
         limpar(self.__tbOcorrencias, self.__tvOcorrencias)
-
+        self.atualizar__advogados()
         self.__framePesquisar.pack(side=BOTTOM, fill=X, pady=1)
 
     def ocultar_pagina(self):
         self.__framePesquisar.pack_forget()
+
+    def atualizar__advogados(self):
+        advogados = [advogado for advogado in search('advogados', parms='nome')]
+        advogados = [advogado[0] for advogado in advogados]
+        self.adv_externo = advogados
 
     def editar(self, frame, tv, tabela):
         try:

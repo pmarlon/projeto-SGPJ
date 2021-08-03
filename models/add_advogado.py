@@ -26,7 +26,7 @@ class AddAdvogado:
 
         self.__txtAdvNome = Entry(self.__frameAdvogados, width=80)
         vcmd = self.__txtAdvNome.register(func=self.valida_auto_complete)
-        self.__txtAdvNome['validate'] = 'all'
+        self.__txtAdvNome['validate'] = 'key'
         self.__txtAdvNome['validatecommand'] = (vcmd, '%P', 'nome')
         self.__txtAdvNome.place(x=100, y=20)
 
@@ -78,7 +78,7 @@ class AddAdvogado:
 
         self.__txtAdvOAB = Entry(self.__frameAdvogados, width=30)
         vcmd = self.__txtAdvOAB.register(func=self.valida_auto_complete)
-        self.__txtAdvOAB['validate'] = 'all'
+        self.__txtAdvOAB['validate'] = 'key'
         self.__txtAdvOAB['validatecommand'] = (vcmd, '%P', 'oab')
         self.__txtAdvOAB.place(x=100, y=170)
 
@@ -88,7 +88,7 @@ class AddAdvogado:
 
         self.__txtAdvCPF = Entry(self.__frameAdvogados, width=30)
         vcmd = self.__txtAdvCPF.register(func=self.valida_auto_complete)
-        self.__txtAdvCPF['validate'] = 'all'
+        self.__txtAdvCPF['validate'] = 'key'
         self.__txtAdvCPF['validatecommand'] = (vcmd, '%P', 'cpf')
         self.__txtAdvCPF.place(x=500, y=170)
 
@@ -218,14 +218,15 @@ class AddAdvogado:
         try:
             insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
                    self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
-            messagebox.showinfo('Informação', 'Advogado cadastrado com sucesso.')
+            messagebox.showinfo('Informação', 'Advogado cadastrado com sucesso.', parent=self.master)
             if str(self.master.winfo_class()) == 'Toplevel':
                 self.master.destroy()
             else:
                 self.iniciar_pagina()
 
         except IntegrityError:
-            messagebox.showwarning('Atenção', 'Já existe um cadastro com o CPF ou N° OAB digitados.')
+            messagebox.showwarning('Atenção', 'Já existe um cadastro com o CPF ou N° OAB digitados.',
+                                   parent=self.master)
 
     def listar(self):
         self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
@@ -241,24 +242,24 @@ class AddAdvogado:
             rid = get_id(self.__tvAdvogados, 'advogados')
 
         except IndexError:
-            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
+            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.', parent=self.master)
         except TypeError:
-            messagebox.showerror('Erro', 'Algo deu errado...')
+            messagebox.showerror('Erro', 'Algo deu errado...', parent=self.master)
         except OperationalError:
-            messagebox.showerror('Erro', 'Algo deu errado...')
+            messagebox.showerror('Erro', 'Algo deu errado...', parent=self.master)
         else:
-            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?'):
+            if messagebox.askyesno('Atenção', 'Deseja mesmo excluir o registro?', parent=self.master):
                 delete(rid, 'advogados')
-                messagebox.showinfo('Informação', 'Registro excluído com sucesso.')
+                messagebox.showinfo('Informação', 'Registro excluído com sucesso.', parent=self.master)
                 self.listar()
 
     def editar(self):
         try:
             self.preencher()
         except ValueError:
-            messagebox.showerror('Atenção', 'Ocorreu um erro...')
+            messagebox.showerror('Atenção', 'Ocorreu um erro...', parent=self.master)
         except IndexError:
-            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
+            messagebox.showerror('Atenção', 'Você precisa selecionar um registro.', parent=self.master)
         else:
             self.__btnEditarAdv.place_forget()
             self.__btnRmvAdv.place_forget()
@@ -284,7 +285,7 @@ class AddAdvogado:
                fax=self.adv_fax,
                email=self.adv_email)
 
-        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
+        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!', parent=self.master)
 
         self.__txtAdvCPF['state'] = 'normal'
         self.__txtAdvOAB['state'] = 'normal'
@@ -313,9 +314,8 @@ class AddAdvogado:
                     child.insert(END, values[cont])
 
     def valida_auto_complete(self, entrada, campo):
-
+        self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
         if entrada:
-            self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
             auto_complete(entrada, 'advogados', campo, self.__tvAdvogados)
             return True
 
