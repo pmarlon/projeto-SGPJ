@@ -31,7 +31,9 @@ def limpar(frame, tv=None):
             child['background'] = '#fff'
             child.delete(0, END)
         elif widget_class == 'Combobox':
-            child['background'] = '#fff'
+            style = ttk.Style()
+            style.configure("w.TCombobox", fieldbackground='#fff')
+            child['style'] = 'w.TCombobox'
             child.delete(0, END)
         elif widget_class == 'Text':
             child['background'] = '#fff'

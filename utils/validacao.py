@@ -52,3 +52,16 @@ def validar_data(entrada):
         return True
     except ValueError:
         return False
+
+
+def validar_processo(entrada):
+    if entrada.isdigit():
+        return True
+    elif '/' in entrada:
+        x = [x for x in entrada if x.isalpha() or not x.isdigit() and x != '/']
+        if not x:
+            return True
+        else:
+            return False
+    else:
+        return False

@@ -104,9 +104,9 @@ class Processos:
         self.__txtUfMunicipio = Entry(self.__frameProcessos, width=40)
         self.__txtUfMunicipio.place(x=210, y=230)
 
-        self.__lblVrCausa = Label(self.__frameProcessos, text='Valor Causa', bg='LightSteelBlue3')
+        self.__lblVrCausa = Label(self.__frameProcessos, text='Valor Causa R$', bg='LightSteelBlue3')
         self.__lblVrCausa['font'] = 'Serif', '12'
-        self.__lblVrCausa.place(x=570, y=230)
+        self.__lblVrCausa.place(x=545, y=230)
 
         self.__txtVrCausa = Entry(self.__frameProcessos, width=21)
         self.__txtVrCausa.place(x=680, y=230)
@@ -121,9 +121,9 @@ class Processos:
         self.__txtSitAtual['justify'] = 'center'
         self.__txtSitAtual.place(x=210, y=260)
 
-        self.__lblVrAtual = Label(self.__frameProcessos, text='Valor Atual', bg='LightSteelBlue3')
+        self.__lblVrAtual = Label(self.__frameProcessos, text='Valor Atual R$', bg='LightSteelBlue3')
         self.__lblVrAtual['font'] = 'Serif', '12'
-        self.__lblVrAtual.place(x=575, y=260)
+        self.__lblVrAtual.place(x=550, y=260)
 
         self.__txtVrAtual = Entry(self.__frameProcessos, width=21)
         self.__txtVrAtual.place(x=680, y=260)
@@ -144,7 +144,7 @@ class Processos:
 
         self.__lblPerda = Label(self.__frameProcessos, text='Perda', bg='LightSteelBlue3')
         self.__lblPerda['font'] = 'Serif', '12'
-        self.__lblPerda.place(x=620, y=290)
+        self.__lblPerda.place(x=615, y=290)
 
         self.__txtPerda = Entry(self.__frameProcessos, width=21)
         self.__txtPerda.place(x=680, y=290)
@@ -378,42 +378,52 @@ class Processos:
 
     def insert_processo(self):
         try:
-            insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso,
-                   self.processo, self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio,
-                   self.situacao, self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda,
-                   self.end_parte_adv)
-            messagebox.showinfo('Informação', 'Processo adicionado com sucesso.')
-            self.iniciar_pagina()
-        except IntegrityError:
-            messagebox.showwarning('Atenção', 'Já existe um caso com este número.')
-        except OperationalError:
-            messagebox.showerror('Atenção', 'Ocorreu um erro...')
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            try:
+                insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso,
+                       self.processo, self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio,
+                       self.situacao, self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda,
+                       self.end_parte_adv)
+                messagebox.showinfo('Informação', 'Processo adicionado com sucesso.')
+                self.iniciar_pagina()
+            except IntegrityError:
+                messagebox.showwarning('Atenção', 'Já existe um caso com este número.')
+            except OperationalError:
+                messagebox.showerror('Atenção', 'Ocorreu um erro...')
 
     def update_processo(self):
-        caso = self.caso
-        rid = search('processos', parms='id', clause=f'where caso={caso}')[0][0]
-        update(rid, 'processos',
-               autor=self.autor,
-               reu=self.reu,
-               adv_externo=self.adv_externo,
-               adv_adverso=self.adv_adverso,
-               processo=self.processo,
-               inicio=self.inicio,
-               vr_causa=self.vr_causa,
-               tipo_acao=self.tipo_acao,
-               vara_tribunal=self.vara_tribunal,
-               uf_municipio=self.uf_municipio,
-               situacao=self.situacao,
-               pos_feito=self.pos_feito,
-               observacao=self.observacao,
-               valor_atual=self.vr_atual,
-               pedido=self.pedido,
-               fim=self.fim,
-               perda=self.perda,
-               end_parte_adv=self.end_parte_adv
-               )
-        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
-        self.iniciar_pagina()
+        try:
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            caso = self.caso
+            rid = search('processos', parms='id', clause=f'where caso={caso}')[0][0]
+            update(rid, 'processos',
+                   autor=self.autor,
+                   reu=self.reu,
+                   adv_externo=self.adv_externo,
+                   adv_adverso=self.adv_adverso,
+                   processo=self.processo,
+                   inicio=self.inicio,
+                   vr_causa=self.vr_causa,
+                   tipo_acao=self.tipo_acao,
+                   vara_tribunal=self.vara_tribunal,
+                   uf_municipio=self.uf_municipio,
+                   situacao=self.situacao,
+                   pos_feito=self.pos_feito,
+                   observacao=self.observacao,
+                   valor_atual=self.vr_atual,
+                   pedido=self.pedido,
+                   fim=self.fim,
+                   perda=self.perda,
+                   end_parte_adv=self.end_parte_adv
+                   )
+            messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
+            self.iniciar_pagina()
 
     def preencher(self, values=None):
         limpar(self.__frameProcessos)
@@ -478,3 +488,107 @@ class Processos:
             self.__btnAddRegistro.place_forget()
             self.__btnSalvarRegistro.place(x=350, y=390)
             self.__btnCancelar.place(x=500, y=390, relwidth=0.13)
+
+    def validar(self):
+        valid = []
+
+        for child in self.__frameProcessos.winfo_children():
+            child_class = child.__class__.__name__
+
+            if child_class == 'Entry':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+            elif child_class == 'Combobox':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    style = ttk.Style()
+                    style.configure("w.TCombobox", fieldbackground='#fff')
+                    child['style'] = 'w.TCombobox'
+                    valid.append(True)
+                else:
+                    style = ttk.Style()
+                    style.configure("r.TCombobox", fieldbackground='Indian Red')
+                    child['style'] = 'r.TCombobox'
+                    valid.append(False)
+            elif child_class == 'Text':
+                if validar_vazio(child.get(1.0, END)) and validar_space(child.get(1.0, END)):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+        if (validar_str(self.autor)) and (validar_str(self.reu)) and (validar_str(self.adv_externo)) and \
+                (validar_str(self.adv_adverso)) and (validar_processo(self.processo)) and \
+                (validar_float(self.vr_causa)) and (validar_float(self.vr_atual)) and \
+                (validar_data(self.inicio)) and (validar_data(self.fim)):
+            valid.append(True)
+        else:
+            if not validar_str(self.autor):
+                self.__txtAutor['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAutor['background'] = '#fff'
+                valid.append(True)
+            if not validar_str(self.reu):
+                self.__txtReu['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtReu['background'] = '#fff'
+                valid.append(True)
+            if not validar_str(self.adv_externo):
+                style = ttk.Style()
+                style.configure("r.TCombobox", fieldbackground='Indian Red')
+                self.__txtAdvExterno['style'] = 'r.TCombobox'
+                valid.append(False)
+            else:
+                style = ttk.Style()
+                style.configure("w.TCombobox", fieldbackground='#fff')
+                self.__txtAdvExterno['style'] = 'w.TCombobox'
+                valid.append(True)
+            if not validar_str(self.adv_adverso):
+                self.__txtAdvAdverso['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAdvAdverso['background'] = '#fff'
+                valid.append(True)
+            if not validar_processo(self.processo):
+                self.__txtNumProcesso['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtNumProcesso['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_float(self.vr_causa):
+                self.__txtVrCausa['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtVrCausa['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_float(self.vr_atual):
+                self.__txtVrAtual['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtVrAtual['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_data(self.inicio):
+                self.__txtDataInicio['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtDataInicio['background'] = '#fff'
+                valid.append(True)
+            if not validar_data(self.fim):
+                self.__txtDataFim['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtDataFim['background'] = '#fff'
+                valid.append(True)
+
+        if False not in valid:
+            return True
+        else:
+            raise ValueError
