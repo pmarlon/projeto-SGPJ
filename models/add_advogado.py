@@ -216,17 +216,23 @@ class AddAdvogado:
 
     def insert_adv(self):
         try:
-            insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
-                   self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
-            messagebox.showinfo('Informação', 'Advogado cadastrado com sucesso.', parent=self.master)
-            if str(self.master.winfo_class()) == 'Toplevel':
-                self.master.destroy()
-            else:
-                self.iniciar_pagina()
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            try:
 
-        except IntegrityError:
-            messagebox.showwarning('Atenção', 'Já existe um cadastro com o CPF ou N° OAB digitados.',
-                                   parent=self.master)
+                insert('advogados', self.adv_nome, self.adv_endereco, self.adv_cidade, self.adv_cep,
+                       self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
+                messagebox.showinfo('Informação', 'Advogado cadastrado com sucesso.', parent=self.master)
+                if str(self.master.winfo_class()) == 'Toplevel':
+                    self.master.destroy()
+                else:
+                    self.iniciar_pagina()
+
+            except IntegrityError:
+                messagebox.showwarning('Atenção', 'Já existe um cadastro com o CPF ou N° OAB digitados.',
+                                       parent=self.master)
 
     def listar(self):
         self.__tvAdvogados.delete(*self.__tvAdvogados.get_children())
@@ -273,25 +279,30 @@ class AddAdvogado:
                 self.__btnFechar.place(x=470, y=350, relwidth=0.15)
 
     def update_adv(self):
-        cpf = self.__txtAdvCPF.get()
-        rid = search('advogados', parms='id', clause=f'where cpf={cpf}')[0][0]
+        try:
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            cpf = self.__txtAdvCPF.get()
+            rid = search('advogados', parms='id', clause=f'where cpf={cpf}')[0][0]
 
-        update(rid, 'advogados',
-               nome=self.adv_nome,
-               endereco=self.adv_endereco,
-               cidade_uf=self.adv_cidade,
-               cep=self.adv_cep,
-               fone_com=self.adv_telefone,
-               fax=self.adv_fax,
-               email=self.adv_email)
+            update(rid, 'advogados',
+                   nome=self.adv_nome,
+                   endereco=self.adv_endereco,
+                   cidade_uf=self.adv_cidade,
+                   cep=self.adv_cep,
+                   fone_com=self.adv_telefone,
+                   fax=self.adv_fax,
+                   email=self.adv_email)
 
-        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!', parent=self.master)
+            messagebox.showinfo('Informação', 'Registro alterado com Sucesso!', parent=self.master)
 
-        self.__txtAdvCPF['state'] = 'normal'
-        self.__txtAdvOAB['state'] = 'normal'
-        limpar(self.__frameAdvogados, self.__tvAdvogados)
-        self.listar()
-        self.command_cancelar()
+            self.__txtAdvCPF['state'] = 'normal'
+            self.__txtAdvOAB['state'] = 'normal'
+            limpar(self.__frameAdvogados, self.__tvAdvogados)
+            self.listar()
+            self.command_cancelar()
 
     def preencher(self):
         try:
@@ -365,3 +376,52 @@ class AddAdvogado:
         if str(self.master.winfo_class()) == 'Toplevel':
             self.__btnFechar.place_forget()
             self.__btnFechar.place(x=620, y=350, relwidth=0.15)
+
+    def validar(self):
+        valid = []
+
+        for child in self.__frameAdvogados.winfo_children():
+            child_class = child.__class__.__name__
+
+            if child_class == 'Entry':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+
+        if validar_str(self.adv_nome) and validar_int(self.adv_cpf) and validar_int(self.adv_oab) \
+                and validar_int(self.adv_cep):
+            valid.append(True)
+        else:
+            if not validar_str(self.adv_nome):
+                self.__txtAdvNome['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAdvNome['background'] = '#fff'
+                valid.append(True)
+            if not validar_int(self.adv_cpf) or len(self.adv_cpf) != 11:
+                self.__txtAdvCPF['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAdvCPF['background'] = '#fff'
+                valid.append(True)
+            if not validar_int(self.adv_oab):
+                self.__txtAdvOAB['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAdvOAB['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_int(self.adv_cep):
+                self.__txtAdvCep['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAdvCep['background'] = '#fff'
+                valid.append(True)
+
+        if False not in valid:
+            return True
+        else:
+            raise ValueError

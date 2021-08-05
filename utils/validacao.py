@@ -9,8 +9,17 @@ def validar_int(entrada):
 
 
 def validar_str(entrada):
+    entrada = entrada.strip()
     if entrada.isalpha():
         return True
+    elif ' ' in entrada:
+        x = [x for x in entrada if x.isdigit() or not x.isalpha() and x != ' ']
+
+        if not x:
+            return True
+        else:
+            return False
+
     else:
         return False
 
@@ -25,16 +34,16 @@ def validar_float(entrada):
 
 def validar_space(entrada):
     if entrada.isspace():
-        return True
-    else:
         return False
+    else:
+        return True
 
 
 def validar_vazio(entrada):
     if entrada == '':
-        return True
-    else:
         return False
+    else:
+        return True
 
 
 def validar_data(entrada):

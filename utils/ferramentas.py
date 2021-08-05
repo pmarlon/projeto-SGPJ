@@ -28,12 +28,13 @@ def limpar(frame, tv=None):
         widget_class = child.__class__.__name__
         # Se a classe for Entry limpa o campo
         if widget_class == 'Entry':
-            child['highlightcolor'] = 'blue'
+            child['background'] = '#fff'
             child.delete(0, END)
         elif widget_class == 'Combobox':
+            child['background'] = '#fff'
             child.delete(0, END)
         elif widget_class == 'Text':
-            child['highlightcolor'] = 'blue'
+            child['background'] = '#fff'
             child.delete(1.0, END)
 
 
