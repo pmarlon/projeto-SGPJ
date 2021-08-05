@@ -235,23 +235,33 @@ class Ocorrencias:
 
     def insert_ocorrencia(self):
         try:
-            insert('ocorrencias', self.caso, self.data_ocorrencia, self.descricao, self.valor, self.vr_atual)
-            messagebox.showinfo('Informação', 'Ocorrência adicionada com sucesso.')
-            self.iniciar_pagina()
-        except OperationalError:
-            messagebox.showerror('Atenção', 'Ocorreu um erro...')
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            try:
+                insert('ocorrencias', self.caso, self.data_ocorrencia, self.descricao, self.valor, self.vr_atual)
+                messagebox.showinfo('Informação', 'Ocorrência adicionada com sucesso.')
+                self.iniciar_pagina()
+            except OperationalError:
+                messagebox.showerror('Atenção', 'Ocorreu um erro...')
 
     def update_ocorrencia(self):
-        caso = self.caso
-        rid = search('ocorrencias', parms='id', clause=f'where caso={caso}')[0][0]
-        update(rid, 'ocorrencias',
-               data=self.data_ocorrencia,
-               descricao=self.descricao,
-               valor=self.valor,
-               vr_atual=self.vr_atual)
+        try:
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            caso = self.caso
+            rid = search('ocorrencias', parms='id', clause=f'where caso={caso}')[0][0]
+            update(rid, 'ocorrencias',
+                   data=self.data_ocorrencia,
+                   descricao=self.descricao,
+                   valor=self.valor,
+                   vr_atual=self.vr_atual)
 
-        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
-        self.iniciar_pagina()
+            messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
+            self.iniciar_pagina()
 
     def pesquisar(self):
         try:
@@ -334,3 +344,50 @@ class Ocorrencias:
         self.__txtTipoAcao['state'] = 'readonly'
         self.__txtAdvExterno['state'] = 'readonly'
         self.__txtUfMunicipio['state'] = 'readonly'
+
+    def validar(self):
+        valid = []
+        for child in self.__frameOcorrencias.winfo_children():
+            child_class = child.__class__.__name__
+
+            if child_class == 'Entry':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+            elif child_class == 'Text':
+                if validar_vazio(child.get(1.0, END)) and validar_space(child.get(1.0, END)):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+        if (validar_data(self.data_ocorrencia)) and (validar_float(self.valor)) and (validar_float(self.vr_atual)):
+            valid.append(True)
+        else:
+            if not validar_data(self.data_ocorrencia):
+                self.__txtDataOcorrencia['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtDataOcorrencia['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_float(self.valor):
+                self.__txtValor['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtValor['background'] = '#fff'
+                valid.append(True)
+            if not validar_float(self.vr_atual):
+                self.__txtValorAtual['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtValorAtual['background'] = '#fff'
+                valid.append(True)
+
+        if False not in valid:
+            return True
+        else:
+            raise ValueError
