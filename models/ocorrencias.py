@@ -13,6 +13,8 @@ class Ocorrencias:
         self.app = app
         self.__frameOcorrencias = Frame(master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
+        self.__id = None
+
         self.__lblCaso = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblCaso['text'] = 'N° do Caso'
         self.__lblCaso['font'] = 'Serif', '12', 'bold'
@@ -252,8 +254,7 @@ class Ocorrencias:
         except ValueError:
             messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
         else:
-            caso = self.caso
-            rid = search('ocorrencias', parms='id', clause=f'where caso={caso}')[0][0]
+            rid = self.__id
             update(rid, 'ocorrencias',
                    data=self.data_ocorrencia,
                    descricao=self.descricao,
@@ -292,6 +293,7 @@ class Ocorrencias:
             self.uf_municipio = values[6]
 
         elif values:
+            self.__id = values[6]
             self.caso = values[7]
             self.autor = values[0]
             self.num_processo = values[1]
