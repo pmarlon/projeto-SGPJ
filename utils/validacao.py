@@ -65,3 +65,16 @@ def validar_processo(entrada):
             return False
     else:
         return False
+
+
+def validar_referencia(entrada):
+    if entrada.isalnum():
+        return True
+    elif '/' in entrada or ' ' in entrada or '.' in entrada or ',' in entrada:
+        x = [x for x in entrada if x != '/' and not x.isalnum() and x != ' ' and x != ',' and x != '.']
+        if not x:
+            return True
+        else:
+            return False
+    else:
+        return False

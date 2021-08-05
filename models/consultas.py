@@ -256,34 +256,44 @@ class Consultas:
 
     def insert_consulta(self):
         try:
-            insert('consultas', self.consulta, self.ref, self.prioridade, self.esperado, self.entrada, self.origem,
-                   self.assunto, self.interessado, self.adv_cojur, self.emenda_result, self.saida, self.destino)
-            messagebox.showinfo('Informação', 'Consulta adicionada com sucesso.')
-            self.iniciar_pagina()
-        except OperationalError:
-            messagebox.showerror('Atenção', 'Ocorreu um erro...')
-        except IntegrityError:
-            messagebox.showwarning('Atenção', 'Já existe uma consulta com este número.')
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            try:
+                insert('consultas', self.consulta, self.ref, self.prioridade, self.esperado, self.entrada, self.origem,
+                       self.assunto, self.interessado, self.adv_cojur, self.emenda_result, self.saida, self.destino)
+                messagebox.showinfo('Informação', 'Consulta adicionada com sucesso.')
+                self.iniciar_pagina()
+            except OperationalError:
+                messagebox.showerror('Atenção', 'Ocorreu um erro...')
+            except IntegrityError:
+                messagebox.showwarning('Atenção', 'Já existe uma consulta com este número.')
 
     def update_consulta(self):
-        consulta = self.consulta
-        rid = search('consultas', parms='id', clause=f'WHERE consulta={consulta}')[0][0]
+        try:
+            self.validar()
+        except ValueError:
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            consulta = self.consulta
+            rid = search('consultas', parms='id', clause=f'WHERE consulta={consulta}')[0][0]
 
-        update(rid, 'consultas',
-               ref=self.ref,
-               prioridade=self.prioridade,
-               esperado=self.esperado,
-               entrada=self.entrada,
-               origem=self.origem,
-               assunto=self.assunto,
-               interessado=self.interessado,
-               adv_cojur=self.adv_cojur,
-               emenda=self.emenda_result,
-               saida=self.saida,
-               destino=self.destino
-               )
-        messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
-        self.iniciar_pagina()
+            update(rid, 'consultas',
+                   ref=self.ref,
+                   prioridade=self.prioridade,
+                   esperado=self.esperado,
+                   entrada=self.entrada,
+                   origem=self.origem,
+                   assunto=self.assunto,
+                   interessado=self.interessado,
+                   adv_cojur=self.adv_cojur,
+                   emenda=self.emenda_result,
+                   saida=self.saida,
+                   destino=self.destino
+                   )
+            messagebox.showinfo('Informação', 'Registro alterado com Sucesso!')
+            self.iniciar_pagina()
 
     def preencher(self, values):
 
@@ -321,3 +331,117 @@ class Consultas:
 
     def ocultar_pagina(self):
         self.__frameConsultas.pack_forget()
+
+    def validar(self):
+        valid = []
+        for child in self.__frameConsultas.winfo_children():
+            child_class = child.__class__.__name__
+
+            if child_class == 'Entry':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+            elif child_class == 'Text':
+                if validar_vazio(child.get(1.0, END)) and validar_space(child.get(1.0, END)):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+            elif child_class == 'Combobox':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    style = ttk.Style()
+                    style.configure("w.TCombobox", fieldbackground='#fff')
+                    child['style'] = 'w.TCombobox'
+                    valid.append(True)
+                else:
+                    style = ttk.Style()
+                    style.configure("r.TCombobox", fieldbackground='Indian Red')
+                    child['style'] = 'r.TCombobox'
+                    valid.append(False)
+        if (validar_int(self.consulta)) and (validar_referencia(self.ref)) and (validar_str(self.prioridade)) and\
+                (validar_data(self.esperado)) and (validar_str(self.origem)) and (validar_data(self.entrada)) and \
+                (validar_str(self.interessado)) and (validar_str(self.adv_cojur)) and (validar_str(self.destino)) and \
+                (validar_data(self.saida)):
+            valid.append(True)
+        else:
+            if not validar_int(self.consulta):
+                self.__txtConsulta['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtConsulta['background'] = '#fff'
+                valid.append(True)
+            if not validar_referencia(self.ref):
+                self.__txtRef['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtRef['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_str(self.prioridade):
+                style = ttk.Style()
+                style.configure("r.TCombobox", fieldbackground='Indian Red')
+                self.__txtPrioridade['style'] = 'r.TCombobox'
+                valid.append(False)
+            else:
+                style = ttk.Style()
+                style.configure("w.TCombobox", fieldbackground='#fff')
+                self.__txtPrioridade['style'] = 'w.TCombobox'
+                valid.append(True)
+
+            if not validar_data(self.esperado):
+                self.__txtEsperado['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtEsperado['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_str(self.origem):
+                self.__txtOrigem['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtOrigem['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_data(self.entrada):
+                self.__txtEntrada['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtEntrada['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_str(self.interessado):
+                self.__txtInteressado['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtInteressado['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_str(self.adv_cojur):
+                self.__txtAdvCojur['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtAdvCojur['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_str(self.destino):
+                self.__txtDestino['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtDestino['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_data(self.saida):
+                self.__txtSaida['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtSaida['background'] = '#fff'
+                valid.append(True)
+
+        if False not in valid:
+            return True
+        else:
+            raise ValueError
