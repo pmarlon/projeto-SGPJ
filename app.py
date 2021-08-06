@@ -12,7 +12,7 @@ class App:
 
     def __init__(self, root=None):
 
-        logo = ImageTk.PhotoImage(data=base64.b64decode(logo_base64))
+        logo = ImageTk.PhotoImage(data=base64.b64decode(logo_completo_base64))
         img_principal = PhotoImage(data=base64.b64decode(img_home_base64))  # imagem do botão Página Principal
         img_ocorrencias = PhotoImage(data=base64.b64decode(img_ocorrencias_base64))  # imagem do botão Ocorrências
         img_processo = PhotoImage(data=base64.b64decode(img_processo_base64))  # imagem do botão Processos
@@ -25,15 +25,8 @@ class App:
         # Cabeçalho do Programa
         self.__Header = Frame(self.root, height=100, bg='#282a34')
         self.__Header.pack(side=TOP, fill=X)
-        self.__lblTitulo = Label(self.__Header, text='SGPJ - Advogados Associados', bg='#282a34')
-        self.__lblTitulo['font'] = 'Serif', '24', 'bold'
-        self.__lblTitulo['fg'] = '#64b6fa'
-        self.__lblTitulo.place(x=200, y=30)
-        self.__lblTitulo.place(x=200, y=30)
         self.__lblLogo = Label(self.__Header, image=logo, bg='#282a34')
         self.__lblLogo.place(x=100, y=0)
-        self.__lblLogo = Label(self.__Header, image=logo, bg='#282a34')
-        self.__lblLogo.place(x=750, y=0)
         self.__lblLogo = logo
 
         # Menu com os botões das páginas do programa
