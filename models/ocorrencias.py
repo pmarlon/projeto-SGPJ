@@ -4,11 +4,11 @@ from utils.modulos import *
 class Ocorrencias:
 
     def __init__(self, master=None, app=None):
-        img_pesquisar = ImageTk.PhotoImage(Image.open('imagens/imgPesquisar.png').resize((28, 28), Image.ANTIALIAS))
-        imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar
-        imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Nova Ocorrência
-        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
-        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
+        img_pesquisar = ImageTk.PhotoImage(data=base64.b64decode(img_pesquisar_menor_base64))
+        img_salvar = PhotoImage(data=base64.b64decode(img_salvar_base64))  # imagem do botão Salvar Registro
+        img_adicionar = PhotoImage(data=base64.b64decode(img_add_registro_base64))  # imagem do botão Add Registro
+        img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
+        img_calendario = PhotoImage(data=base64.b64decode(img_calendario_base64))  # imagem do botão calendário
 
         self.app = app
         self.__frameOcorrencias = Frame(master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
@@ -104,8 +104,8 @@ class Ocorrencias:
                                          compound=TOP,
                                          relief='flat',
                                          bg='LightSteelBlue3')
-        self.__btnAddOcorrencia['image'] = imgbtn8
-        self.__btnAddOcorrencia.image = imgbtn8
+        self.__btnAddOcorrencia['image'] = img_adicionar
+        self.__btnAddOcorrencia.image = img_adicionar
         self.__btnAddOcorrencia['command'] = lambda: self.insert_ocorrencia()
 
         self.__btnSalvar = Button(self.__frameOcorrencias,
@@ -113,8 +113,8 @@ class Ocorrencias:
                                   compound=TOP,
                                   relief='flat',
                                   bg='LightSteelBlue3')
-        self.__btnSalvar['image'] = imgbtn4
-        self.__btnSalvar.image = imgbtn4
+        self.__btnSalvar['image'] = img_salvar
+        self.__btnSalvar.image = img_salvar
         self.__btnSalvar['command'] = lambda: self.update_ocorrencia()
 
         self.__btnPesquisar = Button(self.__frameOcorrencias,

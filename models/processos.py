@@ -6,11 +6,11 @@ from utils.modulos import *
 class Processos:
     # Cadastro de processos
     def __init__(self, master=None, app=None):
-        imgbtn3 = PhotoImage(file='imagens/imgEscolherAdv.png')  # imagem do botão Escolher Advogado
-        imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
-        imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Add Registro
-        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
-        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
+        img_escolher = PhotoImage(data=base64.b64decode(img_escolher_base64))  # imagem do botão Escolher Advogado
+        img_salvar = PhotoImage(data=base64.b64decode(img_salvar_base64))  # imagem do botão Salvar Registro
+        img_adicionar = PhotoImage(data=base64.b64decode(img_add_registro_base64))  # imagem do botão Add Registro
+        img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
+        img_calendario = PhotoImage(data=base64.b64decode(img_calendario_base64))  # imagem do botão calendário
 
         self.app = app
         self.master = master
@@ -50,8 +50,8 @@ class Processos:
                                   bg='LightSteelBlue3',
                                   highlightthickness=0)
         self.__btnAddAdv['command'] = lambda: self.command_advogados()
-        self.__btnAddAdv['image'] = imgbtn3
-        self.__btnAddAdv.image = imgbtn3
+        self.__btnAddAdv['image'] = img_escolher
+        self.__btnAddAdv.image = img_escolher
         self.__btnAddAdv.place(x=825, y=80)
 
         self.__lblAdvAdverso = Label(self.__frameProcessos, text='Adv Adverso', bg='LightSteelBlue3')
@@ -168,8 +168,8 @@ class Processos:
                                        compound=TOP,
                                        relief='flat',
                                        bg='LightSteelBlue3')
-        self.__btnAddRegistro['image'] = imgbtn8
-        self.__btnAddRegistro.image = imgbtn8
+        self.__btnAddRegistro['image'] = img_adicionar
+        self.__btnAddRegistro.image = img_adicionar
         self.__btnAddRegistro['command'] = lambda: self.insert_processo()
         self.__btnAddRegistro.place(x=400, y=390)
 
@@ -178,8 +178,8 @@ class Processos:
                                           compound=TOP,
                                           relief='flat',
                                           bg='LightSteelBlue3')
-        self.__btnSalvarRegistro['image'] = imgbtn4
-        self.__btnSalvarRegistro.image = imgbtn4
+        self.__btnSalvarRegistro['image'] = img_salvar
+        self.__btnSalvarRegistro.image = img_salvar
         self.__btnSalvarRegistro['command'] = lambda: self.update_processo()
 
         self.__btnCancelar = Button(self.__frameProcessos,

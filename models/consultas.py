@@ -4,10 +4,10 @@ from utils.modulos import *
 class Consultas:
 
     def __init__(self, master=None, app=None):
-        imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar Registro
-        imgbtn8 = PhotoImage(file='imagens/imgAdicionar.png')  # imagem do botão Adicionar Registro
-        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
-        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
+        img_salvar = PhotoImage(data=base64.b64decode(img_salvar_base64))  # imagem do botão Salvar Registro
+        img_adicionar = PhotoImage(data=base64.b64decode(img_add_registro_base64))  # imagem do botão Add Registro
+        img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
+        img_calendario = PhotoImage(data=base64.b64decode(img_calendario_base64))  # imagem do botão calendário
 
         self.master = master
         self.app = app
@@ -103,8 +103,8 @@ class Consultas:
                                           compound=TOP,
                                           relief='flat',
                                           bg='LightSteelBlue3')
-        self.__btnSalvarRegistro['image'] = imgbtn4
-        self.__btnSalvarRegistro.image = imgbtn4
+        self.__btnSalvarRegistro['image'] = img_salvar
+        self.__btnSalvarRegistro.image = img_salvar
         self.__btnSalvarRegistro['command'] = lambda: self.update_consulta()
 
         self.__btnAddRegistro = Button(self.__frameConsultas,
@@ -112,8 +112,8 @@ class Consultas:
                                        compound=TOP,
                                        relief='flat',
                                        bg='LightSteelBlue3')
-        self.__btnAddRegistro['image'] = imgbtn8
-        self.__btnAddRegistro.image = imgbtn8
+        self.__btnAddRegistro['image'] = img_adicionar
+        self.__btnAddRegistro.image = img_adicionar
         self.__btnAddRegistro['command'] = lambda: self.insert_consulta()
 
         self.__btnCancelar = Button(self.__frameConsultas,

@@ -4,13 +4,13 @@ from utils.modulos import *
 class AddAdvogado:
     def __init__(self, master=None, app=None, janela=None):
 
-        imgbtn4 = PhotoImage(file='imagens/imgSalvar.png')  # imagem do botão Salvar
-        imgbtn11 = PhotoImage(file='imagens/imgAddAdv.png')  # imagem do botão Adicionar
-        imgbtn12 = PhotoImage(file='imagens/imgRmvAdv.png')  # imagem do botão Remover
-        imgbtn13 = PhotoImage(file='imagens/imgListarAdv.png')  # imagem do botão Listar
-        imgbtn14 = PhotoImage(file='imagens/imgEditarAdv.png')  # imagem do botão Editar
-        imgbtn15 = PhotoImage(file='imagens/imgFechar.png')  # imagem do botão Fechar
-        img_cancelar = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+        img_salvar = PhotoImage(data=base64.b64decode(img_salvar_base64))  # imagem do botão Salvar Registro
+        img_adicionar = PhotoImage(data=base64.b64decode(img_add_adv_base64))  # imagem do botão Add Advogado
+        img_remover = PhotoImage(data=base64.b64decode(img_remover_adv_base64))  # imagem do botão Remover
+        img_listar = PhotoImage(data=base64.b64decode(img_listar_adv_base64))  # imagem do botão Listar
+        img_editar = PhotoImage(data=base64.b64decode(img_editar_adv_base64))  # imagem do botão Editar
+        img_fechar = PhotoImage(data=base64.b64decode(img_fechar_base64))  # imagem do botão Fechar
+        img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
 
         if janela:
             self.master = Toplevel(master)
@@ -114,60 +114,60 @@ class AddAdvogado:
 
         self.__btnSalvar = Button(self.__frameAdvogados,
                                   text='Salvar',
-                                  image=imgbtn4,
+                                  image=img_salvar,
                                   compound=TOP,
                                   relief='flat')
         self.__btnSalvar['bg'] = 'LightSteelBlue3'
         self.__btnSalvar['command'] = lambda: self.update_adv()
-        self.__btnSalvar.image = imgbtn4
+        self.__btnSalvar.image = img_salvar
 
         self.__btnAddAdv = Button(self.__frameAdvogados,
                                   text='Adicionar',
-                                  image=imgbtn11,
+                                  image=img_adicionar,
                                   compound=TOP,
                                   relief='flat')
         self.__btnAddAdv['bg'] = 'LightSteelBlue3'
         self.__btnAddAdv['command'] = lambda: self.insert_adv()
-        self.__btnAddAdv.image = imgbtn11
+        self.__btnAddAdv.image = img_adicionar
         self.__btnAddAdv.place(x=80, y=350, relwidth=0.15)
 
         self.__btnEditarAdv = Button(self.__frameAdvogados,
                                      text='Editar',
-                                     image=imgbtn14,
+                                     image=img_editar,
                                      compound=TOP,
                                      relief='flat')
         self.__btnEditarAdv['bg'] = 'LightSteelBlue3'
         self.__btnEditarAdv['command'] = lambda: self.editar()
-        self.__btnEditarAdv.image = imgbtn14
+        self.__btnEditarAdv.image = img_editar
 
         self.__btnRmvAdv = Button(self.__frameAdvogados,
                                   text='Remover',
-                                  image=imgbtn12,
+                                  image=img_remover,
                                   compound=TOP,
                                   relief='flat')
         self.__btnRmvAdv['bg'] = 'LightSteelBlue3'
         self.__btnRmvAdv['command'] = lambda: self.deletar()
-        self.__btnRmvAdv.image = imgbtn12
+        self.__btnRmvAdv.image = img_remover
         self.__btnRmvAdv.place(x=340, y=350, relwidth=0.15)
 
         self.__btnListarAdv = Button(self.__frameAdvogados,
                                      text='Listar Advogados',
-                                     image=imgbtn13,
+                                     image=img_listar,
                                      compound=TOP,
                                      relief='flat')
         self.__btnListarAdv['bg'] = 'LightSteelBlue3'
         self.__btnListarAdv['command'] = lambda: self.listar()
-        self.__btnListarAdv.image = imgbtn13
+        self.__btnListarAdv.image = img_listar
         self.__btnListarAdv.place(x=470, y=350)
 
         self.__btnFechar = Button(self.__frameAdvogados,
                                   text='Fechar',
-                                  image=imgbtn15,
+                                  image=img_fechar,
                                   compound=TOP,
                                   relief='flat')
         self.__btnFechar['bg'] = 'LightSteelBlue3'
         self.__btnFechar['command'] = lambda: self.master.destroy()
-        self.__btnFechar.image = imgbtn15
+        self.__btnFechar.image = img_fechar
 
         self.__btnCancelar = Button(self.__frameAdvogados,
                                     image=img_cancelar,

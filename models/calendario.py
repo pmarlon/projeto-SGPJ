@@ -7,8 +7,8 @@ from utils.modulos import *
 class Calendario:
 
     def __init__(self, frame, campo=None):
-        imgbtn5 = PhotoImage(file='imagens/imgSelecionar.png')  # imagem do botão Selecionar Data
-        imgbtn6 = PhotoImage(file='imagens/imgCancelar.png')  # imagem do botão Cancelar
+        img_selecionar = PhotoImage(data=base64.b64decode(img_selecionar_base64))  # imagem do botão Selecionar Data
+        img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
         data = localtime()
         relx, rely = preencher_data(frame, None, campo)
         win = Toplevel(frame)
@@ -25,22 +25,22 @@ class Calendario:
 
         btn_selecionar_data = Button(win,
                                      text='Selecionar',
-                                     image=imgbtn5,
+                                     image=img_selecionar,
                                      compound=LEFT,
                                      relief='flat')
         btn_selecionar_data['bg'] = 'LightSteelBlue3'
         btn_selecionar_data['command'] = lambda: command_selecionar()
-        btn_selecionar_data.image = imgbtn5
+        btn_selecionar_data.image = img_selecionar
         btn_selecionar_data.place(x=10, y=205)
 
         btn_cancelar = Button(win,
                               text='Cancelar',
-                              image=imgbtn6,
+                              image=img_cancelar,
                               compound=LEFT,
                               relief='flat')
         btn_cancelar['bg'] = 'LightSteelBlue3'
         btn_cancelar['command'] = lambda: command_cancelar()
-        btn_cancelar.image = imgbtn6
+        btn_cancelar.image = img_cancelar
         btn_cancelar.place(x=160, y=205)
 
         def command_selecionar():

@@ -11,17 +11,17 @@ from models.pesquisar import Pesquisar
 class App:
 
     def __init__(self, root=None):
-        logo = ImageTk.PhotoImage(Image.open('imagens/logo.png').resize((80, 80), Image.ANTIALIAS))
-        img_principal = PhotoImage(file='imagens/imgHome.png')  # imagem do botão Página Principal
-        img_ocorrencias = PhotoImage(file='imagens/imgObservar.png')  # imagem do botão Ocorrências
-        img_processo = PhotoImage(file='imagens/imgProcessos.png')  # imagem do botão Processos
-        img_advogados = PhotoImage(file='imagens/imgAdvogados.png')  # imagem do botão Escolher Advogado
-        img_pesquisar = PhotoImage(file='imagens/imgPesquisar.png')  # imagem do botão Pesquisar
-        img_sair = PhotoImage(file='imagens/imgSair.png')  # imagem do botão Sair
-        img_consultas = PhotoImage(file='imagens/imgConsultas.png')  # imagem do botão Consultas
+
+        logo = ImageTk.PhotoImage(data=base64.b64decode(logo_base64))
+        img_principal = PhotoImage(data=base64.b64decode(img_home_base64))  # imagem do botão Página Principal
+        img_ocorrencias = PhotoImage(data=base64.b64decode(img_ocorrencias_base64))  # imagem do botão Ocorrências
+        img_processo = PhotoImage(data=base64.b64decode(img_processo_base64))  # imagem do botão Processos
+        img_advogados = PhotoImage(data=base64.b64decode(img_advogados_base64))  # imagem do botão Escolher Advogado
+        img_pesquisar = PhotoImage(data=base64.b64decode(img_pesquisar_base64))  # imagem do botão Pesquisar
+        img_sair = PhotoImage(data=base64.b64decode(img_sair_base64))  # imagem do botão Sair
+        img_consultas = PhotoImage(data=base64.b64decode(img_consultas_base64))  # imagem do botão Consultas
 
         self.root = root
-
         # Cabeçalho do Programa
         self.__Header = Frame(self.root, height=100, bg='#282a34')
         self.__Header.pack(side=TOP, fill=X)
@@ -34,7 +34,7 @@ class App:
         self.__lblLogo.place(x=100, y=0)
         self.__lblLogo = Label(self.__Header, image=logo, bg='#282a34')
         self.__lblLogo.place(x=750, y=0)
-        self.__lblLogo.logo = logo
+        self.__lblLogo = logo
 
         # Menu com os botões das páginas do programa
         self.__MenuBar = Frame(self.root, height=80, bg='LightSteelBlue3', bd=2, relief='ridge')

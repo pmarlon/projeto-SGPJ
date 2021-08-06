@@ -4,11 +4,11 @@ from utils.modulos import *
 class Pesquisar:
 
     def __init__(self, master=None, app=None):
-        img_pesquisar = PhotoImage(file='imagens/imgPesquisar.png')  # imagem do botão Pesquisar
-        img_listar = PhotoImage(file='imagens/imgListarDoc')  # imagem do botão Listar
-        img_calendario = PhotoImage(file='imagens/imgCalendario.png')  # imagem do botão calendário
-        imgbtn6 = PhotoImage(file='imagens/imgEditar.png')  # imagem do botão Editar
-        imgbtn7 = PhotoImage(file='imagens/imgExcluirRegistro.png')  # imagem do botão Excluir
+        img_pesquisar = PhotoImage(data=base64.b64decode(img_pesquisar_base64))  # imagem do botão Pesquisar
+        img_listar = PhotoImage(data=base64.b64decode(img_listar_doc_base64))  # imagem do botão Listar
+        img_calendario = PhotoImage(data=base64.b64decode(img_calendario_base64))  # imagem do botão calendário
+        img_editar = PhotoImage(data=base64.b64decode(img_editar_doc_base64))  # imagem do botão Editar
+        img_excluir = PhotoImage(data=base64.b64decode(img_excluir_doc_base64))  # imagem do botão Excluir
 
         self.master = master
         self.app = app
@@ -110,11 +110,11 @@ class Pesquisar:
         self.__btnListar = criar_botao(self.__tbProcessos, 'Listar', img_listar,
                                        lambda: self.listar_processos(), 410, 350)
 
-        self.__btnEditar = criar_botao(self.__tbProcessos, 'Editar', imgbtn6,
+        self.__btnEditar = criar_botao(self.__tbProcessos, 'Editar', img_editar,
                                        lambda: self.editar(self.app.frameProcessos, self.__tvProcessos, 'processos'),
                                        520, 350)
 
-        self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', imgbtn7,
+        self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', img_excluir,
                                         lambda: deletar(self.__tvProcessos, 'processos'), 630, 350)
 
         self.__btnCalendario = Button(self.__tbProcessos,
@@ -195,13 +195,13 @@ class Pesquisar:
         self.__btnListar = criar_botao(self.__tbOcorrencias, 'Listar', img_listar,
                                        lambda: self.listar_ocorrencias(), 310, 350)
 
-        self.__btnEditar = criar_botao(self.__tbOcorrencias, 'Editar', imgbtn6,
+        self.__btnEditar = criar_botao(self.__tbOcorrencias, 'Editar', img_editar,
                                        lambda: self.editar(self.app.frameOcorrencias,
                                                            self.__tvOcorrencias,
                                                            'ocorrencias'),
                                        420, 350)
 
-        self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', imgbtn7,
+        self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', img_excluir,
                                         lambda: deletar(self.__tvOcorrencias, 'ocorrencias'), 530, 350)
 
         self.__btnCalendario = Button(self.__tbOcorrencias,
@@ -283,11 +283,11 @@ class Pesquisar:
         self.__btnListar = criar_botao(self.__tbConsultas, 'Listar', img_listar,
                                        lambda: self.listar_consultas(), 360, 360)
 
-        self.__btnEditar = criar_botao(self.__tbConsultas, 'Editar', imgbtn6,
+        self.__btnEditar = criar_botao(self.__tbConsultas, 'Editar', img_editar,
                                        lambda: self.editar(self.app.frameConsultas, self.__tvConsultas, 'consultas'),
                                        470, 360)
 
-        self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', imgbtn7,
+        self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', img_excluir,
                                         lambda: deletar(self.__tvConsultas, 'consultas'), 580, 360)
 
         self.__btnCalendario = Button(self.__tbConsultas,
