@@ -199,7 +199,9 @@ class Processos:
                                       )
         self.__btnCalendario.image = img_calendario
         self.__btnCalendario['command'] = lambda: Calendario(self.__frameProcessos,
-                                                             self.__txtDataInicio.winfo_name())
+                                                             self.__txtDataInicio,
+                                                             relx=self.__txtDataInicio.winfo_rootx(),
+                                                             rely=self.__txtDataInicio.winfo_rooty())
         self.__btnCalendario.place(x=297, y=288)
 
         self.__btnCalendario = Button(self.__frameProcessos,
@@ -210,7 +212,9 @@ class Processos:
                                       )
         self.__btnCalendario.image = img_calendario
         self.__btnCalendario['command'] = lambda: Calendario(self.__frameProcessos,
-                                                             self.__txtDataFim.winfo_name())
+                                                             self.__txtDataFim,
+                                                             relx=self.__txtDataFim.winfo_rootx(),
+                                                             rely=self.__txtDataFim.winfo_rooty())
         self.__btnCalendario.place(x=517, y=288)
 
     @property

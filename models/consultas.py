@@ -133,7 +133,9 @@ class Consultas:
                                       )
         self.__btnCalendario.image = img_calendario
         self.__btnCalendario['command'] = lambda: Calendario(self.__frameConsultas,
-                                                             self.__txtEsperado.winfo_name())
+                                                             self.__txtEsperado,
+                                                             relx=self.__txtEsperado.winfo_rootx(),
+                                                             rely=self.__txtEsperado.winfo_rooty())
         self.__btnCalendario.place(x=897, y=48)
 
         self.__btnCalendario = Button(self.__frameConsultas,
@@ -144,7 +146,9 @@ class Consultas:
                                       )
         self.__btnCalendario.image = img_calendario
         self.__btnCalendario['command'] = lambda: Calendario(self.__frameConsultas,
-                                                             self.__txtEntrada.winfo_name())
+                                                             self.__txtEntrada,
+                                                             relx=self.__txtEntrada.winfo_rootx(),
+                                                             rely=self.__txtEntrada.winfo_rooty())
         self.__btnCalendario.place(x=897, y=78)
 
         self.__btnCalendario = Button(self.__frameConsultas,
@@ -155,7 +159,9 @@ class Consultas:
                                       )
         self.__btnCalendario.image = img_calendario
         self.__btnCalendario['command'] = lambda: Calendario(self.__frameConsultas,
-                                                             self.__txtSaida.winfo_name())
+                                                             self.__txtSaida,
+                                                             relx=self.__txtSaida.winfo_rootx(),
+                                                             rely=self.__txtSaida.winfo_rooty())
         self.__btnCalendario.place(x=897, y=232)
 
     @property

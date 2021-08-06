@@ -144,7 +144,9 @@ class Ocorrencias:
                                       )
         self.__btnCalendario.image = img_calendario
         self.__btnCalendario['command'] = lambda: Calendario(self.__frameOcorrencias,
-                                                             self.__txtDataOcorrencia.winfo_name())
+                                                             self.__txtDataOcorrencia,
+                                                             relx=self.__txtDataOcorrencia.winfo_rootx(),
+                                                             rely=self.__txtDataOcorrencia.winfo_rooty())
         self.__btnCalendario.place(x=297, y=238)
 
     @property

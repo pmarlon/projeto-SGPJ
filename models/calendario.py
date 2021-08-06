@@ -3,14 +3,14 @@ from tkcalendar import Calendar
 from time import localtime
 from utils.modulos import *
 
+data = localtime()
+
 
 class Calendario:
 
-    def __init__(self, frame, campo=None):
+    def __init__(self, frame, campo=None, *, relx=0, rely=0):
         img_selecionar = PhotoImage(data=base64.b64decode(img_selecionar_base64))  # imagem do botão Selecionar Data
         img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
-        data = localtime()
-        relx, rely = preencher_data(frame, None, campo)
         win = Toplevel(frame)
         win.geometry(f'300x260+{relx}+{rely-300}')
         win['bg'] = 'LightSteelBlue3'
@@ -45,27 +45,9 @@ class Calendario:
 
         def command_selecionar():
             data_selecionada = cal.get_date()
-            preencher_data(frame, data_selecionada, campo)
+            campo.delete(0, END)
+            campo.insert(END, data_selecionada)
             win.destroy()
 
         def command_cancelar():
             win.destroy()
-
-
-def preencher_data(frame, data, campo):
-    """
-    Função que preenche um campo de data de acordo com os parâmetros recebidos
-    :param frame: frame onde o campo de data se encontra
-    :param data: data recebida direto da class Calendário
-    :param campo: nome do campo data, usado para encontrar o campo correto no frame
-    :return: retorna a posição do campo no frame, usado para posicionar o Toplevel do Calendário
-    """
-    for child in frame.winfo_children():
-        child_class = child.__class__.__name__
-        if child_class == 'Entry':
-            if child.winfo_name() == campo:
-                if not data:
-                    return child.winfo_rootx(), child.winfo_rooty()
-                else:
-                    child.delete(0, END)
-                    child.insert(END, data)
