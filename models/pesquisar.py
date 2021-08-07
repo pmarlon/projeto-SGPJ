@@ -111,7 +111,10 @@ class Pesquisar:
                                        lambda: self.listar_processos(), 410, 350)
 
         self.__btnEditar = criar_botao(self.__tbProcessos, 'Editar', img_editar,
-                                       lambda: self.editar(self.app.frameProcessos, self.__tvProcessos, 'processos'),
+                                       lambda: self.editar(self.app.frameProcessos,
+                                                           self.__tvProcessos,
+                                                           'processos',
+                                                           self.app.btnProcessos),
                                        520, 350)
 
         self.__btnExcluir = criar_botao(self.__tbProcessos, 'Excluir', img_excluir,
@@ -202,7 +205,8 @@ class Pesquisar:
         self.__btnEditar = criar_botao(self.__tbOcorrencias, 'Editar', img_editar,
                                        lambda: self.editar(self.app.frameOcorrencias,
                                                            self.__tvOcorrencias,
-                                                           'ocorrencias'),
+                                                           'ocorrencias',
+                                                           self.app.btnOcorrencias),
                                        420, 350)
 
         self.__btnExcluir = criar_botao(self.__tbOcorrencias, 'Excluir', img_excluir,
@@ -291,7 +295,10 @@ class Pesquisar:
                                        lambda: self.listar_consultas(), 360, 360)
 
         self.__btnEditar = criar_botao(self.__tbConsultas, 'Editar', img_editar,
-                                       lambda: self.editar(self.app.frameConsultas, self.__tvConsultas, 'consultas'),
+                                       lambda: self.editar(self.app.frameConsultas,
+                                                           self.__tvConsultas,
+                                                           'consultas',
+                                                           self.app.btnConsultas),
                                        470, 360)
 
         self.__btnExcluir = criar_botao(self.__tbConsultas, 'Excluir', img_excluir,
@@ -579,7 +586,7 @@ class Pesquisar:
         advogados = [advogado[0] for advogado in advogados]
         self.adv_externo = advogados
 
-    def editar(self, frame, tv, tabela):
+    def editar(self, frame, tv, tabela, btn):
         try:
 
             rid = get_id(tv, tabela)
@@ -597,6 +604,6 @@ class Pesquisar:
         except IndexError:
             messagebox.showerror('Atenção', 'Você precisa selecionar um registro.')
         else:
-            self.app.switch_frame(frame)
+            self.app.switch_frame(frame, btn)
             frame.trocar_botoes()
             frame.preencher(values)

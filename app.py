@@ -33,72 +33,79 @@ class App:
         self.__MenuBar = Frame(self.root, height=80, bg='LightSteelBlue3', bd=2, relief='ridge')
         self.__MenuBar.pack(side=TOP, fill=X, pady=1)
 
-        self.__btnInicial = Button(self.__MenuBar,
-                                   text='Página Inicial',
-                                   image=img_inicial,
+        self.btnInicial = Button(self.__MenuBar,
+                                 text='Página Inicial',
+                                 image=img_inicial,
+                                 compound=TOP,
+                                 relief='flat',
+                                 bg='LightSteelBlue3',
+                                 activebackground='#4444ff')
+        self.btnInicial.image = img_inicial
+        self.btnInicial['command'] = lambda: self.switch_frame(self.frameInicial, self.btnInicial)
+        self.btnInicial.place(x=10, y=3, relwidth=0.13)
+
+        self.btnProcessos = Button(self.__MenuBar,
+                                   text='Processos',
+                                   image=img_processo,
                                    compound=TOP,
                                    relief='flat',
-                                   bg='LightSteelBlue3')
-        self.__btnInicial.image = img_inicial
-        self.__btnInicial['command'] = lambda: self.switch_frame(self.frameInicial)
-        self.__btnInicial.place(x=10, y=3, relwidth=0.13)
+                                   bg='LightSteelBlue3',
+                                   activebackground='#4444ff')
+        self.btnProcessos.image = img_processo
+        self.btnProcessos['command'] = lambda: self.switch_frame(self.frameProcessos, self.btnProcessos)
+        self.btnProcessos.place(x=145, y=3, relwidth=0.13)
 
-        self.__btnProcessos = Button(self.__MenuBar,
-                                     text='Processos',
-                                     image=img_processo,
+        self.btnOcorrencias = Button(self.__MenuBar,
+                                     text='Ocorrências',
                                      compound=TOP,
                                      relief='flat',
-                                     bg='LightSteelBlue3')
-        self.__btnProcessos.image = img_processo
-        self.__btnProcessos['command'] = lambda: self.switch_frame(self.frameProcessos)
-        self.__btnProcessos.place(x=145, y=3, relwidth=0.13)
+                                     bg='LightSteelBlue3',
+                                     activebackground='#4444ff')
+        self.btnOcorrencias['image'] = img_ocorrencias
+        self.btnOcorrencias.image = img_ocorrencias
+        self.btnOcorrencias['command'] = lambda: self.switch_frame(self.frameOcorrencias, self.btnOcorrencias)
+        self.btnOcorrencias.place(x=280, y=3, relwidth=0.13)
 
-        self.__btnOcorrencias = Button(self.__MenuBar,
-                                       text='Ocorrências',
-                                       compound=TOP,
-                                       relief='flat',
-                                       bg='LightSteelBlue3')
-        self.__btnOcorrencias['image'] = img_ocorrencias
-        self.__btnOcorrencias.image = img_ocorrencias
-        self.__btnOcorrencias['command'] = lambda: self.switch_frame(self.frameOcorrencias)
-        self.__btnOcorrencias.place(x=280, y=3, relwidth=0.13)
+        self.btnAdvogados = Button(self.__MenuBar,
+                                   text='Advogados',
+                                   image=img_advogados,
+                                   compound=TOP,
+                                   relief='flat',
+                                   bg='LightSteelBlue3',
+                                   activebackground='#4444ff')
+        self.btnAdvogados.image = img_advogados
+        self.btnAdvogados['command'] = lambda: self.switch_frame(self.frameAdvogados, self.btnAdvogados)
+        self.btnAdvogados.place(x=415, y=3, relwidth=0.13)
 
-        self.__btnAdvogados = Button(self.__MenuBar,
-                                     text='Advogados',
-                                     image=img_advogados,
-                                     compound=TOP,
-                                     relief='flat',
-                                     bg='LightSteelBlue3')
-        self.__btnAdvogados.image = img_advogados
-        self.__btnAdvogados['command'] = lambda: self.switch_frame(self.frameAdvogados)
-        self.__btnAdvogados.place(x=415, y=3, relwidth=0.13)
+        self.btnConsultas = Button(self.__MenuBar,
+                                   text='Consultas',
+                                   image=img_consultas,
+                                   compound=TOP,
+                                   relief='flat',
+                                   bg='LightSteelBlue3',
+                                   activebackground='#4444ff')
+        self.btnConsultas.image = img_consultas
+        self.btnConsultas['command'] = lambda: self.switch_frame(self.frameConsultas, self.btnConsultas)
+        self.btnConsultas.place(x=550, y=3, relwidth=0.13)
 
-        self.__btnConsultas = Button(self.__MenuBar,
-                                     text='Consultas',
-                                     image=img_consultas,
-                                     compound=TOP,
-                                     relief='flat',
-                                     bg='LightSteelBlue3')
-        self.__btnConsultas.image = img_consultas
-        self.__btnConsultas['command'] = lambda: self.switch_frame(self.frameConsultas)
-        self.__btnConsultas.place(x=550, y=3, relwidth=0.13)
-
-        self.__btnPesquisar = Button(self.__MenuBar,
-                                     text='Pesquisar',
-                                     image=img_pesquisar,
-                                     compound=TOP,
-                                     relief='flat',
-                                     bg='LightSteelBlue3')
-        self.__btnPesquisar.image = img_pesquisar
-        self.__btnPesquisar['command'] = lambda: self.switch_frame(self.framePesquisar)
-        self.__btnPesquisar.place(x=685, y=3, relwidth=0.13)
+        self.btnPesquisar = Button(self.__MenuBar,
+                                   text='Pesquisar',
+                                   image=img_pesquisar,
+                                   compound=TOP,
+                                   relief='flat',
+                                   bg='LightSteelBlue3',
+                                   activebackground='#4444ff')
+        self.btnPesquisar.image = img_pesquisar
+        self.btnPesquisar['command'] = lambda: self.switch_frame(self.framePesquisar, self.btnPesquisar)
+        self.btnPesquisar.place(x=685, y=3, relwidth=0.13)
 
         self.__btnSair = Button(self.__MenuBar,
                                 text='Sair',
                                 image=img_sair,
                                 compound=TOP,
                                 relief='flat',
-                                bg='LightSteelBlue3')
+                                bg='LightSteelBlue3',
+                                activebackground='#4444ff')
         self.__btnSair.image = img_sair
         self.__btnSair['command'] = lambda: root.destroy()
         self.__btnSair.place(x=820, y=3, relwidth=0.13)
@@ -130,10 +137,21 @@ class App:
         self.framePesquisar.ocultar_pagina()
         self.frameOcorrencias.ocultar_pagina()
 
-    def switch_frame(self, frame):
+    def switch_frame(self, frame, btn=None):
         """Recebe um frame como parâmetro, oculta os frames ativos e inicia o frame recebido"""
         self.ocultar_paginas()
         frame.iniciar_pagina()
+        self.switch_btn_color()
+        if btn:
+            btn['background'] = '#4444ff'
+
+    def switch_btn_color(self):
+        self.btnInicial['background'] = 'LightSteelBlue3'
+        self.btnProcessos['background'] = 'LightSteelBlue3'
+        self.btnOcorrencias['background'] = 'LightSteelBlue3'
+        self.btnAdvogados['background'] = 'LightSteelBlue3'
+        self.btnConsultas['background'] = 'LightSteelBlue3'
+        self.btnPesquisar['background'] = 'LightSteelBlue3'
 
 
 if __name__ == '__main__':
