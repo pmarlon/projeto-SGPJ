@@ -112,7 +112,6 @@ class App:
 
         # Frame inicial
         self.frameInicial = Inicial(self.root, self)
-        self.frameInicial.iniciar_pagina()
 
         # Frame Processos
         self.frameProcessos = Processos(self.root, self)
@@ -128,6 +127,9 @@ class App:
 
         # Frame Pesquisar
         self.framePesquisar = Pesquisar(self.root, self)
+
+        # Inicia o frame inicial ao abrir o app
+        self.switch_frame(self.frameInicial, self.btnInicial)
 
     def ocultar_paginas(self):
         self.frameInicial.ocultar_pagina()
