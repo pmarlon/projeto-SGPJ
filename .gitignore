@@ -11,3 +11,9 @@ __pycache__/
 .idea
 
 screenshots/
+
+app.spec
+
+build/
+
+dist/
