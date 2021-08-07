@@ -40,7 +40,7 @@ class Consultas:
         self.__lblEsperado.place(x=720, y=50)
 
         self.__txtEsperado = Entry(self.__frameConsultas, width=10)
-        self.__txtEsperado.place(x=810, y=50)
+        self.__txtEsperado.place(x=800, y=50)
 
         self.__lblOrigem = Label(self.__frameConsultas, text='Origem', bg='LightSteelBlue3')
         self.__lblOrigem['font'] = 'Serif', '12'
@@ -54,7 +54,7 @@ class Consultas:
         self.__lblEntrada.place(x=730, y=80)
 
         self.__txtEntrada = Entry(self.__frameConsultas, width=10)
-        self.__txtEntrada.place(x=810, y=80)
+        self.__txtEntrada.place(x=800, y=80)
 
         self.__lblAssunto = Label(self.__frameConsultas, text='Assunto', bg='LightSteelBlue3')
         self.__lblAssunto['font'] = 'Serif', '12'
@@ -89,7 +89,7 @@ class Consultas:
         self.__lblSaida.place(x=750, y=235)
 
         self.__txtSaida = Entry(self.__frameConsultas, width=10)
-        self.__txtSaida.place(x=810, y=235)
+        self.__txtSaida.place(x=800, y=235)
 
         self.__lblEmendaResult = Label(self.__frameConsultas, text='Emenda/Resultado', bg='LightSteelBlue3')
         self.__lblEmendaResult['font'] = 'Serif', '12'
@@ -136,7 +136,7 @@ class Consultas:
                                                              self.__txtEsperado,
                                                              relx=self.__txtEsperado.winfo_rootx(),
                                                              rely=self.__txtEsperado.winfo_rooty())
-        self.__btnCalendario.place(x=897, y=48)
+        self.__btnCalendario.place(x=887, y=48)
 
         self.__btnCalendario = Button(self.__frameConsultas,
                                       image=img_calendario,
@@ -149,7 +149,7 @@ class Consultas:
                                                              self.__txtEntrada,
                                                              relx=self.__txtEntrada.winfo_rootx(),
                                                              rely=self.__txtEntrada.winfo_rooty())
-        self.__btnCalendario.place(x=897, y=78)
+        self.__btnCalendario.place(x=887, y=78)
 
         self.__btnCalendario = Button(self.__frameConsultas,
                                       image=img_calendario,
@@ -162,7 +162,7 @@ class Consultas:
                                                              self.__txtSaida,
                                                              relx=self.__txtSaida.winfo_rootx(),
                                                              rely=self.__txtSaida.winfo_rooty())
-        self.__btnCalendario.place(x=897, y=232)
+        self.__btnCalendario.place(x=887, y=232)
 
     @property
     def consulta(self):

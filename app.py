@@ -141,5 +141,6 @@ if __name__ == '__main__':
     App(root)
     root.title('SGPJ - Sistema para Gerenciamento de Processos Jurídicos')
     root.geometry('960x650+200+50')
+    root.resizable(width=False, height=False)
     root['bg'] = 'LightSteelBlue3'
     root.mainloop()
