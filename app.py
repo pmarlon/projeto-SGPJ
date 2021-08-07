@@ -1,6 +1,6 @@
 from utils.modulos import *
 
-from models.principal import Principal
+from models.inicial import Inicial
 from models.consultas import Consultas
 from models.add_advogado import AddAdvogado
 from models.ocorrencias import Ocorrencias
@@ -13,7 +13,7 @@ class App:
     def __init__(self, root=None):
 
         logo = ImageTk.PhotoImage(data=base64.b64decode(logo_completo_base64))
-        img_principal = PhotoImage(data=base64.b64decode(img_home_base64))  # imagem do botão Página Principal
+        img_inicial = PhotoImage(data=base64.b64decode(img_home_base64))  # imagem do botão Página Inicial
         img_ocorrencias = PhotoImage(data=base64.b64decode(img_ocorrencias_base64))  # imagem do botão Ocorrências
         img_processo = PhotoImage(data=base64.b64decode(img_processo_base64))  # imagem do botão Processos
         img_advogados = PhotoImage(data=base64.b64decode(img_advogados_base64))  # imagem do botão Escolher Advogado
@@ -33,15 +33,15 @@ class App:
         self.__MenuBar = Frame(self.root, height=80, bg='LightSteelBlue3', bd=2, relief='ridge')
         self.__MenuBar.pack(side=TOP, fill=X, pady=1)
 
-        self.__btnPrincipal = Button(self.__MenuBar,
-                                     text='Página Principal',
-                                     image=img_principal,
-                                     compound=TOP,
-                                     relief='flat',
-                                     bg='LightSteelBlue3')
-        self.__btnPrincipal.image = img_principal
-        self.__btnPrincipal['command'] = lambda: self.switch_frame(self.framePrincipal)
-        self.__btnPrincipal.place(x=10, y=3, relwidth=0.13)
+        self.__btnInicial = Button(self.__MenuBar,
+                                   text='Página Inicial',
+                                   image=img_inicial,
+                                   compound=TOP,
+                                   relief='flat',
+                                   bg='LightSteelBlue3')
+        self.__btnInicial.image = img_inicial
+        self.__btnInicial['command'] = lambda: self.switch_frame(self.frameInicial)
+        self.__btnInicial.place(x=10, y=3, relwidth=0.13)
 
         self.__btnProcessos = Button(self.__MenuBar,
                                      text='Processos',
@@ -103,9 +103,9 @@ class App:
         self.__btnSair['command'] = lambda: root.destroy()
         self.__btnSair.place(x=820, y=3, relwidth=0.13)
 
-        # Frame principal
-        self.framePrincipal = Principal(self.root, self)
-        self.framePrincipal.iniciar_pagina()
+        # Frame inicial
+        self.frameInicial = Inicial(self.root, self)
+        self.frameInicial.iniciar_pagina()
 
         # Frame Processos
         self.frameProcessos = Processos(self.root, self)
@@ -123,7 +123,7 @@ class App:
         self.framePesquisar = Pesquisar(self.root, self)
 
     def ocultar_paginas(self):
-        self.framePrincipal.ocultar_pagina()
+        self.frameInicial.ocultar_pagina()
         self.frameProcessos.ocultar_pagina()
         self.frameAdvogados.ocultar_pagina()
         self.frameConsultas.ocultar_pagina()
@@ -142,5 +142,4 @@ if __name__ == '__main__':
     root.title('SGPJ - Sistema para Gerenciamento de Processos Jurídicos')
     root.geometry('960x650+200+50')
     root['bg'] = 'LightSteelBlue3'
-    root.resizable(width=False, height=False)
     root.mainloop()

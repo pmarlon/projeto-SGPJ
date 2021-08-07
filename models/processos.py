@@ -15,16 +15,18 @@ class Processos:
         self.app = app
         self.master = master
         self.__frameProcessos = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
-        self.num_caso = StringVar()
 
-        self.__lblCaso = Label(self.__frameProcessos, bg='LightSteelBlue3', relief='groove')
-        self.__lblCaso['textvariable'] = self.num_caso
+        self.__lblCaso = Label(self.__frameProcessos, bg='LightSteelBlue3')
+        self.__lblCaso['text'] = 'Caso N° '
         self.__lblCaso['font'] = 'Serif', '12', 'bold'
         self.__lblCaso.place(x=10, y=20)
 
+        self.__txtCaso = Entry(self.__frameProcessos, width=5, justify='center', font='Serif 12 bold')
+        self.__txtCaso.place(x=90, y=20)
+
         self.__lblAutor = Label(self.__frameProcessos, text='Autor', bg='LightSteelBlue3')
         self.__lblAutor['font'] = 'Serif', '12'
-        self.__lblAutor.place(x=150, y=20)
+        self.__lblAutor.place(x=155, y=20)
 
         self.__txtAutor = Entry(self.__frameProcessos, width=80)
         self.__txtAutor.place(x=210, y=20)
@@ -219,14 +221,12 @@ class Processos:
 
     @property
     def caso(self):
-        try:
-            return self.num_caso.get().split(' ')[2]
-        except IndexError:
-            print(self.num_caso.get())
+
+        return self.__txtCaso.get()
 
     @caso.setter
     def caso(self, valor):
-        self.num_caso.set(f'Caso N° {valor}')
+        self.__txtCaso.insert(0, valor)
 
     @property
     def autor(self):
@@ -387,7 +387,7 @@ class Processos:
             messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
         else:
             try:
-                insert('processos', int(self.caso), self.autor, self.reu, self.adv_externo, self.adv_adverso,
+                insert('processos', self.caso, self.autor, self.reu, self.adv_externo, self.adv_adverso,
                        self.processo, self.inicio, self.vr_causa, self.tipo_acao, self.vara_tribunal, self.uf_municipio,
                        self.situacao, self.pos_feito, self.observacao, self.vr_atual, self.pedido, self.fim, self.perda,
                        self.end_parte_adv)
@@ -430,6 +430,7 @@ class Processos:
             self.iniciar_pagina()
 
     def preencher(self, values=None):
+        self.__txtCaso['state'] = 'normal'
         limpar(self.__frameProcessos)
 
         if values:
@@ -452,9 +453,11 @@ class Processos:
             self.fim = values[17]
             self.perda = values[18]
             self.end_parte_adv = values[19]
+        self.__txtCaso['state'] = 'readonly'
 
     def iniciar_pagina(self, novo=True):
         self.ocultar_pagina()
+        self.__txtCaso['state'] = 'normal'
         limpar(self.__frameProcessos)
         self.atualizar__advogados()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
@@ -463,6 +466,7 @@ class Processos:
         self.__btnAddRegistro.place(x=400, y=390)
         if novo:
             self.novo_caso()
+        self.__txtCaso['state'] = 'readonly'
 
     def atualizar__advogados(self):
         advogados = [advogado for advogado in search('advogados', parms='nome')]
