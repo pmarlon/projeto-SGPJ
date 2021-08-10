@@ -32,7 +32,7 @@ class Calendario:
         btn_selecionar_data['bg'] = 'LightSteelBlue3'
         btn_selecionar_data['command'] = lambda: command_selecionar()
         btn_selecionar_data.image = img_selecionar
-        btn_selecionar_data.place(relx=0.10, rely=0.8)
+        btn_selecionar_data.place(relx=0.05, rely=0.8)
 
         btn_cancelar = Button(win,
                               text='Cancelar',
@@ -42,7 +42,7 @@ class Calendario:
         btn_cancelar['bg'] = 'LightSteelBlue3'
         btn_cancelar['command'] = lambda: command_cancelar()
         btn_cancelar.image = img_cancelar
-        btn_cancelar.place(relx=0.65, rely=0.8)
+        btn_cancelar.place(relx=0.55, rely=0.8)
 
         def command_selecionar():
             data_selecionada = cal.get_date()
