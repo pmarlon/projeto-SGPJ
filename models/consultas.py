@@ -136,7 +136,7 @@ class Consultas:
                                                              self.__txtEsperado,
                                                              relx=self.__txtEsperado.winfo_rootx(),
                                                              rely=self.__txtEsperado.winfo_rooty())
-        self.__btnCalendario.place(relx=0.9275, rely=0.103)
+        self.__btnCalendario.place(relx=0.9275, rely=0.10)
 
         self.__btnCalendario = Button(self.__frameConsultas,
                                       image=img_calendario,
@@ -149,7 +149,7 @@ class Consultas:
                                                              self.__txtEntrada,
                                                              relx=self.__txtEntrada.winfo_rootx(),
                                                              rely=self.__txtEntrada.winfo_rooty())
-        self.__btnCalendario.place(relx=0.9275, rely=0.169)
+        self.__btnCalendario.place(relx=0.9275, rely=0.165)
 
         self.__btnCalendario = Button(self.__frameConsultas,
                                       image=img_calendario,
@@ -162,7 +162,7 @@ class Consultas:
                                                              self.__txtSaida,
                                                              relx=self.__txtSaida.winfo_rootx(),
                                                              rely=self.__txtSaida.winfo_rooty())
-        self.__btnCalendario.place(relx=0.9275, rely=0.505)
+        self.__btnCalendario.place(relx=0.9275, rely=0.5)
 
     @property
     def consulta(self):
@@ -360,11 +360,13 @@ class Consultas:
             elif child_class == 'Combobox':
                 if validar_vazio(child.get()) and validar_space(child.get()):
                     style = ttk.Style()
+                    style.theme_use('alt')
                     style.configure("w.TCombobox", fieldbackground='#fff')
                     child['style'] = 'w.TCombobox'
                     valid.append(True)
                 else:
                     style = ttk.Style()
+                    style.theme_use('alt')
                     style.configure("r.TCombobox", fieldbackground='Indian Red')
                     child['style'] = 'r.TCombobox'
                     valid.append(False)

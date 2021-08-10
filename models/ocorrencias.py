@@ -147,7 +147,7 @@ class Ocorrencias:
                                                              self.__txtDataOcorrencia,
                                                              relx=self.__txtDataOcorrencia.winfo_rootx(),
                                                              rely=self.__txtDataOcorrencia.winfo_rooty())
-        self.__btnCalendario.place(relx=0.31, rely=0.513)
+        self.__btnCalendario.place(relx=0.31, rely=0.51)
 
     @property
     def caso(self):

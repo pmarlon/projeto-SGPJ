@@ -12,11 +12,11 @@ class AddAdvogado:
         img_fechar = PhotoImage(data=base64.b64decode(img_fechar_base64))  # imagem do botão Fechar
         img_cancelar = PhotoImage(data=base64.b64decode(img_cancelar_base64))  # imagem do botão Cancelar
 
+        self.app = app
         if janela:
             self.master = Toplevel(master)
         else:
             self.master = master
-            self.app = app
 
         self.__frameAdvogados = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
@@ -218,7 +218,8 @@ class AddAdvogado:
         try:
             self.validar()
         except ValueError:
-            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.',
+                                   parent=self.master)
         else:
             try:
 
@@ -226,6 +227,7 @@ class AddAdvogado:
                        self.adv_telefone, self.adv_fax, self.adv_email, self.adv_oab, self.adv_cpf)
                 messagebox.showinfo('Informação', 'Advogado cadastrado com sucesso.', parent=self.master)
                 if str(self.master.winfo_class()) == 'Toplevel':
+                    self.app.atualizar_advogados()
                     self.master.destroy()
                 else:
                     self.iniciar_pagina()
@@ -282,7 +284,8 @@ class AddAdvogado:
         try:
             self.validar()
         except ValueError:
-            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.',
+                                   parent=self.master)
         else:
             cpf = self.__txtAdvCPF.get()
             rid = search('advogados', parms='id', clause=f'where cpf={cpf}')[0][0]

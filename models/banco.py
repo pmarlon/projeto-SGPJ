@@ -94,7 +94,7 @@ def init_db():
         origem	TEXT NOT NULL,
         assunto	TEXT NOT NULL,
         interessado	TEXT NOT NULL,
-        responsavel	TEXT NOT NULL,
+        adv_cojur TEXT NOT NULL,
         emenda	TEXT NOT NULL,
         saida	TEXT,
         destino	TEXT NOT NULL,

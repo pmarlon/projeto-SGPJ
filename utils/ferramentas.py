@@ -32,6 +32,7 @@ def limpar(frame, tv=None):
             child.delete(0, END)
         elif widget_class == 'Combobox':
             style = ttk.Style()
+            style.theme_use('alt')
             style.configure("w.TCombobox", fieldbackground='#fff')
             child['style'] = 'w.TCombobox'
             child.delete(0, END)
@@ -101,3 +102,11 @@ def auto_complete(entrada, tabela, campo, tv=None):
 
     else:
         pass
+
+
+def formata_data(data):
+    mes = {1: 'Janeiro', 2: 'Fevereiro', 3: 'Maço', 4: 'Abril', 5: 'Maio', 6: 'Junho',
+           7: 'Julho', 8: 'Agosto', 9: 'Setembro', 10: 'Outubro', 11: 'Novembro', 12: 'Dezembro'}
+    dia_semana = {0: 'Segunda-feira', 1: 'Terça-feira', 2: 'Quarta-feira',
+                  3: 'Quinta-feira', 4: 'Sexta-feira', 5: 'Sábado', 6: 'Domingo'}
+    return f"{dia_semana[data.weekday()]}, {data.day} de {mes[data.month]} de {data.year}"

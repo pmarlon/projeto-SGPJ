@@ -53,7 +53,8 @@ class Processos:
         self.__btnAddAdv['command'] = lambda: self.command_advogados()
         self.__btnAddAdv['image'] = img_escolher
         self.__btnAddAdv.image = img_escolher
-        self.__btnAddAdv.place(x=833, y=80, relx=0.0001)
+        self.__btnAddAdv.place(relx=0.87, rely=0.17)
+
         self.__lblAdvAdverso = Label(self.__frameProcessos, text='Adv Adverso', bg='LightSteelBlue3')
         self.__lblAdvAdverso['font'] = 'Serif', '12'
         self.__lblAdvAdverso.place(x=100, y=110)
@@ -202,7 +203,7 @@ class Processos:
                                                              self.__txtDataInicio,
                                                              relx=self.__txtDataInicio.winfo_rootx(),
                                                              rely=self.__txtDataInicio.winfo_rooty())
-        self.__btnCalendario.place(relx=0.31, rely=0.623)
+        self.__btnCalendario.place(relx=0.31, rely=0.62)
 
         self.__btnCalendario = Button(self.__frameProcessos,
                                       image=img_calendario,
@@ -215,7 +216,7 @@ class Processos:
                                                              self.__txtDataFim,
                                                              relx=self.__txtDataFim.winfo_rootx(),
                                                              rely=self.__txtDataFim.winfo_rooty())
-        self.__btnCalendario.place(relx=0.541, rely=0.623)
+        self.__btnCalendario.place(relx=0.541, rely=0.62)
 
     @property
     def caso(self):
@@ -457,7 +458,7 @@ class Processos:
         self.ocultar_pagina()
         self.__txtCaso['state'] = 'normal'
         limpar(self.__frameProcessos)
-        self.atualizar__advogados()
+        self.atualizar_advogados()
         self.__frameProcessos.pack(side=BOTTOM, fill=X, pady=1)
         self.__btnSalvarRegistro.place_forget()
         self.__btnCancelar.place_forget()
@@ -466,7 +467,7 @@ class Processos:
             self.novo_caso()
         self.__txtCaso['state'] = 'readonly'
 
-    def atualizar__advogados(self):
+    def atualizar_advogados(self):
         advogados = [advogado for advogado in search('advogados', parms='nome')]
         advogados = [advogado[0] for advogado in advogados]
         self.advogados = advogados
@@ -516,9 +517,10 @@ class Processos:
                     valid.append(True)
                 else:
                     style = ttk.Style()
-                    style.configure("r.TCombobox", fieldbackground='Indian Red')
+                    style.configure("r.TCombobox", selectbackground='Indian Red')
                     child['style'] = 'r.TCombobox'
                     valid.append(False)
+
             elif child_class == 'Text':
                 if validar_vazio(child.get(1.0, END)) and validar_space(child.get(1.0, END)):
                     child['background'] = '#fff'
@@ -526,6 +528,7 @@ class Processos:
                 else:
                     child['background'] = 'Indian Red'
                     valid.append(False)
+
         if (validar_str(self.autor)) and (validar_str(self.reu)) and (validar_str(self.adv_externo)) and \
                 (validar_str(self.adv_adverso)) and (validar_processo(self.processo)) and \
                 (validar_float(self.vr_causa)) and (validar_float(self.vr_atual)) and \
@@ -546,11 +549,13 @@ class Processos:
                 valid.append(True)
             if not validar_str(self.adv_externo):
                 style = ttk.Style()
+                style.theme_use('alt')
                 style.configure("r.TCombobox", fieldbackground='Indian Red')
                 self.__txtAdvExterno['style'] = 'r.TCombobox'
                 valid.append(False)
             else:
                 style = ttk.Style()
+                style.theme_use('alt')
                 style.configure("w.TCombobox", fieldbackground='#fff')
                 self.__txtAdvExterno['style'] = 'w.TCombobox'
                 valid.append(True)

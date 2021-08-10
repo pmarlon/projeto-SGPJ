@@ -20,8 +20,12 @@ class App:
         img_pesquisar = PhotoImage(data=base64.b64decode(img_pesquisar_base64))  # imagem do botão Pesquisar
         img_sair = PhotoImage(data=base64.b64decode(img_sair_base64))  # imagem do botão Sair
         img_consultas = PhotoImage(data=base64.b64decode(img_consultas_base64))  # imagem do botão Consultas
+        icon = ImageTk.PhotoImage(data=base64.b64decode(icon_base64))  # ícone do app
 
         self.root = root
+
+        root.wm_iconphoto(True, icon)  # Define o ícone da janela
+
         # Cabeçalho do Programa
         self.__Header = Frame(self.root, height=100, bg='#282a34')
         self.__Header.pack(side=TOP, fill=X)

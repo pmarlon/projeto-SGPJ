@@ -16,8 +16,10 @@ class Pesquisar:
 
         # Define o Estilo dos Notebook
         style = ttk.Style()
+        style.theme_use('alt')
         style.configure("TNotebook", background='LightSteelBlue3')
         style.configure("TNotebook.Tab", background='LightSteelBlue3')
+        style.map('TNotebook.Tab', background=[('selected', '#4444ff')])
 
         # Cria um Notebook
         self.__notebook = ttk.Notebook(self.__framePesquisar, height=500)
@@ -129,7 +131,7 @@ class Pesquisar:
                                                              self.__txtDataInicio,
                                                              relx=self.__txtDataInicio.winfo_rootx(),
                                                              rely=self.__txtDataInicio.winfo_rooty())
-        self.__btnCalendario.place(relx=0.312, rely=0.315)
+        self.__btnCalendario.place(relx=0.312, rely=0.312)
 
         self.__btnCalendario = Button(self.__tbProcessos,
                                       image=img_calendario,
@@ -142,7 +144,7 @@ class Pesquisar:
                                                              self.__txtDataFim,
                                                              relx=self.__txtDataFim.winfo_rootx(),
                                                              rely=self.__txtDataFim.winfo_rooty())
-        self.__btnCalendario.place(relx=0.492, rely=0.315)
+        self.__btnCalendario.place(relx=0.492, rely=0.312)
 
         # Aba Pesquisar Ocorrências
         self.__tbOcorrencias = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -222,7 +224,7 @@ class Pesquisar:
                                                              relx=self.__txtDataOcorrencia.winfo_rootx(),
                                                              rely=self.__txtDataOcorrencia.winfo_rooty())
 
-        self.__btnCalendario.place(relx=0.795, rely=0.1795)
+        self.__btnCalendario.place(relx=0.792, rely=0.175)
 
         # Aba Pesquisar Consultas
         self.__tbConsultas = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -313,7 +315,7 @@ class Pesquisar:
                                                              self.__txtEntrada,
                                                              relx=self.__txtEntrada.winfo_rootx(),
                                                              rely=self.__txtEntrada.winfo_rooty())
-        self.__btnCalendario.place(relx=0.4285, rely=0.245)
+        self.__btnCalendario.place(relx=0.4285, rely=0.243)
 
         self.__btnCalendario = Button(self.__tbConsultas,
                                       image=img_calendario,
@@ -326,7 +328,7 @@ class Pesquisar:
                                                              self.__txtSaida,
                                                              relx=self.__txtSaida.winfo_rootx(),
                                                              rely=self.__txtSaida.winfo_rooty())
-        self.__btnCalendario.place(relx=0.652, rely=0.245)
+        self.__btnCalendario.place(relx=0.652, rely=0.243)
 
     @property
     def caso(self):
