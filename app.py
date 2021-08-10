@@ -42,7 +42,7 @@ class App:
                                  activebackground='#4444ff')
         self.btnInicial.image = img_inicial
         self.btnInicial['command'] = lambda: self.switch_frame(self.frameInicial, self.btnInicial)
-        self.btnInicial.place(x=10, y=3, relwidth=0.13)
+        self.btnInicial.place(relx=0.01, y=3, width=120)
 
         self.btnProcessos = Button(self.__MenuBar,
                                    text='Processos',
@@ -53,7 +53,7 @@ class App:
                                    activebackground='#4444ff')
         self.btnProcessos.image = img_processo
         self.btnProcessos['command'] = lambda: self.switch_frame(self.frameProcessos, self.btnProcessos)
-        self.btnProcessos.place(x=145, y=3, relwidth=0.13)
+        self.btnProcessos.place(relx=0.15, y=3, width=120)
 
         self.btnOcorrencias = Button(self.__MenuBar,
                                      text='Ocorrências',
@@ -64,7 +64,7 @@ class App:
         self.btnOcorrencias['image'] = img_ocorrencias
         self.btnOcorrencias.image = img_ocorrencias
         self.btnOcorrencias['command'] = lambda: self.switch_frame(self.frameOcorrencias, self.btnOcorrencias)
-        self.btnOcorrencias.place(x=280, y=3, relwidth=0.13)
+        self.btnOcorrencias.place(relx=0.29, y=3, width=120)
 
         self.btnAdvogados = Button(self.__MenuBar,
                                    text='Advogados',
@@ -75,7 +75,7 @@ class App:
                                    activebackground='#4444ff')
         self.btnAdvogados.image = img_advogados
         self.btnAdvogados['command'] = lambda: self.switch_frame(self.frameAdvogados, self.btnAdvogados)
-        self.btnAdvogados.place(x=415, y=3, relwidth=0.13)
+        self.btnAdvogados.place(relx=0.43, y=3, width=120)
 
         self.btnConsultas = Button(self.__MenuBar,
                                    text='Consultas',
@@ -86,7 +86,7 @@ class App:
                                    activebackground='#4444ff')
         self.btnConsultas.image = img_consultas
         self.btnConsultas['command'] = lambda: self.switch_frame(self.frameConsultas, self.btnConsultas)
-        self.btnConsultas.place(x=550, y=3, relwidth=0.13)
+        self.btnConsultas.place(relx=0.57, y=3, width=120)
 
         self.btnPesquisar = Button(self.__MenuBar,
                                    text='Pesquisar',
@@ -97,7 +97,7 @@ class App:
                                    activebackground='#4444ff')
         self.btnPesquisar.image = img_pesquisar
         self.btnPesquisar['command'] = lambda: self.switch_frame(self.framePesquisar, self.btnPesquisar)
-        self.btnPesquisar.place(x=685, y=3, relwidth=0.13)
+        self.btnPesquisar.place(relx=0.71, y=3, width=120)
 
         self.__btnSair = Button(self.__MenuBar,
                                 text='Sair',
@@ -108,7 +108,7 @@ class App:
                                 activebackground='#4444ff')
         self.__btnSair.image = img_sair
         self.__btnSair['command'] = lambda: root.destroy()
-        self.__btnSair.place(x=820, y=3, relwidth=0.13)
+        self.__btnSair.place(relx=0.85, y=3, width=120)
 
         # Frame inicial
         self.frameInicial = Inicial(self.root, self)

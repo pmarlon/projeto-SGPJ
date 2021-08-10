@@ -20,84 +20,84 @@ class Ocorrencias:
         self.__lblCaso['font'] = 'Serif', '12', 'bold'
         self.__lblCaso.place(x=100, y=20)
 
-        self.__txtCaso = Entry(self.__frameOcorrencias, width=10)
-        self.__txtCaso.place(x=210, y=20)
+        self.__txtCaso = Entry(self.__frameOcorrencias)
+        self.__txtCaso.place(relx=0.22, y=20, relwidth=0.09)
 
         self.__lblAutor = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblAutor['text'] = 'Autor'
         self.__lblAutor['font'] = 'Serif', '12', 'bold'
         self.__lblAutor.place(x=140, y=60)
 
-        self.__txtAutor = Entry(self.__frameOcorrencias, width=80, state='readonly')
-        self.__txtAutor.place(x=210, y=60)
+        self.__txtAutor = Entry(self.__frameOcorrencias, state='readonly')
+        self.__txtAutor.place(relx=0.22, y=60, relwidth=0.675)
 
         self.__lblReu = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblReu['text'] = 'Réu'
         self.__lblReu['font'] = 'Serif', '12', 'bold'
         self.__lblReu.place(x=160, y=90)
 
-        self.__txtReu = Entry(self.__frameOcorrencias, width=80, state='readonly')
-        self.__txtReu.place(x=210, y=90)
+        self.__txtReu = Entry(self.__frameOcorrencias, state='readonly')
+        self.__txtReu.place(relx=0.22, y=90, relwidth=0.675)
 
         self.__lblAdvExterno = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblAdvExterno['text'] = 'Adv Externo'
         self.__lblAdvExterno['font'] = 'Serif', '12', 'bold'
         self.__lblAdvExterno.place(x=90, y=120)
 
-        self.__txtAdvExterno = Entry(self.__frameOcorrencias, width=80, state='readonly')
-        self.__txtAdvExterno.place(x=210, y=120)
+        self.__txtAdvExterno = Entry(self.__frameOcorrencias, state='readonly')
+        self.__txtAdvExterno.place(relx=0.22, y=120, relwidth=0.675)
 
         self.__lblTipoAcao = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblTipoAcao['font'] = 'Serif', '12', 'bold'
         self.__lblTipoAcao['text'] = 'Tipo Ação'
         self.__lblTipoAcao.place(x=110, y=150)
 
-        self.__txtTipoAcao = Entry(self.__frameOcorrencias, width=80, state='readonly')
-        self.__txtTipoAcao.place(x=210, y=150)
+        self.__txtTipoAcao = Entry(self.__frameOcorrencias, state='readonly')
+        self.__txtTipoAcao.place(relx=0.22, y=150, relwidth=0.675)
 
         self.__lblProcessso = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblProcessso['text'] = 'Processo'
         self.__lblProcessso['font'] = 'Serif', '12', 'bold'
         self.__lblProcessso.place(x=120, y=180)
 
-        self.__txtProcesso = Entry(self.__frameOcorrencias, width=80, state='readonly')
-        self.__txtProcesso.place(x=210, y=180)
+        self.__txtProcesso = Entry(self.__frameOcorrencias, state='readonly')
+        self.__txtProcesso.place(relx=0.22, y=180, relwidth=0.675)
 
         self.__lblUfMunicipio = Label(self.__frameOcorrencias, bg='LightSteelBlue3')
         self.__lblUfMunicipio['text'] = 'UF - Município'
         self.__lblUfMunicipio['font'] = 'Serif', '12', 'bold'
         self.__lblUfMunicipio.place(x=60, y=210)
 
-        self.__txtUfMunicipio = Entry(self.__frameOcorrencias, width=80, state='readonly')
-        self.__txtUfMunicipio.place(x=210, y=210)
+        self.__txtUfMunicipio = Entry(self.__frameOcorrencias, state='readonly')
+        self.__txtUfMunicipio.place(relx=0.22, y=210, relwidth=0.675)
 
         self.__lblDataOcorrencia = Label(self.__frameOcorrencias, text='Data', bg='LightSteelBlue3')
         self.__lblDataOcorrencia['font'] = 'Serif', '12'
         self.__lblDataOcorrencia.place(x=160, y=240)
 
-        self.__txtDataOcorrencia = Entry(self.__frameOcorrencias, width=10)
-        self.__txtDataOcorrencia.place(x=210, y=240)
+        self.__txtDataOcorrencia = Entry(self.__frameOcorrencias)
+        self.__txtDataOcorrencia.place(relx=0.22, y=240, relwidth=0.09)
 
         self.__lblDescricao = Label(self.__frameOcorrencias, text='Descrição', bg='LightSteelBlue3')
         self.__lblDescricao['font'] = 'Serif', '12'
         self.__lblDescricao.place(x=110, y=285)
 
-        self.__txtDescricao = Text(self.__frameOcorrencias, width=53, height=3)
-        self.__txtDescricao.place(x=210, y=270)
+        self.__txtDescricao = Text(self.__frameOcorrencias, height=3)
+        self.__txtDescricao.place(relx=0.22, y=270, relwidth=0.5)
 
         self.__lblValor = Label(self.__frameOcorrencias, text='Valor R$', bg='LightSteelBlue3')
         self.__lblValor['font'] = 'Serif', '12'
         self.__lblValor.place(x=130, y=335)
 
-        self.__txtValor = Entry(self.__frameOcorrencias, width=15)
-        self.__txtValor.place(x=210, y=335)
+        self.__txtValor = Entry(self.__frameOcorrencias, width=20)
+        self.__txtValor.place(relx=0.22, y=335, relwidth=0.15)
 
         self.__lblValorAtual = Label(self.__frameOcorrencias, text='Valor Atual R$', bg='LightSteelBlue3')
         self.__lblValorAtual['font'] = 'Serif', '12'
-        self.__lblValorAtual.place(x=380, y=335)
+        self.__lblValorAtual.place(relx=0.425, y=335, relwidth=0.15)
 
-        self.__txtValorAtual = Entry(self.__frameOcorrencias, width=15)
-        self.__txtValorAtual.place(x=515, y=335)
+        self.__txtValorAtual = Entry(self.__frameOcorrencias, width=20)
+        self.__txtValorAtual.place(relx=0.57, y=335, relwidth=0.15)
 
         self.__btnAddOcorrencia = Button(self.__frameOcorrencias,
                                          text='Adicionar Ocorrência',
@@ -125,7 +125,7 @@ class Ocorrencias:
                                      highlightthickness=False)
         self.__btnPesquisar.image = img_pesquisar
         self.__btnPesquisar['command'] = lambda: self.pesquisar()
-        self.__btnPesquisar.place(x=300, y=15)
+        self.__btnPesquisar.place(relx=0.31, y=15)
 
         self.__btnCancelar = Button(self.__frameOcorrencias,
                                     image=img_cancelar,
@@ -147,7 +147,7 @@ class Ocorrencias:
                                                              self.__txtDataOcorrencia,
                                                              relx=self.__txtDataOcorrencia.winfo_rootx(),
                                                              rely=self.__txtDataOcorrencia.winfo_rooty())
-        self.__btnCalendario.place(x=297, y=238)
+        self.__btnCalendario.place(relx=0.31, rely=0.513)
 
     @property
     def caso(self):

@@ -28,24 +28,23 @@ class Processos:
         self.__lblAutor['font'] = 'Serif', '12'
         self.__lblAutor.place(x=155, y=20)
 
-        self.__txtAutor = Entry(self.__frameProcessos, width=80)
-        self.__txtAutor.place(x=210, y=20)
+        self.__txtAutor = Entry(self.__frameProcessos)
+        self.__txtAutor.place(x=210, y=20, relwidth=0.674)
 
         self.__lblReu = Label(self.__frameProcessos, text='Réu', bg='LightSteelBlue3')
         self.__lblReu['font'] = 'Serif', '12'
         self.__lblReu.place(x=160, y=50)
 
-        self.__txtReu = Entry(self.__frameProcessos, width=80)
-        self.__txtReu.place(x=210, y=50)
+        self.__txtReu = Entry(self.__frameProcessos)
+        self.__txtReu.place(x=210, y=50, relwidth=0.674)
 
         self.__lblAdvExterno = Label(self.__frameProcessos, text='Adv Externo', bg='LightSteelBlue3')
         self.__lblAdvExterno['font'] = 'Serif', '12'
         self.__lblAdvExterno.place(x=100, y=80)
 
-        self.__txtAdvExterno = ttk.Combobox(self.__frameProcessos, values=[],
-                                            width=74)
+        self.__txtAdvExterno = ttk.Combobox(self.__frameProcessos, values=[])
         self.__txtAdvExterno['justify'] = 'left'
-        self.__txtAdvExterno.place(x=210, y=80)
+        self.__txtAdvExterno.place(x=210, y=80, relwidth=0.65)
 
         self.__btnAddAdv = Button(self.__frameProcessos,
                                   relief='flat',
@@ -54,21 +53,20 @@ class Processos:
         self.__btnAddAdv['command'] = lambda: self.command_advogados()
         self.__btnAddAdv['image'] = img_escolher
         self.__btnAddAdv.image = img_escolher
-        self.__btnAddAdv.place(x=825, y=80)
-
+        self.__btnAddAdv.place(x=833, y=80, relx=0.0001)
         self.__lblAdvAdverso = Label(self.__frameProcessos, text='Adv Adverso', bg='LightSteelBlue3')
         self.__lblAdvAdverso['font'] = 'Serif', '12'
         self.__lblAdvAdverso.place(x=100, y=110)
 
-        self.__txtAdvAdverso = Entry(self.__frameProcessos, width=80)
-        self.__txtAdvAdverso.place(x=210, y=110)
+        self.__txtAdvAdverso = Entry(self.__frameProcessos)
+        self.__txtAdvAdverso.place(x=210, y=110, relwidth=0.674)
 
         self.__lblEndParteAdversa = Label(self.__frameProcessos, text='Endereço parte Adversa', bg='LightSteelBlue3')
         self.__lblEndParteAdversa['font'] = 'Serif', '12'
         self.__lblEndParteAdversa.place(x=10, y=140)
 
-        self.__txtEndParteAdversa = Entry(self.__frameProcessos, width=80)
-        self.__txtEndParteAdversa.place(x=210, y=140)
+        self.__txtEndParteAdversa = Entry(self.__frameProcessos)
+        self.__txtEndParteAdversa.place(x=210, y=140, relwidth=0.674)
 
         self.__lblTipoAcao = Label(self.__frameProcessos, text='Tipo Ação', bg='LightSteelBlue3')
         self.__lblTipoAcao['font'] = 'Serif', '12'
@@ -82,22 +80,22 @@ class Processos:
         self.__lblNumProcesso['font'] = 'Serif', '12'
         self.__lblNumProcesso.place(x=450, y=170)
 
-        self.__txtNumProcesso = Entry(self.__frameProcessos, width=40)
-        self.__txtNumProcesso.place(x=530, y=170)
+        self.__txtNumProcesso = Entry(self.__frameProcessos)
+        self.__txtNumProcesso.place(x=530, y=170, relwidth=0.34)
 
         self.__lblVaraTribunal = Label(self.__frameProcessos, text='Vara/Tribunal', bg='LightSteelBlue3')
         self.__lblVaraTribunal['font'] = 'Serif', '12'
         self.__lblVaraTribunal.place(x=90, y=200)
 
-        self.__txtVaraTribunal = Entry(self.__frameProcessos, width=45)
+        self.__txtVaraTribunal = Entry(self.__frameProcessos, width=40)
         self.__txtVaraTribunal.place(x=210, y=200)
 
         self.__lblPosFeito = Label(self.__frameProcessos, text='Pos Feito', bg='LightSteelBlue3')
         self.__lblPosFeito['font'] = 'Serif', '12'
-        self.__lblPosFeito.place(x=590, y=200)
+        self.__lblPosFeito.place(relx=0.625, y=200)
 
-        self.__txtPosFeito = Entry(self.__frameProcessos, width=21)
-        self.__txtPosFeito.place(x=680, y=200)
+        self.__txtPosFeito = Entry(self.__frameProcessos)
+        self.__txtPosFeito.place(relx=0.714, y=200, relwidth=0.18)
 
         self.__lblUfMunicipio = Label(self.__frameProcessos, text='UF - Município', bg='LightSteelBlue3')
         self.__lblUfMunicipio['font'] = 'Serif', '12'
@@ -108,10 +106,10 @@ class Processos:
 
         self.__lblVrCausa = Label(self.__frameProcessos, text='Valor Causa R$', bg='LightSteelBlue3')
         self.__lblVrCausa['font'] = 'Serif', '12'
-        self.__lblVrCausa.place(x=545, y=230)
+        self.__lblVrCausa.place(relx=0.57, y=230)
 
-        self.__txtVrCausa = Entry(self.__frameProcessos, width=21)
-        self.__txtVrCausa.place(x=680, y=230)
+        self.__txtVrCausa = Entry(self.__frameProcessos)
+        self.__txtVrCausa.place(relx=0.714, y=230, relwidth=0.18)
 
         self.__lblSitAtual = Label(self.__frameProcessos, text='Situação Atual', bg='LightSteelBlue3')
         self.__lblSitAtual['font'] = 'Serif', '12'
@@ -125,31 +123,31 @@ class Processos:
 
         self.__lblVrAtual = Label(self.__frameProcessos, text='Valor Atual R$', bg='LightSteelBlue3')
         self.__lblVrAtual['font'] = 'Serif', '12'
-        self.__lblVrAtual.place(x=550, y=260)
+        self.__lblVrAtual.place(relx=0.58, y=260)
 
-        self.__txtVrAtual = Entry(self.__frameProcessos, width=21)
-        self.__txtVrAtual.place(x=680, y=260)
+        self.__txtVrAtual = Entry(self.__frameProcessos)
+        self.__txtVrAtual.place(relx=0.714, y=260, relwidth=0.18)
 
         self.__lblDataInicio = Label(self.__frameProcessos, text='Inicio', bg='LightSteelBlue3')
         self.__lblDataInicio['font'] = 'Serif', '12'
         self.__lblDataInicio.place(x=150, y=290)
 
-        self.__txtDataInicio = Entry(self.__frameProcessos, width=10)
-        self.__txtDataInicio.place(x=210, y=290)
+        self.__txtDataInicio = Entry(self.__frameProcessos)
+        self.__txtDataInicio.place(x=210, y=290, relwidth=0.09)
 
         self.__lblDataFim = Label(self.__frameProcessos, text='Fim', bg='LightSteelBlue3')
         self.__lblDataFim['font'] = 'Serif', '12'
         self.__lblDataFim.place(x=385, y=290)
 
-        self.__txtDataFim = Entry(self.__frameProcessos, width=10)
-        self.__txtDataFim.place(x=430, y=290)
+        self.__txtDataFim = Entry(self.__frameProcessos)
+        self.__txtDataFim.place(x=430, y=290, relwidth=0.09)
 
         self.__lblPerda = Label(self.__frameProcessos, text='Perda', bg='LightSteelBlue3')
         self.__lblPerda['font'] = 'Serif', '12'
-        self.__lblPerda.place(x=615, y=290)
+        self.__lblPerda.place(relx=0.65, y=290)
 
-        self.__txtPerda = Entry(self.__frameProcessos, width=21)
-        self.__txtPerda.place(x=680, y=290)
+        self.__txtPerda = Entry(self.__frameProcessos)
+        self.__txtPerda.place(relx=0.714, y=290, relwidth=0.18)
 
         self.__lblPedido = Label(self.__frameProcessos, text='Pedido', bg='LightSteelBlue3')
         self.__lblPedido['font'] = 'Serif', '12'
@@ -160,10 +158,10 @@ class Processos:
 
         self.__lblObs = Label(self.__frameProcessos, text='Observações', bg='LightSteelBlue3')
         self.__lblObs['font'] = 'Serif', '12'
-        self.__lblObs.place(x=495, y=320)
+        self.__lblObs.place(relx=0.575, y=320)
 
-        self.__txtObs = Text(self.__frameProcessos, width=30, height=3)
-        self.__txtObs.place(x=608, y=320)
+        self.__txtObs = Text(self.__frameProcessos, height=3)
+        self.__txtObs.place(relx=0.694, y=320, relwidth=0.2)
 
         self.__btnAddRegistro = Button(self.__frameProcessos,
                                        text='Adicionar Registro',
@@ -204,7 +202,7 @@ class Processos:
                                                              self.__txtDataInicio,
                                                              relx=self.__txtDataInicio.winfo_rootx(),
                                                              rely=self.__txtDataInicio.winfo_rooty())
-        self.__btnCalendario.place(x=297, y=288)
+        self.__btnCalendario.place(relx=0.31, rely=0.623)
 
         self.__btnCalendario = Button(self.__frameProcessos,
                                       image=img_calendario,
@@ -217,7 +215,7 @@ class Processos:
                                                              self.__txtDataFim,
                                                              relx=self.__txtDataFim.winfo_rootx(),
                                                              rely=self.__txtDataFim.winfo_rooty())
-        self.__btnCalendario.place(x=517, y=288)
+        self.__btnCalendario.place(relx=0.541, rely=0.623)
 
     @property
     def caso(self):

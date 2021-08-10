@@ -17,86 +17,86 @@ class Consultas:
         self.__lblConsulta['font'] = 'Serif', '12'
         self.__lblConsulta.place(x=75, y=20)
 
-        self.__txtConsulta = Entry(self.__frameConsultas, width=8)
-        self.__txtConsulta.place(x=160, y=20)
+        self.__txtConsulta = Entry(self.__frameConsultas)
+        self.__txtConsulta.place(relx=0.166, y=20, relwidth=0.1)
 
         self.__lblRef = Label(self.__frameConsultas, text='REF', bg='LightSteelBlue3')
         self.__lblRef['font'] = 'Serif', '12'
         self.__lblRef.place(x=110, y=50)
 
-        self.__txtRef = Entry(self.__frameConsultas, width=40)
-        self.__txtRef.place(x=160, y=50)
+        self.__txtRef = Entry(self.__frameConsultas)
+        self.__txtRef.place(relx=0.166, y=50, relwidth=0.35)
 
         self.__lblPrioridade = Label(self.__frameConsultas, text='Prioridade', bg='LightSteelBlue3')
         self.__lblPrioridade['font'] = 'Serif', '12'
-        self.__lblPrioridade.place(x=500, y=50)
+        self.__lblPrioridade.place(relx=0.525, y=50)
 
-        self.__txtPrioridade = ttk.Combobox(self.__frameConsultas, values=['ALTA', 'MÉDIA', 'BAIXA'], width=10)
+        self.__txtPrioridade = ttk.Combobox(self.__frameConsultas, values=['ALTA', 'MÉDIA', 'BAIXA'])
         self.__txtPrioridade['justify'] = 'center'
-        self.__txtPrioridade.place(x=595, y=50)
+        self.__txtPrioridade.place(relx=0.625, y=50, relwidth=0.1)
 
         self.__lblEsperado = Label(self.__frameConsultas, text='Esperado', bg='LightSteelBlue3')
         self.__lblEsperado['font'] = 'Serif', '12'
-        self.__lblEsperado.place(x=720, y=50)
+        self.__lblEsperado.place(relx=0.75, y=50)
 
-        self.__txtEsperado = Entry(self.__frameConsultas, width=10)
-        self.__txtEsperado.place(x=800, y=50)
+        self.__txtEsperado = Entry(self.__frameConsultas)
+        self.__txtEsperado.place(relx=0.837, y=50, relwidth=0.09)
 
         self.__lblOrigem = Label(self.__frameConsultas, text='Origem', bg='LightSteelBlue3')
         self.__lblOrigem['font'] = 'Serif', '12'
         self.__lblOrigem.place(x=80, y=80)
 
-        self.__txtOrigem = Entry(self.__frameConsultas, width=66)
-        self.__txtOrigem.place(x=160, y=80)
+        self.__txtOrigem = Entry(self.__frameConsultas)
+        self.__txtOrigem.place(relx=0.166, y=80, relwidth=0.56)
 
         self.__lblEntrada = Label(self.__frameConsultas, text='Entrada', bg='LightSteelBlue3')
         self.__lblEntrada['font'] = 'Serif', '12'
-        self.__lblEntrada.place(x=730, y=80)
+        self.__lblEntrada.place(relx=0.76, y=80)
 
-        self.__txtEntrada = Entry(self.__frameConsultas, width=10)
-        self.__txtEntrada.place(x=800, y=80)
+        self.__txtEntrada = Entry(self.__frameConsultas)
+        self.__txtEntrada.place(relx=0.837, y=80, relwidth=0.09)
 
         self.__lblAssunto = Label(self.__frameConsultas, text='Assunto', bg='LightSteelBlue3')
         self.__lblAssunto['font'] = 'Serif', '12'
         self.__lblAssunto.place(x=80, y=110)
 
-        self.__txtAssunto = Text(self.__frameConsultas, width=93, height=3)
-        self.__txtAssunto.place(x=160, y=110)
+        self.__txtAssunto = Text(self.__frameConsultas, height=3)
+        self.__txtAssunto.place(relx=0.166, y=110, relwidth=0.786)
 
         self.__lblInteressado = Label(self.__frameConsultas, text='Interessado', bg='LightSteelBlue3')
         self.__lblInteressado['font'] = 'Serif', '12'
         self.__lblInteressado.place(x=50, y=175)
 
-        self.__txtInteressado = Entry(self.__frameConsultas, width=93)
-        self.__txtInteressado.place(x=160, y=175)
+        self.__txtInteressado = Entry(self.__frameConsultas)
+        self.__txtInteressado.place(relx=0.166, y=175, relwidth=0.786)
 
         self.__lblAdvCojur = Label(self.__frameConsultas, text='Advogado Cojur', bg='LightSteelBlue3')
         self.__lblAdvCojur['font'] = 'Serif', '12'
         self.__lblAdvCojur.place(x=10, y=205)
 
-        self.__txtAdvCojur = Entry(self.__frameConsultas, width=93)
-        self.__txtAdvCojur.place(x=160, y=205)
+        self.__txtAdvCojur = Entry(self.__frameConsultas)
+        self.__txtAdvCojur.place(relx=0.166, y=205, relwidth=0.786)
 
         self.__lblDestino = Label(self.__frameConsultas, text='Destino', bg='LightSteelBlue3')
         self.__lblDestino['font'] = 'Serif', '12'
         self.__lblDestino.place(x=80, y=235)
 
-        self.__txtDestino = Entry(self.__frameConsultas, width=65)
-        self.__txtDestino.place(x=160, y=235)
+        self.__txtDestino = Entry(self.__frameConsultas)
+        self.__txtDestino.place(relx=0.166, y=235, relwidth=0.6)
 
         self.__lblSaida = Label(self.__frameConsultas, text='Saída', bg='LightSteelBlue3')
         self.__lblSaida['font'] = 'Serif', '12'
-        self.__lblSaida.place(x=750, y=235)
+        self.__lblSaida.place(relx=0.78, y=235)
 
-        self.__txtSaida = Entry(self.__frameConsultas, width=10)
-        self.__txtSaida.place(x=800, y=235)
+        self.__txtSaida = Entry(self.__frameConsultas)
+        self.__txtSaida.place(relx=0.837, y=235, relwidth=0.09)
 
         self.__lblEmendaResult = Label(self.__frameConsultas, text='Emenda/Resultado', bg='LightSteelBlue3')
         self.__lblEmendaResult['font'] = 'Serif', '12'
         self.__lblEmendaResult.place(x=5, y=265)
 
-        self.__txtEmendaResult = Text(self.__frameConsultas, width=93, height=5)
-        self.__txtEmendaResult.place(x=160, y=265)
+        self.__txtEmendaResult = Text(self.__frameConsultas, height=5)
+        self.__txtEmendaResult.place(relx=0.166, y=265, relwidth=0.786)
 
         self.__btnSalvarRegistro = Button(self.__frameConsultas,
                                           text='Salvar Registro',
@@ -136,7 +136,7 @@ class Consultas:
                                                              self.__txtEsperado,
                                                              relx=self.__txtEsperado.winfo_rootx(),
                                                              rely=self.__txtEsperado.winfo_rooty())
-        self.__btnCalendario.place(x=887, y=48)
+        self.__btnCalendario.place(relx=0.9275, rely=0.103)
 
         self.__btnCalendario = Button(self.__frameConsultas,
                                       image=img_calendario,
@@ -149,7 +149,7 @@ class Consultas:
                                                              self.__txtEntrada,
                                                              relx=self.__txtEntrada.winfo_rootx(),
                                                              rely=self.__txtEntrada.winfo_rooty())
-        self.__btnCalendario.place(x=887, y=78)
+        self.__btnCalendario.place(relx=0.9275, rely=0.169)
 
         self.__btnCalendario = Button(self.__frameConsultas,
                                       image=img_calendario,
@@ -162,7 +162,7 @@ class Consultas:
                                                              self.__txtSaida,
                                                              relx=self.__txtSaida.winfo_rootx(),
                                                              rely=self.__txtSaida.winfo_rooty())
-        self.__btnCalendario.place(x=887, y=232)
+        self.__btnCalendario.place(relx=0.9275, rely=0.505)
 
     @property
     def consulta(self):

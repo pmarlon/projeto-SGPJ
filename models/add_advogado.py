@@ -24,73 +24,73 @@ class AddAdvogado:
         self.__lblAdvNome['font'] = 'Serif', '12'
         self.__lblAdvNome.place(x=35, y=20)
 
-        self.__txtAdvNome = Entry(self.__frameAdvogados, width=80)
+        self.__txtAdvNome = Entry(self.__frameAdvogados)
         vcmd = self.__txtAdvNome.register(func=self.valida_auto_complete)
         self.__txtAdvNome['validate'] = 'key'
         self.__txtAdvNome['validatecommand'] = (vcmd, '%P', 'nome')
-        self.__txtAdvNome.place(x=100, y=20)
+        self.__txtAdvNome.place(x=100, y=20, relwidth=0.85)
 
         self.__lblAdvEndereco = Label(self.__frameAdvogados, text='Endereço', bg='LightSteelBlue3')
         self.__lblAdvEndereco['font'] = 'Serif', '12'
         self.__lblAdvEndereco.place(x=10, y=50)
 
-        self.__txtAdvEndereco = Entry(self.__frameAdvogados, width=80)
-        self.__txtAdvEndereco.place(x=100, y=50)
+        self.__txtAdvEndereco = Entry(self.__frameAdvogados)
+        self.__txtAdvEndereco.place(x=100, y=50, relwidth=0.85)
 
         self.__lblAdvCidadeUf = Label(self.__frameAdvogados, text='Cidade/UF', bg='LightSteelBlue3')
         self.__lblAdvCidadeUf['font'] = 'Serif', '12'
         self.__lblAdvCidadeUf.place(x=10, y=80)
 
-        self.__txtAdvCidadeUf = Entry(self.__frameAdvogados, width=40)
-        self.__txtAdvCidadeUf.place(x=100, y=80)
+        self.__txtAdvCidadeUf = Entry(self.__frameAdvogados)
+        self.__txtAdvCidadeUf.place(x=100, y=80, relwidth=0.45)
 
         self.__lblAdvCep = Label(self.__frameAdvogados, text='CEP', bg='LightSteelBlue3')
         self.__lblAdvCep['font'] = 'Serif', '12'
-        self.__lblAdvCep.place(x=450, y=80)
+        self.__lblAdvCep.place(relx=0.62, y=80)
 
-        self.__txtAdvCep = Entry(self.__frameAdvogados, width=30)
-        self.__txtAdvCep.place(x=500, y=80)
+        self.__txtAdvCep = Entry(self.__frameAdvogados)
+        self.__txtAdvCep.place(relx=0.675, y=80, relwidth=0.3)
 
         self.__lblAdvFax = Label(self.__frameAdvogados, text='FAX', bg='LightSteelBlue3')
         self.__lblAdvFax['font'] = 'Serif', '12'
         self.__lblAdvFax.place(x=50, y=110)
 
-        self.__txtAdvFax = Entry(self.__frameAdvogados, width=30)
-        self.__txtAdvFax.place(x=100, y=110)
+        self.__txtAdvFax = Entry(self.__frameAdvogados)
+        self.__txtAdvFax.place(x=100, y=110, relwidth=0.3)
 
         self.__lblAdvTel = Label(self.__frameAdvogados, text='Tel. Comercial', bg='LightSteelBlue3')
         self.__lblAdvTel['font'] = 'Serif', '12'
-        self.__lblAdvTel.place(x=370, y=110)
+        self.__lblAdvTel.place(relx=0.51, y=110)
 
-        self.__txtAdvTel = Entry(self.__frameAdvogados, width=30)
-        self.__txtAdvTel.place(x=500, y=110)
+        self.__txtAdvTel = Entry(self.__frameAdvogados)
+        self.__txtAdvTel.place(relx=0.675, y=110, relwidth=0.3)
 
         self.__lblAdvEmail = Label(self.__frameAdvogados, text='Email', bg='LightSteelBlue3')
         self.__lblAdvEmail['font'] = 'Serif', '12'
         self.__lblAdvEmail.place(x=30, y=140)
 
-        self.__txtAdvEmail = Entry(self.__frameAdvogados, width=80)
-        self.__txtAdvEmail.place(x=100, y=140)
+        self.__txtAdvEmail = Entry(self.__frameAdvogados)
+        self.__txtAdvEmail.place(x=100, y=140, relwidth=0.85)
 
         self.__lblAdvOAB = Label(self.__frameAdvogados, text='N° OAB', bg='LightSteelBlue3')
         self.__lblAdvOAB['font'] = 'Serif', '12'
         self.__lblAdvOAB.place(x=30, y=170)
 
-        self.__txtAdvOAB = Entry(self.__frameAdvogados, width=30)
+        self.__txtAdvOAB = Entry(self.__frameAdvogados)
         vcmd = self.__txtAdvOAB.register(func=self.valida_auto_complete)
         self.__txtAdvOAB['validate'] = 'key'
         self.__txtAdvOAB['validatecommand'] = (vcmd, '%P', 'oab')
-        self.__txtAdvOAB.place(x=100, y=170)
+        self.__txtAdvOAB.place(x=100, y=170, relwidth=0.3)
 
         self.__lblAdvCPF = Label(self.__frameAdvogados, text='CPF', bg='LightSteelBlue3')
         self.__lblAdvCPF['font'] = 'Serif', '12'
-        self.__lblAdvCPF.place(x=450, y=170)
+        self.__lblAdvCPF.place(relx=0.62, y=170)
 
-        self.__txtAdvCPF = Entry(self.__frameAdvogados, width=30)
+        self.__txtAdvCPF = Entry(self.__frameAdvogados)
         vcmd = self.__txtAdvCPF.register(func=self.valida_auto_complete)
         self.__txtAdvCPF['validate'] = 'key'
         self.__txtAdvCPF['validatecommand'] = (vcmd, '%P', 'cpf')
-        self.__txtAdvCPF.place(x=500, y=170)
+        self.__txtAdvCPF.place(relx=0.675, y=170, relwidth=0.3)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5')
         self.__tvAdvogados = ttk.Treeview(self.__frameAdvogados, columns=self.__colunas, selectmode='browse',

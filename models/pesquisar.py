@@ -26,8 +26,7 @@ class Pesquisar:
         # Abas do Notebook
         # Aba Pesquisar Processos
         self.__tbProcessos = Frame(self.__notebook, bg='LightSteelBlue3')
-        self.__notebook.add(self.__tbProcessos,
-                            text='Pesquisar Processos')
+        self.__notebook.add(self.__tbProcessos, text='Pesquisar Processos')
 
         self.__lblTitulo = Label(self.__tbProcessos, text='Pesquisar Processos', bg='LightSteelBlue3')
         self.__lblTitulo['font'] = 'Serif', '16', 'bold'
@@ -37,52 +36,51 @@ class Pesquisar:
         self.__lblCaso['font'] = 'Serif', '12'
         self.__lblCaso.place(x=100, y=50)
 
-        self.__txtCaso = Entry(self.__tbProcessos, width=20)
-        self.__txtCaso.place(x=210, y=50)
+        self.__txtCaso = Entry(self.__tbProcessos)
+        self.__txtCaso.place(relx=0.22, y=50, relwidth=0.1)
 
         self.__lblProcesso = Label(self.__tbProcessos, text='N° do Processo', bg='LightSteelBlue3')
         self.__lblProcesso['font'] = 'Serif', '12'
-        self.__lblProcesso.place(x=430, y=50)
+        self.__lblProcesso.place(relx=0.45, y=50)
 
-        self.__txtProcesso = Entry(self.__tbProcessos, width=35)
-        self.__txtProcesso.place(x=570, y=50)
+        self.__txtProcesso = Entry(self.__tbProcessos)
+        self.__txtProcesso.place(relx=0.595, y=50, relwidth=0.3)
 
         self.__lblAutor = Label(self.__tbProcessos, text='Autor', bg='LightSteelBlue3')
         self.__lblAutor['font'] = 'Serif', '12'
         self.__lblAutor.place(x=150, y=80)
 
-        self.__txtAutor = Entry(self.__tbProcessos, width=80)
-        self.__txtAutor.place(x=210, y=80)
+        self.__txtAutor = Entry(self.__tbProcessos)
+        self.__txtAutor.place(relx=0.22, y=80, relwidth=0.675)
 
         self.__lblAdvExterno = Label(self.__tbProcessos, text='Adv Externo', bg='LightSteelBlue3')
         self.__lblAdvExterno['font'] = 'Serif', '12'
         self.__lblAdvExterno.place(x=100, y=110)
 
-        self.__txtAdvExterno = ttk.Combobox(self.__tbProcessos, values=['ANTÔNIO DOS ANZÓIS'],
-                                            width=79)
+        self.__txtAdvExterno = ttk.Combobox(self.__tbProcessos, values=['ANTÔNIO DOS ANZÓIS'])
         self.__txtAdvExterno['justify'] = 'left'
-        self.__txtAdvExterno.place(x=210, y=110)
+        self.__txtAdvExterno.place(relx=0.22, y=110, relwidth=0.674)
 
         self.__lblDataInicio = Label(self.__tbProcessos, text='Inicio', bg='LightSteelBlue3')
         self.__lblDataInicio['font'] = 'Serif', '12'
         self.__lblDataInicio.place(x=150, y=140)
 
-        self.__txtDataInicio = Entry(self.__tbProcessos, width=10)
-        self.__txtDataInicio.place(x=210, y=140)
+        self.__txtDataInicio = Entry(self.__tbProcessos)
+        self.__txtDataInicio.place(relx=0.22, y=140, relwidth=0.09)
 
         self.__lblDataFim = Label(self.__tbProcessos, text='Fim', bg='LightSteelBlue3')
         self.__lblDataFim['font'] = 'Serif', '12'
-        self.__lblDataFim.place(x=340, y=140)
+        self.__lblDataFim.place(relx=0.355, y=140)
 
-        self.__txtDataFim = Entry(self.__tbProcessos, width=10)
-        self.__txtDataFim.place(x=380, y=140)
+        self.__txtDataFim = Entry(self.__tbProcessos)
+        self.__txtDataFim.place(relx=0.4, y=140, relwidth=0.09)
 
         self.__lblVaraTribunal = Label(self.__tbProcessos, text='Vara/Tribunal', bg='LightSteelBlue3')
         self.__lblVaraTribunal['font'] = 'Serif', '12'
-        self.__lblVaraTribunal.place(x=500, y=140)
+        self.__lblVaraTribunal.place(relx=0.545, y=140)
 
-        self.__txtVaraTribunal = Entry(self.__tbProcessos, width=28)
-        self.__txtVaraTribunal.place(x=630, y=140)
+        self.__txtVaraTribunal = Entry(self.__tbProcessos)
+        self.__txtVaraTribunal.place(relx=0.675, y=140, relwidth=0.22)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5')
         self.__tvProcessos = ttk.Treeview(self.__tbProcessos, columns=self.__colunas, selectmode='browse', height=5)
@@ -131,7 +129,7 @@ class Pesquisar:
                                                              self.__txtDataInicio,
                                                              relx=self.__txtDataInicio.winfo_rootx(),
                                                              rely=self.__txtDataInicio.winfo_rooty())
-        self.__btnCalendario.place(x=297, y=138)
+        self.__btnCalendario.place(relx=0.312, rely=0.315)
 
         self.__btnCalendario = Button(self.__tbProcessos,
                                       image=img_calendario,
@@ -144,7 +142,7 @@ class Pesquisar:
                                                              self.__txtDataFim,
                                                              relx=self.__txtDataFim.winfo_rootx(),
                                                              rely=self.__txtDataFim.winfo_rooty())
-        self.__btnCalendario.place(x=467, y=138)
+        self.__btnCalendario.place(relx=0.492, rely=0.315)
 
         # Aba Pesquisar Ocorrências
         self.__tbOcorrencias = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -159,22 +157,22 @@ class Pesquisar:
         self.__lblCasoOcorrencia['font'] = 'Serif', '12'
         self.__lblCasoOcorrencia.place(x=100, y=80)
 
-        self.__txtCasoOcorrencia = Entry(self.__tbOcorrencias, width=20)
-        self.__txtCasoOcorrencia.place(x=150, y=80)
+        self.__txtCasoOcorrencia = Entry(self.__tbOcorrencias)
+        self.__txtCasoOcorrencia.place(relx=0.166, y=80, relwidth=0.15)
 
-        self.__lblValorOcorrencia = Label(self.__tbOcorrencias, text='Valor', bg='LightSteelBlue3')
+        self.__lblValorOcorrencia = Label(self.__tbOcorrencias, text='Valor R$', bg='LightSteelBlue3')
         self.__lblValorOcorrencia['font'] = 'Serif', '12'
-        self.__lblValorOcorrencia.place(x=370, y=80)
+        self.__lblValorOcorrencia.place(relx=0.37, y=80)
 
-        self.__txtValorOcorrencia = Entry(self.__tbOcorrencias, width=20)
-        self.__txtValorOcorrencia.place(x=430, y=80)
+        self.__txtValorOcorrencia = Entry(self.__tbOcorrencias)
+        self.__txtValorOcorrencia.place(relx=0.455, y=80, relwidth=0.15)
 
         self.__lblDataOcorrencia = Label(self.__tbOcorrencias, text='Data', bg='LightSteelBlue3')
         self.__lblDataOcorrencia['font'] = 'Serif', '12'
-        self.__lblDataOcorrencia.place(x=620, y=80)
+        self.__lblDataOcorrencia.place(relx=0.65, y=80)
 
-        self.__txtDataOcorrencia = Entry(self.__tbOcorrencias, width=10)
-        self.__txtDataOcorrencia.place(x=670, y=80)
+        self.__txtDataOcorrencia = Entry(self.__tbOcorrencias)
+        self.__txtDataOcorrencia.place(relx=0.7, y=80, relwidth=0.09)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5')
         self.__tvOcorrencias = ttk.Treeview(self.__tbOcorrencias, columns=self.__colunas, selectmode='browse',
@@ -224,7 +222,7 @@ class Pesquisar:
                                                              relx=self.__txtDataOcorrencia.winfo_rootx(),
                                                              rely=self.__txtDataOcorrencia.winfo_rooty())
 
-        self.__btnCalendario.place(x=757, y=78)
+        self.__btnCalendario.place(relx=0.795, rely=0.1795)
 
         # Aba Pesquisar Consultas
         self.__tbConsultas = Frame(self.__notebook, bg='LightSteelBlue3')
@@ -239,30 +237,30 @@ class Pesquisar:
         self.__lblConsulta['font'] = 'Serif', '12'
         self.__lblConsulta.place(x=225, y=80)
 
-        self.__txtConsulta = Entry(self.__tbConsultas, width=11)
-        self.__txtConsulta.place(x=310, y=80)
+        self.__txtConsulta = Entry(self.__tbConsultas)
+        self.__txtConsulta.place(relx=0.325, y=80, relwidth=0.1)
 
         self.__lblPrioridade = Label(self.__tbConsultas, text='Prioridade', bg='LightSteelBlue3')
         self.__lblPrioridade['font'] = 'Serif', '12'
-        self.__lblPrioridade.place(x=430, y=80)
+        self.__lblPrioridade.place(relx=0.45, y=80)
 
-        self.__txtPrioridade = ttk.Combobox(self.__tbConsultas, values=['ALTA', 'MÉDIA', 'BAIXA'], width=10)
+        self.__txtPrioridade = ttk.Combobox(self.__tbConsultas, values=['ALTA', 'MÉDIA', 'BAIXA'])
         self.__txtPrioridade['justify'] = 'center'
-        self.__txtPrioridade.place(x=523, y=80)
+        self.__txtPrioridade.place(relx=0.55, y=80, relwidth=0.127)
 
         self.__lblEntrada = Label(self.__tbConsultas, text='Entrada', bg='LightSteelBlue3')
         self.__lblEntrada['font'] = 'Serif', '12'
         self.__lblEntrada.place(x=230, y=110)
 
-        self.__txtEntrada = Entry(self.__tbConsultas, width=10)
-        self.__txtEntrada.place(x=310, y=110)
+        self.__txtEntrada = Entry(self.__tbConsultas)
+        self.__txtEntrada.place(relx=0.325, y=110, relwidth=0.1)
 
         self.__lblSaida = Label(self.__tbConsultas, text='Saída', bg='LightSteelBlue3')
         self.__lblSaida['font'] = 'Serif', '12'
-        self.__lblSaida.place(x=460, y=110)
+        self.__lblSaida.place(relx=0.49, y=110)
 
-        self.__txtSaida = Entry(self.__tbConsultas, width=10)
-        self.__txtSaida.place(x=521, y=110)
+        self.__txtSaida = Entry(self.__tbConsultas)
+        self.__txtSaida.place(relx=0.55, y=110, relwidth=0.1)
 
         self.__colunas = ('#1', '#2', '#3', '#4', '#5', '#6', '#7')
         self.__tvConsultas = ttk.Treeview(self.__tbConsultas, columns=self.__colunas, selectmode='browse',
@@ -315,7 +313,7 @@ class Pesquisar:
                                                              self.__txtEntrada,
                                                              relx=self.__txtEntrada.winfo_rootx(),
                                                              rely=self.__txtEntrada.winfo_rooty())
-        self.__btnCalendario.place(x=397, y=108)
+        self.__btnCalendario.place(relx=0.4285, rely=0.245)
 
         self.__btnCalendario = Button(self.__tbConsultas,
                                       image=img_calendario,
@@ -328,7 +326,7 @@ class Pesquisar:
                                                              self.__txtSaida,
                                                              relx=self.__txtSaida.winfo_rootx(),
                                                              rely=self.__txtSaida.winfo_rooty())
-        self.__btnCalendario.place(x=607, y=108)
+        self.__btnCalendario.place(relx=0.652, rely=0.245)
 
     @property
     def caso(self):
