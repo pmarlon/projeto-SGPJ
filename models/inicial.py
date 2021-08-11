@@ -19,7 +19,7 @@ class Inicial:
 
         def tic():
 
-            self.__lblWallpaper['text'] = strftime(f'{"  " * 35}{formata_data(hoje)} %H:%M:%S\n')
+            self.__lblWallpaper['text'] = strftime(f'{formata_data(hoje)} %H:%M:%S\n')
             self.__lblWallpaper['compound'] = 'top'
             self.__lblWallpaper['fg'] = '#1e1d20'
 

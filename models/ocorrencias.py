@@ -159,11 +159,11 @@ class Ocorrencias:
 
     @property
     def autor(self):
-        return self.__txtAutor.get()
+        return self.__txtAutor.get().upper()
 
     @autor.setter
     def autor(self, valor):
-        self.__txtAutor.insert(END, valor)
+        self.__txtAutor.insert(END, valor.upper())
 
     @property
     def num_processo(self):
@@ -175,35 +175,35 @@ class Ocorrencias:
 
     @property
     def reu(self):
-        return self.__txtReu.get()
+        return self.__txtReu.get().upper()
 
     @reu.setter
     def reu(self, valor):
-        self.__txtReu.insert(END, valor)
+        self.__txtReu.insert(END, valor.upper())
 
     @property
     def tipo_acao(self):
-        return self.__txtTipoAcao.get()
+        return self.__txtTipoAcao.get().upper()
 
     @tipo_acao.setter
     def tipo_acao(self, valor):
-        self.__txtTipoAcao.insert(END, valor)
+        self.__txtTipoAcao.insert(END, valor.upper())
 
     @property
     def adv_externo(self):
-        return self.__txtAdvExterno.get()
+        return self.__txtAdvExterno.get().upper()
 
     @adv_externo.setter
     def adv_externo(self, valor):
-        self.__txtAdvExterno.insert(END, valor)
+        self.__txtAdvExterno.insert(END, valor.upper())
 
     @property
     def uf_municipio(self):
-        return self.__txtUfMunicipio.get()
+        return self.__txtUfMunicipio.get().upper()
 
     @uf_municipio.setter
     def uf_municipio(self, valor):
-        self.__txtUfMunicipio.insert(END, valor)
+        self.__txtUfMunicipio.insert(END, valor.upper())
 
     @property
     def data_ocorrencia(self):
@@ -215,11 +215,11 @@ class Ocorrencias:
 
     @property
     def descricao(self):
-        return self.__txtDescricao.get(1.0, END)
+        return self.__txtDescricao.get(1.0, END).upper()
 
     @descricao.setter
     def descricao(self, valor):
-        self.__txtDescricao.insert(END, valor)
+        self.__txtDescricao.insert(END, valor.upper())
 
     @property
     def valor(self):
@@ -241,6 +241,7 @@ class Ocorrencias:
         try:
             self.validar()
         except ValueError:
+            print(self.valor, self.vr_atual)
             messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
         else:
             try:

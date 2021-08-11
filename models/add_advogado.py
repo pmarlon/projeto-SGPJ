@@ -180,19 +180,19 @@ class AddAdvogado:
 
     @property
     def adv_nome(self):
-        return self.__txtAdvNome.get()
+        return self.__txtAdvNome.get().upper()
 
     @property
     def adv_endereco(self):
-        return self.__txtAdvEndereco.get()
+        return self.__txtAdvEndereco.get().upper()
 
     @property
     def adv_cidade(self):
-        return self.__txtAdvCidadeUf.get()
+        return self.__txtAdvCidadeUf.get().upper()
 
     @property
     def adv_cep(self):
-        return self.__txtAdvCep.get()
+        return self.__txtAdvCep.get().upper()
 
     @property
     def adv_fax(self):
@@ -204,7 +204,7 @@ class AddAdvogado:
 
     @property
     def adv_email(self):
-        return self.__txtAdvEmail.get()
+        return self.__txtAdvEmail.get().upper()
 
     @property
     def adv_oab(self):

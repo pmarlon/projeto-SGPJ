@@ -220,7 +220,6 @@ class Processos:
 
     @property
     def caso(self):
-
         return self.__txtCaso.get()
 
     @caso.setter
@@ -229,51 +228,51 @@ class Processos:
 
     @property
     def autor(self):
-        return self.__txtAutor.get()
+        return self.__txtAutor.get().upper()
 
     @autor.setter
     def autor(self, valor):
-        self.__txtAutor.insert(0, valor)
+        self.__txtAutor.insert(0, valor.upper())
 
     @property
     def reu(self):
-        return self.__txtReu.get()
+        return self.__txtReu.get().upper()
 
     @reu.setter
     def reu(self, valor):
-        self.__txtReu.insert(0, valor)
+        self.__txtReu.insert(0, valor.upper())
 
     @property
     def adv_externo(self):
-        return self.__txtAdvExterno.get()
+        return self.__txtAdvExterno.get().upper()
 
     @adv_externo.setter
     def adv_externo(self, valor):
-        self.__txtAdvExterno.insert(0, valor)
+        self.__txtAdvExterno.insert(0, valor.upper())
 
     @property
     def adv_adverso(self):
-        return self.__txtAdvAdverso.get()
+        return self.__txtAdvAdverso.get().upper()
 
     @adv_adverso.setter
     def adv_adverso(self, valor):
-        self.__txtAdvAdverso.insert(0, valor)
+        self.__txtAdvAdverso.insert(0, valor.upper())
 
     @property
     def end_parte_adv(self):
-        return self.__txtEndParteAdversa.get()
+        return self.__txtEndParteAdversa.get().upper()
 
     @end_parte_adv.setter
     def end_parte_adv(self, valor):
-        self.__txtEndParteAdversa.insert(0, valor)
+        self.__txtEndParteAdversa.insert(0, valor.upper())
 
     @property
     def tipo_acao(self):
-        return self.__txtTipoAcao.get()
+        return self.__txtTipoAcao.get().upper()
 
     @tipo_acao.setter
     def tipo_acao(self, valor):
-        self.__txtTipoAcao.insert(0, valor)
+        self.__txtTipoAcao.insert(0, valor.upper())
 
     @property
     def processo(self):
@@ -285,27 +284,27 @@ class Processos:
 
     @property
     def vara_tribunal(self):
-        return self.__txtVaraTribunal.get()
+        return self.__txtVaraTribunal.get().upper()
 
     @vara_tribunal.setter
     def vara_tribunal(self, valor):
-        self.__txtVaraTribunal.insert(0, valor)
+        self.__txtVaraTribunal.insert(0, valor.upper())
 
     @property
     def pos_feito(self):
-        return self.__txtPosFeito.get()
+        return self.__txtPosFeito.get().upper()
 
     @pos_feito.setter
     def pos_feito(self, valor):
-        self.__txtPosFeito.insert(0, valor)
+        self.__txtPosFeito.insert(0, valor.upper())
 
     @property
     def uf_municipio(self):
-        return self.__txtUfMunicipio.get()
+        return self.__txtUfMunicipio.get().upper()
 
     @uf_municipio.setter
     def uf_municipio(self, valor):
-        self.__txtUfMunicipio.insert(0, valor)
+        self.__txtUfMunicipio.insert(0, valor.upper())
 
     @property
     def vr_causa(self):
@@ -317,11 +316,11 @@ class Processos:
 
     @property
     def situacao(self):
-        return self.__txtSitAtual.get()
+        return self.__txtSitAtual.get().upper()
 
     @situacao.setter
     def situacao(self, valor):
-        self.__txtSitAtual.insert(0, valor)
+        self.__txtSitAtual.insert(0, valor.upper())
 
     @property
     def vr_atual(self):
@@ -349,31 +348,31 @@ class Processos:
 
     @property
     def perda(self):
-        return self.__txtPerda.get()
+        return self.__txtPerda.get().upper()
 
     @perda.setter
     def perda(self, valor):
-        self.__txtPerda.insert(0, valor)
+        self.__txtPerda.insert(0, valor.upper())
 
     @property
     def pedido(self):
-        return self.__txtPedido.get(1.0, END)
+        return self.__txtPedido.get(1.0, END).upper()
 
     @pedido.setter
     def pedido(self, valor):
-        self.__txtPedido.insert(1.0, valor)
+        self.__txtPedido.insert(1.0, valor.upper())
 
     @property
     def observacao(self):
-        return self.__txtObs.get(1.0, END)
+        return self.__txtObs.get(1.0, END).upper()
 
     @observacao.setter
     def observacao(self, valor):
-        self.__txtObs.insert(1.0, valor)
+        self.__txtObs.insert(1.0, valor.upper())
 
     @property
     def advogados(self):
-        return self.__txtAdvExterno.get()
+        return self.__txtAdvExterno.get().upper()
 
     @advogados.setter
     def advogados(self, valor):

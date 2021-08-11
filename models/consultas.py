@@ -174,19 +174,19 @@ class Consultas:
 
     @property
     def ref(self):
-        return self.__txtRef.get()
+        return self.__txtRef.get().upper()
 
     @ref.setter
     def ref(self, valor):
-        self.__txtRef.insert(END, valor)
+        self.__txtRef.insert(END, valor.upper())
 
     @property
     def prioridade(self):
-        return self.__txtPrioridade.get()
+        return self.__txtPrioridade.get().upper()
 
     @prioridade.setter
     def prioridade(self, valor):
-        self.__txtPrioridade.insert(END, valor)
+        self.__txtPrioridade.insert(END, valor.upper())
 
     @property
     def esperado(self):
@@ -198,11 +198,11 @@ class Consultas:
 
     @property
     def origem(self):
-        return self.__txtOrigem.get()
+        return self.__txtOrigem.get().upper()
 
     @origem.setter
     def origem(self, valor):
-        self.__txtOrigem.insert(END, valor)
+        self.__txtOrigem.insert(END, valor.upper())
 
     @property
     def entrada(self):
@@ -214,35 +214,35 @@ class Consultas:
 
     @property
     def assunto(self):
-        return self.__txtAssunto.get(1.0, END)
+        return self.__txtAssunto.get(1.0, END).upper()
 
     @assunto.setter
     def assunto(self, valor):
-        self.__txtAssunto.insert(END, valor)
+        self.__txtAssunto.insert(END, valor.upper())
 
     @property
     def interessado(self):
-        return self.__txtInteressado.get()
+        return self.__txtInteressado.get().upper()
 
     @interessado.setter
     def interessado(self, valor):
-        self.__txtInteressado.insert(END, valor)
+        self.__txtInteressado.insert(END, valor.upper())
 
     @property
     def adv_cojur(self):
-        return self.__txtAdvCojur.get()
+        return self.__txtAdvCojur.get().upper()
 
     @adv_cojur.setter
     def adv_cojur(self, valor):
-        self.__txtAdvCojur.insert(END, valor)
+        self.__txtAdvCojur.insert(END, valor.upper())
 
     @property
     def destino(self):
-        return self.__txtDestino.get()
+        return self.__txtDestino.get().upper()
 
     @destino.setter
     def destino(self, valor):
-        self.__txtDestino.insert(END, valor)
+        self.__txtDestino.insert(END, valor.upper())
 
     @property
     def saida(self):
@@ -254,11 +254,11 @@ class Consultas:
 
     @property
     def emenda_result(self):
-        return self.__txtEmendaResult.get(1.0, END)
+        return self.__txtEmendaResult.get(1.0, END).upper()
 
     @emenda_result.setter
     def emenda_result(self, valor):
-        self.__txtEmendaResult.insert(END, valor)
+        self.__txtEmendaResult.insert(END, valor.upper())
 
     def insert_consulta(self):
         try:
