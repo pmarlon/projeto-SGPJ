@@ -1,0 +1,38 @@
+A página inicial é composta somente por um wallpaper, além de mostrar o dia da semana seguido da data e hora atuais.
+
+A navegação é feita através dos botões na parte superior da tela, clicando em Processos, abre-se uma tela onde é possível
+cadastrar um novo processo, o campo contendo o número do caso é criado aleatóreamente, e não se repete, alguns campos como autor e
+réu só aceitam letras e espaços como entrada, o campo adv Externo tem uma lista de nomes de advogados já cadastrados, e ao lado
+um botão que abre uma janela para cadastrar um novo advogado, caso necessário. Quando cadastrado, automáticamente o nome
+já aparece na lista.
+Também é possivel realizar o mesmo cadastro clicando em Advogados na parte superior da tela.
+
+O campo Processo só aceita números como entrada e barra. ex: 70000/00000. que é o formato de número de processo utilizado
+no modelo de onde se baseia o projeto.
+
+Em todos os campos de data existe um botão ao lado que abre um calendário contendo a data atual, onde é possível
+escolher a data desejada, também é possível digitar a data, desde que seja no padrão 00/00/0000.
+
+Em qualquer tela, ao clicar no botão adicionar ou Salvar em caso de edição, é feita uma verificação em todos os campos,
+caso algo não esteja de acordo o campo em questão ficará vermelho e uma mensagem será exibida na tela informando o erro.
+
+É possível adicionar ocorrências aos casos, desde que exista um caso (processo) salvo no sistema, clicando em Ocorrências
+na parte superior da tela.
+
+Para adicionar uma ocorrência, é preciso pesquisar um número de caso, digitando e clicando no botão ao lado do campo. Caso encontre
+automáticamente os campos referentes ao caso serão preenchidos e não podem ser editados, restando somente os campos referentes à ocorrência.
+
+
+Na tela de Advogados, ao digitar algo no campo de nome, N° OAB ou CPF, o programa busca no banco de dados conforme o campo é
+preenchido, caso haja algum cadastro com os dados digitados.
+
+Em Consultas, é possível adicionar uma consulta que seria algo como dados de Gestão extrajudicial e segue o mesmo padrão dos outros formulários.
+
+Clicando em Pesquisar na parte superior da tela, são exibidas três abas, cada uma direcionada a uma tela específica, onde é possível realizar pesquisas individuais,
+em cada campo ou em todos ao mesmo tempo, ao clicar em listar serão exibidos todos os cadastros disponíveis.
+Para editar ou excluir um cadastro é preciso clicar primeiro no cadastro desejado, senão será exibida uma mensagem de erro. Esse comportamento se
+repete em todos botões ou telas semelhantes.
+
+Ao clicar em excluir é exibida uma mensagem de confirmação.
+
+Ao clicar no botão Sair o programa é encerrado.

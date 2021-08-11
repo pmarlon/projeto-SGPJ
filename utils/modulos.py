@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image
-from PIL import Image
+from PIL import ImageTk
 import base64
 from utils.images import *
 from tkinter import ttk, messagebox

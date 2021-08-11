@@ -4,14 +4,21 @@
   
 # Sobre o projeto  
   
-Este projeto visa otimizar o gerenciamento de processos judiciais, com foco em escritórios de advocacia.  
-A ideia do projeto teve origem acadêmica, não profissional.  
+Este projeto visa otimizar o controle de processos judiciais e administrativos, com foco em escritórios de advocacia.  
+A ideia do projeto teve origem acadêmica, não profissional e o modelo utilizado foi o proposto neste <a href="http://www.baeta.info/informacoes-judiciais-e-extrajudiciais.html">link</a> 
+
 É uma aplicação desktop, que poderia rodar tanto em windows quanto em linux, só não foi testado em MacOs.  
   
 
 ## Layout desktop (linux)
-![tela 1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela1.png) ![Tela2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela2.png)
-![Tela4](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela4.png)![Tela5](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela5.png)![Tela6-1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela6-1.png)![Tela6-2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela6-2.png)![Tela6-3](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela6-3.png)
+![tela 1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela1.png) 
+![Tela2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela2.png)
+![Tela3](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela3.png)
+![Tela4](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela4.png)
+![Tela5](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela5.png)
+![Tela6-1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela6-1.png)
+![Tela6-2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela6-2.png)
+![Tela6-3](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela6-3.png)
 
 
 ## Validações

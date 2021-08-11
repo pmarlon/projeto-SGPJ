@@ -147,7 +147,7 @@ class Processos:
         self.__lblPerda['font'] = 'Serif', '12'
         self.__lblPerda.place(relx=0.65, y=290)
 
-        self.__txtPerda = Entry(self.__frameProcessos)
+        self.__txtPerda = ttk.Combobox(self.__frameProcessos, values=['REMOTA', 'POSSÍVEL', 'PROVÁVEL'])
         self.__txtPerda.place(relx=0.714, y=290, relwidth=0.18)
 
         self.__lblPedido = Label(self.__frameProcessos, text='Pedido', bg='LightSteelBlue3')
