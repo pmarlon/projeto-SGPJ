@@ -113,6 +113,13 @@ def init_db():
         PRIMARY KEY("id" AUTOINCREMENT)
 )
 """)
+    banco.execute("""CREATE TABLE IF NOT EXISTS cadastro (
+            id INTEGER,
+            usuario TEXT NOT NULL,
+            senha TEXT NOT NULL,
+            PRIMARY KEY("id" AUTOINCREMENT)
+    )
+    """)
 
     banco.persist()
     banco.disconnect()
