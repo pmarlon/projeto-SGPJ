@@ -2,6 +2,7 @@ from utils.modulos import *
 
 from time import strftime
 from datetime import datetime
+from passlib.hash import pbkdf2_sha256 as cryp
 
 
 class Inicial:
@@ -81,7 +82,6 @@ class Inicial:
         self.__btnCadastro.place(relx=0.52, y=225)
 
         self.__lblMensagens = Label(self.__frameLogin, font='Serif 7 bold italic', fg='red', bg='light blue')
-        self.__lblMensagens['text'] = 'Usuário e/ou senha inválidos.'
         self.__lblMensagens.place(relx=0.31, y=80)
 
         self.__frameCadastro = Frame(self.__frameInicial, bg='light blue')
@@ -89,11 +89,17 @@ class Inicial:
         self.__lblCadastro = Label(self.__frameCadastro, text='Cadastro', font='Serif 18 bold', bg='light blue')
         self.__lblCadastro.place(relx=0.38, y=20)
 
+        self.__lblDicaUsuario = Label(self.__frameCadastro, font='Serif 7 bold italic', fg='red', bg='light blue')
+        self.__lblDicaUsuario.place(relx=0.4, y=125)
+
         self.__lblNovoUsuario = Label(self.__frameCadastro, text='Usuário', bg='light blue', font='Serif 10 italic')
         self.__lblNovoUsuario.place(relx=0.22, y=100)
 
-        self.txtNovoUsuario = Entry(self.__frameCadastro, highlightthickness=0)
-        self.txtNovoUsuario.place(relx=0.4, y=100, relwidth=0.5)
+        self.__txtNovoUsuario = Entry(self.__frameCadastro, highlightthickness=0)
+        self.__txtNovoUsuario.place(relx=0.4, y=100, relwidth=0.5)
+
+        self.__lblDicaSenha = Label(self.__frameCadastro, font='Serif 7 bold italic', fg='red', bg='light blue')
+        self.__lblDicaSenha.place(relx=0.4, y=165)
 
         self.__lblNovaSenha = Label(self.__frameCadastro, text='Senha', font='Serif 10 italic', bg='light blue')
         self.__lblNovaSenha.place(relx=0.25, y=140)
@@ -116,7 +122,7 @@ class Inicial:
                                      pady=0,
                                      bg='light blue',
                                      highlightthickness=0)
-        self.__btnCadastrar['command'] = ''
+        self.__btnCadastrar['command'] = lambda: self.command_cadastrar()
         self.__btnCadastrar.image = img_cadastrar
         self.__btnCadastrar.place(relx=0.38, y=220)
 
@@ -131,20 +137,115 @@ class Inicial:
         self.__btnCancelar.image = img_cancelar_cadastro
         self.__btnCancelar.place(relx=0.65, y=220)
 
+    @property
+    def usuario(self):
+        return self.__txtUsuario.get().lower()
+
+    @property
+    def novo_usuario(self):
+        return self.__txtNovoUsuario.get()
+
     def command_entrar(self):
-        self.__frameLogin.place_forget()
+        if checa_usuario(self.usuario):
+            senha = search('cadastro', parms='senha', clause=f'where usuario="{self.usuario}"')[0][0]
+            if self.checa_senha(senha):
+                self.__lblMensagens['text'] = ''
+                print('logado')
+            else:
+                self.__lblMensagens['text'] = 'Senha incorreta'
+        else:
+            self.__lblMensagens['text'] = 'Usuário não encontrado'
 
     def command_cadastro(self):
         self.__frameLogin.place_forget()
+        limpar(self.__frameLogin)
+        limpar(self.__frameCadastro)
+        self.__lblDicaUsuario['text'] = ''
+        self.__lblDicaSenha['text'] = ''
         self.__frameCadastro.place(width=350, height=300, relx=0.38, y=50)
 
+    def command_cadastrar(self):
+        try:
+            self.validar()
+        except ValueError:
+            self.__lblDicaUsuario['text'] = 'Mínimo 8 caracteres para senha'
+            messagebox.showwarning('Atenção', 'Verifique os campos marcados em vermelho e tente novamente.')
+        else:
+            try:
+                senha = cryp.hash(self.__txtNovaSenha.get(), rounds=200000, salt_size=16)
+                insert('cadastro', self.novo_usuario, senha)
+                messagebox.showinfo('Informação', 'Usuário Cadastrado com sucesso.')
+                self.iniciar_pagina()
+            except IntegrityError:
+                messagebox.showwarning('Atenção', 'Este usuário já existe')
+
     def command_cancelar(self):
-        self.__frameCadastro.place_forget()
-        self.__frameLogin.place(width=300, height=300, relx=0.3855, y=50)
+        self.iniciar_pagina()
+
+    def checa_senha(self, senha):
+        if cryp.verify(self.__txtSenha.get(), senha):
+            return True
+        return False
+
+    def validar(self):
+        valid = []
+
+        for child in self.__frameCadastro.winfo_children():
+            child_class = child.__class__.__name__
+
+            if child_class == 'Entry':
+                if validar_vazio(child.get()) and validar_space(child.get()):
+                    child['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    child['background'] = 'Indian Red'
+                    valid.append(False)
+        if (validar_usuario(self.novo_usuario)) and (validar_senha(self.__txtNovaSenha.get())) and \
+                (validar_senha(self.__txtConfirmaSenha.get())):
+            valid.append(True)
+        else:
+            if not validar_usuario(self.novo_usuario):
+                self.__txtNovoUsuario['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtNovoUsuario['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_senha(self.__txtNovaSenha.get()):
+                self.__txtNovaSenha['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                self.__txtNovaSenha['background'] = '#fff'
+                valid.append(True)
+
+            if not validar_senha(self.__txtConfirmaSenha.get()):
+                self.__txtConfirmaSenha['background'] = 'Indian Red'
+                valid.append(False)
+            else:
+                if self.__txtNovaSenha.get() == self.__txtConfirmaSenha.get():
+                    self.__txtConfirmaSenha['background'] = '#fff'
+                    self.__txtNovaSenha['background'] = '#fff'
+                    valid.append(True)
+                else:
+                    self.__txtConfirmaSenha['background'] = 'Indian Red'
+                    self.__txtNovaSenha['background'] = 'Indian Red'
+                    self.__lblDicaSenha['text'] = 'As senhas não conferem'
+                    valid.append(False)
+
+        if False not in valid:
+            return True
+        else:
+            raise ValueError
 
     def iniciar_pagina(self):
         self.ocultar_pagina()
+        limpar(self.__frameLogin)
+        limpar(self.__frameCadastro)
+        self.__lblMensagens['text'] = ''
         self.__frameInicial.pack(side=BOTTOM, fill=X, pady=1)
+        self.__frameLogin.place(width=300, height=300, relx=0.3855, y=50)
 
     def ocultar_pagina(self):
+        self.__frameLogin.place_forget()
+        self.__frameCadastro.place_forget()
         self.__frameInicial.pack_forget()

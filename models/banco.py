@@ -115,7 +115,7 @@ def init_db():
 """)
     banco.execute("""CREATE TABLE IF NOT EXISTS cadastro (
             id INTEGER,
-            usuario TEXT NOT NULL,
+            usuario TEXT NOT NULL UNIQUE,
             senha TEXT NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
     )

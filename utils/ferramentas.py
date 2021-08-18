@@ -110,3 +110,11 @@ def formata_data(data):
     dia_semana = {0: 'Segunda-feira', 1: 'Terça-feira', 2: 'Quarta-feira',
                   3: 'Quinta-feira', 4: 'Sexta-feira', 5: 'Sábado', 6: 'Domingo'}
     return f"{dia_semana[data.weekday()]}, {data.day} de {mes[data.month]} de {data.year}"
+
+
+def checa_usuario(usuario):
+    usuarios = search('cadastro', parms='usuario')[0]
+    if usuario in usuarios:
+        return True
+    else:
+        return False
