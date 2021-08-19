@@ -104,7 +104,7 @@ class App:
         self.btnPesquisar.place(relx=0.71, y=3, width=120)
 
         self.__btnSair = Button(self.__MenuBar,
-                                text='Sair',
+                                text='Encerrar',
                                 image=img_sair,
                                 compound=TOP,
                                 relief='flat',
@@ -158,6 +158,20 @@ class App:
         self.btnAdvogados['background'] = 'LightSteelBlue3'
         self.btnConsultas['background'] = 'LightSteelBlue3'
         self.btnPesquisar['background'] = 'LightSteelBlue3'
+
+    def bloqueia_botoes(self):
+        self.btnProcessos['state'] = 'disable'
+        self.btnOcorrencias['state'] = 'disable'
+        self.btnAdvogados['state'] = 'disable'
+        self.btnConsultas['state'] = 'disable'
+        self.btnPesquisar['state'] = 'disable'
+
+    def desbloqueia_botoes(self):
+        self.btnProcessos['state'] = 'normal'
+        self.btnOcorrencias['state'] = 'normal'
+        self.btnAdvogados['state'] = 'normal'
+        self.btnConsultas['state'] = 'normal'
+        self.btnPesquisar['state'] = 'normal'
 
 
 if __name__ == '__main__':

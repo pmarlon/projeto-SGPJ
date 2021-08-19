@@ -78,3 +78,17 @@ def validar_referencia(entrada):
             return False
     else:
         return False
+
+
+def validar_usuario(entrada):
+    if entrada.isalnum():
+        return True
+    else:
+        return False
+
+
+def validar_senha(entrada):
+    if len(entrada) < 8:
+        return False
+    else:
+        return True
