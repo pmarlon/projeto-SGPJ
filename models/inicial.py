@@ -12,8 +12,13 @@ class Inicial:
         img_entrar = ImageTk.PhotoImage(data=base64.b64decode(img_entrar_base64))  # Imagem do botão Entrar
         img_cadastrar = ImageTk.PhotoImage(data=base64.b64decode(img_cadastrar_base64))  # Imagem do botão Cadastrar
         img_cancelar_cadastro = ImageTk.PhotoImage(data=base64.b64decode(img_cancelar_cadastro_base64))
+        img_logout = ImageTk.PhotoImage(data=base64.b64decode(img_logout_base64))
+
         self.master = master
         self.app = app
+
+        self.__login = False
+
         self.__frameInicial = Frame(self.master, height=500, bg='LightSteelBlue3', bd=2, relief='ridge')
 
         self.__lblWallpaper = Label(self.__frameInicial, image=img_wallpaper, bg='LightSteelBlue3')
@@ -34,6 +39,20 @@ class Inicial:
         self.__lblWallpaper.place(x=0, y=0, relwidth=1, relheight=1)
         tac()
         self.__lblWallpaper.image = img_wallpaper
+
+        self.__lblBoasVindas = Label(self.__frameInicial, font='Serif 14 bold', bg='LightSteelBlue3', fg='#1d1e20')
+        self.__lblBoasVindas['text'] = ''
+        self.__lblBoasVindas.place(x=20, y=10)
+
+        self.__btnLogout = Button(self.__frameInicial,
+                                  image=img_logout,
+                                  padx=0,
+                                  pady=0,
+                                  bg='LightSteelBlue3',
+                                  relief='flat',
+                                  highlightthickness=0)
+        self.__btnLogout['command'] = lambda: self.command_logout()
+        self.__btnLogout.image = img_logout
 
         self.__frameLogin = Frame(self.__frameInicial, bg='light blue')
         self.__frameLogin.place(width=300, height=300, relx=0.3855, y=50)
@@ -155,8 +174,12 @@ class Inicial:
                 senha = search('cadastro', parms='senha', clause=f'where usuario="{self.usuario}"')[0][0]
 
                 if (validar_vazio(self.__txtSenha.get())) and (validar_space(self.usuario)):
+
                     if self.checa_senha(senha):
                         self.__lblMensagens['text'] = ''
+                        self.__login = True
+                        self.__lblBoasVindas['text'] = f'Seja Bem-vindo(a) {self.usuario.title()}'
+                        self.__btnLogout.place(relx=0.9, y=10)
                         print('logado')
                     else:
                         self.__lblMensagens['text'] = 'Senha incorreta'
@@ -186,6 +209,12 @@ class Inicial:
 
     def command_cancelar(self):
         self.iniciar_pagina()
+
+    def command_logout(self):
+
+        if messagebox.askyesno('Atenção', 'Deseja mesmo Sair?'):
+            self.__login = False
+            self.iniciar_pagina()
 
     def checa_senha(self, senha):
         if cryp.verify(self.__txtSenha.get(), senha):
@@ -257,7 +286,11 @@ class Inicial:
         limpar(self.__frameCadastro)
         self.__lblMensagens['text'] = ''
         self.__frameInicial.pack(side=BOTTOM, fill=X, pady=1)
-        self.__frameLogin.place(width=300, height=300, relx=0.3855, y=50)
+
+        if not self.__login:
+            self.__frameLogin.place(width=300, height=300, relx=0.3855, y=50)
+            self.__btnLogout.place_forget()
+            self.__lblBoasVindas['text'] = ''
 
     def ocultar_pagina(self):
         self.__frameLogin.place_forget()

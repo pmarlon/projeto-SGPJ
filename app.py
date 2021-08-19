@@ -104,7 +104,7 @@ class App:
         self.btnPesquisar.place(relx=0.71, y=3, width=120)
 
         self.__btnSair = Button(self.__MenuBar,
-                                text='Sair',
+                                text='Encerrar',
                                 image=img_sair,
                                 compound=TOP,
                                 relief='flat',
