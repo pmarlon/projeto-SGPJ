@@ -180,7 +180,8 @@ class Inicial:
                         self.__login = True
                         self.__lblBoasVindas['text'] = f'Seja Bem-vindo(a) {self.usuario.title()}'
                         self.__btnLogout.place(relx=0.9, y=10)
-                        print('logado')
+                        self.app.desbloqueia_botoes()
+                        self.__frameLogin.place_forget()
                     else:
                         self.__lblMensagens['text'] = 'Senha incorreta'
                 else:
@@ -291,6 +292,7 @@ class Inicial:
             self.__frameLogin.place(width=300, height=300, relx=0.3855, y=50)
             self.__btnLogout.place_forget()
             self.__lblBoasVindas['text'] = ''
+            self.app.bloqueia_botoes()
 
     def ocultar_pagina(self):
         self.__frameLogin.place_forget()
