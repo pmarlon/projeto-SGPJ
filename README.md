@@ -11,6 +11,8 @@ A ideia do projeto teve origem acadêmica, não profissional e o modelo utilizad
   
 
 ## Layout desktop (linux)
+![tela login](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela-login.png) 
+![tela cadastro](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela-cadastro.png) 
 ![tela 1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela1.png) 
 ![Tela2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela2.png)
 ![Tela3](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela3.png)
@@ -25,6 +27,10 @@ A ideia do projeto teve origem acadêmica, não profissional e o modelo utilizad
 
 A aplicação conta com tratamento de dados, contendo algumas validações de entrada. 
 
+![Tela-login-validação1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela-login-valida%C3%A7%C3%A3o.png)
+![Tela-login-validação2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela-login-valida%C3%A7%C3%A3o2.png)
+![Tela-cadastro-validação1](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela-cadastro-validação1.png)
+![Tela-cadastro-validação2](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela-cadastro-validação2.png)
 ![Tela2-validação](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela2-valida%C3%A7%C3%A3o.png)
 ![Tela3-validação](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela3-valida%C3%A7%C3%A3o.png)
 ![Tela4-validação](https://raw.githubusercontent.com/pmarlon/SGPJ-screenshots/main/tela4-valida%C3%A7%C3%A3o.png)

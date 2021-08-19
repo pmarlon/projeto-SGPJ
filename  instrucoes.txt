@@ -1,4 +1,15 @@
-A página inicial é composta somente por um wallpaper, além de mostrar o dia da semana seguido da data e hora atuais.
+Para acessar as funcionalidades do programa é necessário realizar login caso tenha um usuário cadastrado ou cadastrar um
+novo usuário e senha.
+O username aceita caracteres alphanuméricos, não aceita símbolos e a senha aceita qualquer tipo de caracter desde que
+sejam pelo menos 8.
+Antes de realizar login os botões de navegação ficam bloqueados, com excessão do botão da tela inicial e o botão encerrar.
+Após realizar login a tela de login some e o aplicativo mostra uma mensagem de boas vindas com o seu nome de usuário e um
+botão de logout que ao ser clicado exibe uma mensagem de confirmação, além de desbloquear os botões de navegação, liberando
+os recursos do aplicativo.
+Ao realizar logout o aplicativo retorna à tela de login e bloqueia novamente os botões de navegação.
+
+A página inicial é composta somente por um wallpaper, além de mostrar o dia da semana seguido da data e hora atuais e uma
+mensagem de boas vindas no caso de estar logado ou a tela de login, caso não esteja.
 
 A navegação é feita através dos botões na parte superior da tela, clicando em Processos, abre-se uma tela onde é possível
 cadastrar um novo processo, o campo contendo o número do caso é criado aleatóreamente, e não se repete, alguns campos como autor e
