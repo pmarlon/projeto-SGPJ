@@ -113,8 +113,7 @@ def formata_data(data):
 
 
 def checa_usuario(usuario):
-    usuarios = search('cadastro', parms='usuario')[0]
-    if usuario in usuarios:
-        return True
-    else:
-        return False
+    usuarios = search('cadastro', parms='usuario')
+    for user in usuarios:
+        if usuario == user[0]:
+            return True
